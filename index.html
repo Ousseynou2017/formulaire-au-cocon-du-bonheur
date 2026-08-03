@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chargement…</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--
+  Coquille vide volontaire.
+  Tout le contenu visible est construit par app.js a partir de config.json et
+  questions.json. Ne rien ecrire en dur ici : ni question, ni libelle, ni nom de client.
+-->
+
+<a class="lien-evitement" href="#zone-principale" id="lien-evitement"></a>
+
+<header class="entete" id="entete" hidden>
+  <div class="entete__haut">
+    <img class="entete__logo" id="logo" alt="" hidden>
+    <p class="entete__client" id="entete-client"></p>
+    <button type="button" class="bouton bouton--discret entete__sommaire" id="btn-sommaire"
+            aria-expanded="false" aria-controls="sommaire"></button>
+  </div>
+
+  <div class="progression" id="progression" hidden>
+    <div class="progression__ligne">
+      <span class="progression__etape" id="progression-etape"></span>
+      <span class="progression__pourcent" id="progression-pourcent"></span>
+    </div>
+    <div class="progression__piste" id="progression-piste"
+         role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progression__jauge" id="progression-jauge"></div>
+    </div>
+  </div>
+</header>
+
+<!-- Sommaire : panneau lateral, accessible depuis n'importe quelle section -->
+<div class="sommaire" id="sommaire" hidden>
+  <div class="sommaire__voile" id="sommaire-voile"></div>
+  <nav class="sommaire__panneau" aria-labelledby="sommaire-titre">
+    <div class="sommaire__entete">
+      <h2 class="sommaire__titre" id="sommaire-titre"></h2>
+      <button type="button" class="bouton-icone" id="btn-fermer-sommaire"></button>
+    </div>
+    <ul class="sommaire__liste" id="sommaire-liste"></ul>
+  </nav>
+</div>
+
+<main class="zone" id="zone-principale" tabindex="-1">
+  <!-- Annonce des changements d'ecran aux lecteurs d'ecran -->
+  <p class="lecteur-seul" aria-live="polite" id="annonce"></p>
+
+  <!-- Rappel non bloquant : penser a telecharger une copie. Affiche une seule fois. -->
+  <div class="bandeau" id="bandeau" hidden>
+    <p class="bandeau__texte" id="bandeau-texte"></p>
+    <button type="button" class="bouton-icone" id="bandeau-fermer"></button>
+  </div>
+
+  <div id="ecran"></div>
+</main>
+
+<!-- Barre d'action fixe en bas : atteignable au pouce -->
+<div class="barre-bas" id="barre-bas" hidden>
+  <button type="button" class="bouton bouton--contour" id="btn-precedent"></button>
+  <button type="button" class="bouton bouton--principal" id="btn-suivant"></button>
+</div>
+
+<footer class="pied" id="pied" hidden>
+  <button type="button" class="bouton bouton--lien" id="btn-telecharger"></button>
+</footer>
+
+<!--
+  Copie embarquee de config.json et questions.json, pour que la page fonctionne
+  sans reseau (rechargement hors connexion) et en file://.
+  LES FICHIERS .json RESTENT LA SOURCE DE VERITE.
+  Apres toute modification de l'un d'eux : node sync-inline.mjs
+-->
+<script type="application/json" id="config-inline">
+{
+  "_note": "Configuration du formulaire. Pour un nouveau client : dupliquer ce fichier et questions.json, remplacer les valeurs, redeployer. Aucun code a modifier. Les couleurs sont injectees en variables CSS au chargement par app.js.",
+
+  "projet": {
+    "id": "au-cocon-du-bonheur",
+    "client": "Au Cocon Du Bonheur",
+    "titre_page": "Informations pour votre nouveau site",
+    "logo": "assets/logo.png",
+    "langue": "fr"
+  },
+
+  "messages": {
+    "accueil_titre": "Construisons votre site ensemble",
+    "accueil_texte": "Ce formulaire rassemble tout ce dont j'ai besoin pour créer le site de l'école. Comptez une trentaine de minutes, mais vous n'êtes pas obligée de tout faire d'un coup : vos réponses sont enregistrées automatiquement. Vous pouvez fermer la page et revenir quand vous voulez, vous retrouverez tout où vous l'aviez laissé.\n\nSi une question vous bloque, appuyez sur « Je ne sais pas » et passez à la suivante.",
+    "accueil_bouton": "Commencer",
+    "restauration": "J'ai retrouvé vos réponses précédentes. Vous pouvez continuer où vous vous étiez arrêtée.",
+    "recap_titre": "Relisez avant d'envoyer",
+    "recap_texte": "Vérifiez vos réponses. Vous pouvez modifier n'importe quelle ligne en appuyant dessus.",
+    "envoi_bouton": "Envoyer mes réponses",
+    "succes_titre": "C'est envoyé, merci",
+    "succes_texte": "J'ai bien reçu vos réponses. Je reviens vers vous rapidement. Vous pouvez revenir sur cette page à tout moment pour compléter ce qui manque.",
+    "echec_titre": "L'envoi n'a pas fonctionné",
+    "echec_texte": "Vos réponses ne sont pas perdues, elles sont enregistrées sur votre téléphone. Appuyez sur « Télécharger mes réponses » puis envoyez-moi le fichier par WhatsApp.",
+    "telecharger_bouton": "Télécharger mes réponses",
+    "je_ne_sais_pas": "Je ne sais pas, je vous dirai plus tard"
+  },
+
+  "envoi": {
+    "endpoint": "https://formspree.io/f/xrennzzp",
+    "methode": "POST",
+    "whatsapp_secours": "+221 76 463 44 89",
+    "nom_fichier_export": "reponses-au-cocon-du-bonheur"
+  },
+
+  "design": {
+    "_source": "Valeurs extraites du flyer imprime livre (echantillonnage du PDF rendu a 200 dpi).",
+    "_contraintes": [
+      "Le jaune #FFD400 ne doit JAMAIS servir de texte sur creme : contraste 1.33:1. Uniquement sur violet (4.82:1) ou en aplat avec texte violet dessus.",
+      "Le flyer contient deux violets quasi identiques (#873897 et #792F89). On n'en garde qu'un. --violet-fonce ci-dessous est un assombrissement volontaire, pas une valeur du flyer.",
+      "Le jaune doit apparaitre au moins une fois par ecran de contenu, sinon la charte n'est pas executee."
+    ],
+    "couleurs": {
+      "creme":         "#FDF6E6",
+      "creme-fonce":   "#FBF2D8",
+      "violet":        "#873897",
+      "violet-fonce":  "#5A2166",
+      "jaune":         "#FFD400",
+      "jaune-pale":    "#F8E6A5",
+      "titre":         "#5E4966",
+      "encre":         "#331F3A",
+      "blanc":         "#FFFFFF"
+    },
+    "roles": {
+      "fond_page":        "creme",
+      "fond_alternatif":  "blanc",
+      "fond_accentue":    "violet",
+      "texte_courant":    "encre",
+      "texte_titre":      "titre",
+      "bouton_principal": { "fond": "violet", "texte": "creme" },
+      "bouton_action":    { "fond": "jaune",  "texte": "violet-fonce" },
+      "focus":            { "sur_fond_clair": "violet", "sur_fond_violet": "jaune" },
+      "filets":           "jaune-pale"
+    },
+    "typographie": {
+      "_note": "Polices systeme volontairement. Aucun chargement externe : la connexion peut etre lente ou absente.",
+      "titres": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+      "corps": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+      "graisse_titre": 700,
+      "interlignage_titre": 1.1,
+      "interlignage_corps": 1.6
+    },
+    "formes": {
+      "rayon": "4px",
+      "ombre": "aucune",
+      "transition": "180ms ease"
+    }
+  }
+}
+</script>
+<script type="application/json" id="questions-inline">
+{
+  "_schema": {
+    "version": "1.0",
+    "note": "Fichier de contenu du formulaire de collecte. Le moteur (app.js) lit ce fichier et construit l'interface. Pour un nouveau client : dupliquer ce fichier, remplacer les sections. Ne jamais ecrire de question en dur dans le HTML.",
+    "types_supportes": [
+      "text", "textarea", "number", "tel", "email", "url",
+      "select", "radio", "checkbox", "repeater", "confirmation", "info"
+    ],
+    "notes_types": {
+      "confirmation": "Affiche une valeur pre-remplie (champ 'valeur') avec deux boutons : 'C'est correct' / 'A corriger'. Si 'A corriger', ouvre un champ texte pre-rempli avec la valeur, editable. Sert a valider une info deja connue sans faire retaper le client.",
+      "info": "Pas un champ. Bloc de texte explicatif affiche dans le flux. Aucune donnee collectee.",
+      "repeater": "Groupe de sous-champs (cle 'champs') repetable. 'entrees_initiales' pre-cree des entrees deja remplies."
+    },
+    "cle_bouton_je_ne_sais_pas": "Toute question sans 'skippable': false doit afficher le bouton 'Je ne sais pas, je vous dirai plus tard'. Valeur enregistree : 'A COMPLETER'."
+  },
+
+  "sections": [
+
+    {
+      "id": "verifications",
+      "titre": "Vérifions ce que j'ai déjà",
+      "intro": "J'ai repris ces informations sur votre flyer et sur votre page Facebook. Vérifiez simplement qu'elles sont exactes. C'est la partie la plus rapide.",
+      "questions": [
+        {
+          "id": "nom_exact",
+          "type": "confirmation",
+          "label": "Le nom de l'école, tel qu'il doit apparaître sur le site",
+          "valeur": "Au Cocon Du Bonheur",
+          "aide": "Vérifiez les majuscules. Faut-il écrire « Du » ou « du » ?",
+          "requis": true
+        },
+        {
+          "id": "adresse",
+          "type": "confirmation",
+          "label": "L'adresse complète",
+          "valeur": "Cité El Hadj Malick Sy, Ouakam, après le Monument de la Renaissance, Dakar",
+          "aide": "C'est cette adresse qui servira pour le plan et l'itinéraire.",
+          "requis": true
+        },
+        {
+          "id": "tel_principal",
+          "type": "confirmation",
+          "label": "Le téléphone principal",
+          "valeur": "+221 77 884 53 53",
+          "aide": "Ce numéro sera cliquable : un parent appuie dessus et l'appel démarre.",
+          "requis": true
+        },
+        {
+          "id": "tel_secondaire",
+          "type": "confirmation",
+          "label": "Le deuxième numéro",
+          "valeur": "+221 77 393 74 67",
+          "aide": "Souhaitez-vous qu'il apparaisse aussi sur le site ?",
+          "requis": false
+        },
+        {
+          "id": "tel_fixe",
+          "type": "confirmation",
+          "label": "Le fixe",
+          "valeur": "+221 33 865 65 75",
+          "aide": "Trouvé sur votre page Facebook mais absent du flyer. Est-il toujours actif ?",
+          "requis": false
+        },
+        {
+          "id": "email_conflit",
+          "type": "radio",
+          "label": "Deux adresses email différentes circulent. Laquelle utilise-t-on ?",
+          "aide": "Le flyer affiche l'une, Facebook affiche l'autre. Il faut n'en garder qu'une sur le site pour éviter de perdre des messages.",
+          "options": [
+            "contact@aucocondubonheur.com",
+            "aucocondubonheur@gmail.com",
+            "Les deux, mais une seule est affichée",
+            "Autre adresse"
+          ],
+          "requis": true
+        },
+        {
+          "id": "autorisation",
+          "type": "confirmation",
+          "label": "Le numéro d'autorisation officielle",
+          "valeur": "Autorisation 604 IA/DK/BEP — Arrêté n°07486 du 27/10/2016",
+          "aide": "Cette mention rassure les parents. Elle sera affichée en bas du site.",
+          "requis": false
+        },
+        {
+          "id": "annee_ouverture",
+          "type": "text",
+          "label": "En quelle année l'école a-t-elle ouvert ses portes ?",
+          "aide": "L'autorisation date de 2016, mais l'école a peut-être ouvert avant. Je veux la vraie date.",
+          "exemple": "2016",
+          "requis": true
+        },
+        {
+          "id": "annee_scolaire",
+          "type": "confirmation",
+          "label": "L'année scolaire concernée par les inscriptions",
+          "valeur": "2026 – 2027",
+          "requis": true
+        }
+      ]
+    },
+
+    {
+      "id": "site_existant",
+      "titre": "Votre site actuel",
+      "intro": "Vous avez déjà un site à l'adresse aucocondubonheur.com. Il n'a plus été mis à jour depuis 2022. J'ai besoin de savoir dans quel état il est pour décider si on le remplace ou si on repart de zéro.",
+      "questions": [
+        {
+          "id": "site_acces",
+          "type": "radio",
+          "label": "Avez-vous les accès pour modifier ce site ?",
+          "aide": "Identifiant et mot de passe, ou le contact de la personne qui l'a fait.",
+          "options": [
+            "Oui, j'ai les accès",
+            "Non, c'est quelqu'un d'autre qui les a",
+            "Je ne sais plus qui l'a fait",
+            "Je ne sais pas"
+          ],
+          "requis": true
+        },
+        {
+          "id": "site_qui",
+          "type": "text",
+          "label": "Si quelqu'un d'autre s'en occupe, qui ?",
+          "aide": "Nom et contact, même approximatif. Je pourrai le joindre directement.",
+          "requis": false
+        },
+        {
+          "id": "site_paiement",
+          "type": "radio",
+          "label": "Payez-vous encore quelque chose pour ce site ou pour l'adresse internet ?",
+          "aide": "Un abonnement annuel, un renouvellement de nom de domaine.",
+          "options": [
+            "Oui, je paie chaque année",
+            "Non, plus rien",
+            "Je ne sais pas"
+          ],
+          "requis": true
+        },
+        {
+          "id": "site_avis",
+          "type": "textarea",
+          "label": "Qu'est-ce qui ne vous plaît pas dans le site actuel ?",
+          "aide": "Dites-le simplement. C'est ce qui m'indique quoi éviter.",
+          "requis": false
+        },
+        {
+          "id": "site_garder",
+          "type": "textarea",
+          "label": "Y a-t-il quelque chose que vous voulez absolument garder ?",
+          "aide": "Un texte, une photo, les témoignages de parents.",
+          "requis": false
+        }
+      ]
+    },
+
+    {
+      "id": "ecole",
+      "titre": "Votre école en quelques mots",
+      "intro": "C'est la partie qui demande le plus de réflexion. Prenez votre temps, vous pouvez revenir plus tard.",
+      "questions": [
+        {
+          "id": "difference",
+          "type": "textarea",
+          "label": "En 3 phrases : pourquoi un parent devrait choisir votre école plutôt qu'une autre du quartier ?",
+          "aide": "C'est la question la plus importante du formulaire. Écrivez comme vous le diriez à une amie, je me charge de la mise en forme.",
+          "requis": true
+        },
+        {
+          "id": "valeurs",
+          "type": "textarea",
+          "label": "Quelles sont les 4 valeurs qui comptent le plus pour vous dans l'éducation des enfants ?",
+          "aide": "Un mot chacune, plus une phrase d'explication. Exemple : « Bienveillance — chaque enfant est accueilli comme il est. » Ces 4 valeurs occuperont une grande place sur la page d'accueil.",
+          "requis": true
+        },
+        {
+          "id": "nb_eleves",
+          "type": "number",
+          "label": "Combien d'enfants accueillez-vous en tout ?",
+          "aide": "Une estimation suffit. Les chiffres rassurent les parents.",
+          "requis": false
+        },
+        {
+          "id": "nb_par_classe",
+          "type": "text",
+          "label": "Combien d'enfants par classe en moyenne ?",
+          "aide": "Si c'est un petit effectif, c'est un argument fort. On l'affichera.",
+          "requis": false
+        },
+        {
+          "id": "nb_personnel",
+          "type": "text",
+          "label": "Combien d'enseignantes et d'encadrants au total ?",
+          "requis": false
+        },
+        {
+          "id": "temoignages",
+          "type": "textarea",
+          "label": "Une ou deux phrases de parents satisfaits",
+          "aide": "Il y en a déjà sur votre ancien site, je peux les reprendre. Mais si vous en avez de plus récentes, elles seront meilleures. Prénom seul suffit, avec l'accord de la personne.",
+          "requis": false
+        },
+        {
+          "id": "activites_confirm",
+          "type": "confirmation",
+          "label": "Les activités annoncées sur le flyer",
+          "valeur": "Langues : français, anglais, arabe (coranique), chinois en option — Initiation à l'informatique — Récréation-jardinage et récréation-contes — Sorties pédagogiques — Ramassage des enfants",
+          "aide": "Est-ce toujours d'actualité ? Manque-t-il quelque chose ?",
+          "requis": true
+        },
+        {
+          "id": "activites_plus",
+          "type": "textarea",
+          "label": "D'autres activités à ajouter ?",
+          "aide": "Sport, musique, camp de vacances, soutien scolaire…",
+          "requis": false
+        }
+      ]
+    },
+
+    {
+      "id": "cycles",
+      "titre": "Les cycles que vous proposez",
+      "intro": "J'ai pré-rempli les 4 cycles de votre flyer. Complétez ce que vous pouvez, corrigez ce qui a changé, et supprimez un cycle s'il n'existe plus.",
+      "questions": [
+        {
+          "id": "liste_cycles",
+          "type": "repeater",
+          "label": "Vos cycles",
+          "aide": "Chaque cycle aura sa propre section sur le site.",
+          "bouton_ajouter": "Ajouter un cycle",
+          "requis": true,
+          "champs": [
+            { "id": "nom", "type": "text", "label": "Nom du cycle", "requis": true },
+            { "id": "ages", "type": "text", "label": "Âges concernés", "exemple": "de 3 mois à 2 ans" },
+            { "id": "horaires", "type": "text", "label": "Horaires", "exemple": "7h30 – 17h30, du lundi au vendredi" },
+            { "id": "effectif", "type": "text", "label": "Nombre d'enfants maximum par groupe" },
+            { "id": "description", "type": "textarea", "label": "En 3 ou 4 lignes : ce qu'on y fait, ce qu'on y apprend" },
+            { "id": "specificite", "type": "text", "label": "Une chose que ce cycle a de particulier", "aide": "Un atelier, une méthode, un moment de la journée." }
+          ],
+          "entrees_initiales": [
+            { "nom": "Crèche", "ages": "dès 3 mois" },
+            { "nom": "Garderie", "ages": "2 – 3 ans" },
+            { "nom": "Préscolaire", "ages": "", "specificite": "programme français" },
+            { "nom": "Élémentaire", "ages": "", "specificite": "cycle complet" }
+          ]
+        },
+        {
+          "id": "programme",
+          "type": "radio",
+          "label": "Quel programme suivez-vous ?",
+          "aide": "Le flyer dit « programme français », l'ancien site dit « programme officiel sénégalais ». Les deux ne disent pas la même chose et un parent le remarquera.",
+          "options": [
+            "Programme français uniquement",
+            "Programme sénégalais uniquement",
+            "Les deux, selon le cycle",
+            "Les deux, combinés"
+          ],
+          "requis": true
+        },
+        {
+          "id": "programme_precision",
+          "type": "textarea",
+          "label": "Précisez si nécessaire",
+          "aide": "Par exemple : programme français au préscolaire, sénégalais à l'élémentaire.",
+          "requis": false
+        },
+        {
+          "id": "garderie_horaires",
+          "type": "text",
+          "label": "Y a-t-il un accueil avant ou après la classe ? À quelle heure ?",
+          "aide": "Beaucoup de parents choisissent une école pour ça.",
+          "requis": false
+        },
+        {
+          "id": "cantine",
+          "type": "radio",
+          "label": "Y a-t-il une cantine ?",
+          "options": ["Oui, tous les jours", "Oui, certains jours", "Non, les enfants apportent leur repas", "Non"],
+          "requis": true
+        },
+        {
+          "id": "transport",
+          "type": "textarea",
+          "label": "Le ramassage des enfants : quels quartiers desservez-vous ?",
+          "aide": "Le flyer dit « On vient chercher votre enfant ». C'est un argument fort, mais il faut dire jusqu'où vous allez.",
+          "requis": false
+        }
+      ]
+    },
+
+    {
+      "id": "inscription",
+      "titre": "L'inscription et les tarifs",
+      "intro": "C'est la section la plus consultée d'un site d'école. Un parent qui ne trouve pas ces informations appelle une autre école.",
+      "questions": [
+        {
+          "id": "periode",
+          "type": "text",
+          "label": "À partir de quand les inscriptions sont-elles ouvertes ?",
+          "aide": "Une date, ou « toute l'année ».",
+          "requis": true
+        },
+        {
+          "id": "documents",
+          "type": "textarea",
+          "label": "Quels documents un parent doit-il apporter ?",
+          "aide": "Extrait de naissance, carnet de vaccination, photos d'identité, bulletin de l'école précédente…",
+          "requis": true
+        },
+        {
+          "id": "entretien",
+          "type": "radio",
+          "label": "Y a-t-il un entretien ou un test avant l'admission ?",
+          "options": ["Oui, un entretien avec les parents", "Oui, un test pour l'enfant", "Les deux", "Non, inscription directe"],
+          "requis": true
+        },
+        {
+          "id": "frais_inscription",
+          "type": "text",
+          "label": "Frais d'inscription",
+          "aide": "Le montant payé une fois à l'entrée. En FCFA.",
+          "requis": false
+        },
+        {
+          "id": "tarifs_par_cycle",
+          "type": "textarea",
+          "label": "Les frais de scolarité, cycle par cycle",
+          "aide": "Mensuel ou trimestriel, précisez lequel. Exemple : « Crèche : 45 000 F/mois. Préscolaire : 40 000 F/mois. »",
+          "requis": false
+        },
+        {
+          "id": "tarifs_inclus",
+          "type": "textarea",
+          "label": "Qu'est-ce qui est compris dans ce prix ?",
+          "aide": "Fournitures, uniforme, cantine, transport, assurance : compris ou à payer en plus ?",
+          "requis": false
+        },
+        {
+          "id": "reductions",
+          "type": "text",
+          "label": "Y a-t-il une réduction pour plusieurs enfants d'une même famille ?",
+          "requis": false
+        },
+        {
+          "id": "paiement",
+          "type": "checkbox",
+          "label": "Comment les parents peuvent-ils payer ?",
+          "options": ["Espèces", "Virement bancaire", "Wave", "Orange Money", "Chèque", "Autre"],
+          "requis": false
+        }
+      ]
+    },
+
+    {
+      "id": "contact",
+      "titre": "Vous joindre",
+      "intro": "Presque terminé.",
+      "questions": [
+        {
+          "id": "whatsapp",
+          "type": "tel",
+          "label": "Quel numéro WhatsApp faut-il mettre sur le site ?",
+          "aide": "Le site aura un bouton WhatsApp visible en permanence sur téléphone. C'est par là que la plupart des parents vous écriront. Si c'est le même numéro que le téléphone principal, écrivez « le même ».",
+          "requis": true
+        },
+        {
+          "id": "horaires_reponse",
+          "type": "text",
+          "label": "À quelles heures et quels jours quelqu'un répond-il ?",
+          "aide": "Pour éviter qu'un parent appelle un dimanche à 21h et pense que vous l'ignorez.",
+          "requis": true
+        },
+        {
+          "id": "repere",
+          "type": "text",
+          "label": "Un point de repère pour trouver l'école",
+          "aide": "« En face de… », « juste après… ». Plus utile qu'une adresse à Dakar.",
+          "requis": true
+        },
+        {
+          "id": "reseaux",
+          "type": "textarea",
+          "label": "Vos pages sur les réseaux sociaux",
+          "aide": "J'ai trouvé Facebook et Instagram (@aucocondubonheur). Confirmez, et ajoutez YouTube ou TikTok si vous en avez.",
+          "requis": false
+        },
+        {
+          "id": "visite",
+          "type": "radio",
+          "label": "Un parent peut-il venir visiter l'école sans rendez-vous ?",
+          "options": ["Oui, quand il veut pendant les heures d'ouverture", "Seulement sur rendez-vous", "Certains jours uniquement"],
+          "requis": false
+        }
+      ]
+    },
+
+    {
+      "id": "photos",
+      "titre": "Les photos",
+      "intro": "Les photos font 80 % de l'effet d'un site d'école. C'est la partie qui prend le plus de temps, donc commencez dès maintenant. Envoyez-les par WhatsApp, pas par ce formulaire.",
+      "questions": [
+        {
+          "id": "photos_explication",
+          "type": "info",
+          "label": "Comment envoyer les photos",
+          "contenu": "Envoyez-les par WhatsApp au numéro indiqué à la fin de ce formulaire. Important : dans WhatsApp, choisissez « Document » plutôt que « Photo » au moment de les envoyer. Sinon WhatsApp les compresse et elles deviennent floues sur un écran d'ordinateur. Ce qui est invisible sur un téléphone se voit énormément sur un site."
+        },
+        {
+          "id": "photos_liste",
+          "type": "checkbox",
+          "label": "Cochez les photos que vous avez déjà",
+          "aide": "Cochez au fur et à mesure que vous les envoyez. Ça vous permet de suivre où vous en êtes.",
+          "options": [
+            "Les photos d'origine du flyer (les fichiers sortis de l'appareil, pas les versions recadrées)",
+            "La façade ou l'entrée de l'école",
+            "Une salle de classe vide, propre et rangée",
+            "Des enfants en activité : lecture, jeu, repas, cour, atelier",
+            "L'équipe ou les enseignantes",
+            "Le logo en fichier d'origine (.ai, .eps, .svg ou .pdf)"
+          ],
+          "requis": false
+        },
+        {
+          "id": "photos_conseils",
+          "type": "info",
+          "label": "Trois conseils pour de bonnes photos",
+          "contenu": "1. Tenez le téléphone à l'horizontale. Un site web est large, une photo verticale devra être coupée. 2. Photographiez près d'une fenêtre ou dehors. La lumière naturelle change tout, le flash abîme. 3. Rangez avant de photographier. Un fond en désordre se remarque énormément sur grand écran. Il me faut 6 à 10 très bonnes photos, pas 60 moyennes."
+        },
+        {
+          "id": "photos_manque",
+          "type": "radio",
+          "label": "Avez-vous les photos qu'il faut, ou faut-il en refaire ?",
+          "aide": "S'il en manque, une séance d'une heure sur place couvre tout le nécessaire. Mieux vaut le dire maintenant que dans trois semaines.",
+          "options": [
+            "J'ai tout ce qu'il faut",
+            "J'ai une partie, il en manque",
+            "Il faut refaire des photos sur place",
+            "Je ne sais pas encore"
+          ],
+          "requis": true
+        },
+        {
+          "id": "autorisation_parentale",
+          "type": "radio",
+          "label": "Avez-vous l'accord des parents pour publier des photos de leurs enfants sur internet ?",
+          "aide": "Ce point est important et différent du flyer. Un flyer papier circule dans le quartier ; un site est accessible au monde entier et reste indexé par Google. Si l'accord n'est pas écrit, je peux flouter les visages ou n'utiliser que des photos de dos.",
+          "options": [
+            "Oui, j'ai un accord écrit des parents",
+            "Oui, mais seulement verbal",
+            "Non, il faut que je le demande",
+            "Non, préférons les photos sans visage identifiable"
+          ],
+          "requis": true,
+          "skippable": false
+        },
+        {
+          "id": "logo_source",
+          "type": "radio",
+          "label": "Avez-vous le fichier d'origine du logo ?",
+          "aide": "Celui qu'a utilisé la personne qui l'a créé. Extension .ai, .eps, .svg ou .pdf. Sans lui, le logo risque d'être flou en grand sur le site.",
+          "options": [
+            "Oui, je l'ai",
+            "Non, mais je sais qui l'a créé",
+            "Non, je n'ai qu'une image",
+            "Je ne sais pas"
+          ],
+          "requis": true
+        }
+      ]
+    },
+
+    {
+      "id": "decisions",
+      "titre": "Trois décisions à prendre",
+      "intro": "Dernière étape. Ces choix orientent tout le site, autant les faire maintenant.",
+      "questions": [
+        {
+          "id": "afficher_tarifs",
+          "type": "radio",
+          "label": "Affiche-t-on les tarifs sur le site ?",
+          "aide": "Mon conseil : oui. Une école qui cache ses prix inquiète, et vous recevrez des appels de familles hors budget. Si vos tarifs varient selon les cas, on peut afficher « à partir de ».",
+          "options": [
+            "Oui, les montants exacts",
+            "Oui, mais seulement « à partir de »",
+            "Non, sur demande uniquement",
+            "Je préfère en discuter avec vous"
+          ],
+          "requis": true
+        },
+        {
+          "id": "langue",
+          "type": "radio",
+          "label": "En quelle langue le site doit-il être ?",
+          "aide": "Une version anglaise double le travail. À ne faire que si vous accueillez réellement des familles anglophones.",
+          "options": ["Français uniquement", "Français et anglais", "Je ne sais pas"],
+          "requis": true
+        },
+        {
+          "id": "priorite",
+          "type": "radio",
+          "label": "Si vous ne deviez obtenir qu'une seule chose de ce site, ce serait quoi ?",
+          "aide": "Il n'y a pas de mauvaise réponse. Ça me dit ce qu'il faut mettre en premier sur la page d'accueil.",
+          "options": [
+            "Recevoir plus d'appels de nouveaux parents",
+            "Que l'école paraisse sérieuse et professionnelle",
+            "Éviter de répéter les mêmes informations au téléphone",
+            "Être trouvée sur Google"
+          ],
+          "requis": true
+        },
+        {
+          "id": "libre",
+          "type": "textarea",
+          "label": "Autre chose que je devrais savoir ?",
+          "aide": "Tout ce qui vous vient. Même une remarque en passant peut changer le site.",
+          "requis": false
+        }
+      ]
+    }
+
+  ]
+}
+</script>
+
+<script src="app.js"></script>
+</body>
+</html>
