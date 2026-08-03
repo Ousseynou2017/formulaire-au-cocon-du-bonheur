@@ -39,9 +39,10 @@ python -m http.server 8777        # puis, dans un autre terminal :
 node .test/parcours.mjs
 node .test/verif-jauge-honnete.mjs   # 7 vérifications : « je ne sais pas » ≠ rempli
 node .test/verif-barre-mobile.mjs   # 18 vérifications : bouton Suivant atteignable sur téléphone
+node .test/verif-navigation-prod.mjs # 10 vérifications : « Suivant » avance vraiment, aucun script tiers
 ```
 
-Les deux derniers acceptent `URL_TEST` pour rejouer les vérifications sur le site en ligne :
+Les trois derniers acceptent `URL_TEST` pour rejouer les vérifications sur le site en ligne :
 `URL_TEST=https://exemple.tiiny.site/ node .test/verif-barre-mobile.mjs`
 
 Pour vérifier l'envoi **réel** vers Formspree (à faire une fois par projet, après avoir renseigné `envoi.endpoint`) :
