@@ -43,7 +43,7 @@ node .test/verif-navigation-prod.mjs # 10 vérifications : « Suivant » avance 
 ```
 
 Les trois derniers acceptent `URL_TEST` pour rejouer les vérifications sur le site en ligne :
-`URL_TEST=https://exemple.tiiny.site/ node .test/verif-barre-mobile.mjs`
+`URL_TEST=https://ousseynou2017.github.io/formulaire-au-cocon-du-bonheur/ node .test/verif-barre-mobile.mjs`
 
 Pour vérifier l'envoi **réel** vers Formspree (à faire une fois par projet, après avoir renseigné `envoi.endpoint`) :
 
