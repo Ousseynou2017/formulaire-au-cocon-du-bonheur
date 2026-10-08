@@ -2,687 +2,360 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Chargement…</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Questionnaire de la Directrice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Charte Au Cocon : une étape par écran, carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. */
+:root{
+  --violet:#873897; --violet-fonce:#5A2166; --violet-clair:#F6EDF8;
+  --creme:#FDF6E6; --fond:#EFE9F1; --carte:#FFFFFF;
+  --encre:#331F3A; --titre:#5E4966; --doux:#5A4862; --filet:#EADFEC;
+  --ok:#1D6B44;
+  --f-titre:'Baloo 2','Poppins',system-ui,sans-serif;
+  --f-texte:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.55}
+.cadre{max-width:640px;margin:0 auto;padding-block:20px 120px;padding-inline:16px}
+header.haut{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.marque{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);font-size:18px}
+.etape-num{font-size:13px;color:var(--doux);font-variant-numeric:tabular-nums}
+.barre{height:6px;background:var(--filet);border-radius:999px;overflow:hidden;margin-bottom:18px}
+.barre i{display:block;height:100%;background:var(--violet);width:0;transition:width .25s}
+.carte{background:var(--carte);border:1px solid var(--filet);border-radius:20px;padding:22px 18px}
+h1,h2{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);line-height:1.2;margin:0 0 6px;text-wrap:balance}
+h1{font-size:28px} h2{font-size:23px}
+.aide{color:var(--doux);font-size:14px;margin:0 0 18px}
+.bloc{display:flex;flex-direction:column;gap:14px}
+label.champ{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;color:var(--titre)}
+input[type=text],input[type=number],textarea,select{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:11px 12px;width:100%;min-width:0}
+textarea{min-height:120px;resize:vertical}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.ligne-membre{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center}
+.ligne-membre button{border:0;background:none;color:var(--doux);font-size:22px;width:40px;height:44px;cursor:pointer;border-radius:10px}
+@media (max-width:420px){.ligne-membre{grid-template-columns:1fr auto}.ligne-membre select{grid-column:1/2}}
+.tache{border-top:1px solid var(--filet);padding-top:14px}
+.tache:first-child{border-top:0;padding-top:0}
+.tache h3{font-family:var(--f-texte);font-weight:500;font-size:16px;margin:0 0 8px;color:var(--encre)}
+.tache .sous{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--doux);margin:10px 0 6px}
+.puces{display:flex;flex-wrap:wrap;gap:8px}
+.puce{font:inherit;font-size:14px;border:1px solid var(--filet);background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
+.puce[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:#fff}
+.alerte{display:none;margin-top:8px;font-size:13px;color:#8F430C;background:#FDF5EE;border-radius:10px;padding:6px 10px}
+.alerte.vue{display:block}
+.frais{width:100%;border-collapse:collapse;font-size:14px}
+.frais th{font-weight:500;text-align:left;color:var(--doux);font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:0 6px 8px}
+.frais td{padding:4px 6px;border-top:1px solid var(--filet)}
+.frais td:first-child{font-weight:500;white-space:nowrap}
+.frais input{padding:9px 10px;font-variant-numeric:tabular-nums}
+.defile{overflow-x:auto}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:420px){.trio{grid-template-columns:1fr}}
+.coche{display:flex;gap:10px;align-items:center;font-size:15px;padding:6px 0}
+.coche input{width:22px;height:22px;accent-color:var(--violet)}
+.recap{white-space:pre-wrap;background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:14px;font-size:14px;max-height:340px;overflow:auto}
+nav.pied{position:fixed;left:0;right:0;bottom:0;background:var(--carte);border-top:1px solid var(--filet);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
+.bouton{font:inherit;font-weight:500;font-size:16px;border-radius:999px;padding:12px 20px;cursor:pointer;border:1px solid var(--violet);min-height:48px}
+.bouton.plein{background:var(--violet);color:#fff;flex:1}
+.bouton.vide{background:var(--carte);color:var(--violet-fonce);border-color:var(--filet)}
+.bouton.lien{display:block;text-align:center;text-decoration:none;background:var(--violet);color:#fff}
+.actions{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.petit{font-size:13px;color:var(--doux)}
+.enregistre{font-size:12px;color:var(--ok);min-height:18px}
+@media (prefers-reduced-motion:reduce){.barre i{transition:none}}
+</style>
 </head>
 <body>
+<div class="cadre">
+  <header class="haut">
+    <span class="marque">Au Cocon Du Bonheur</span>
+    <span class="etape-num" id="etapeNum">Étape 1 sur 7</span>
+  </header>
+  <div class="barre" aria-hidden="true"><i id="barre"></i></div>
 
-<!--
-  Coquille vide volontaire.
-  Tout le contenu visible est construit par app.js a partir de config.json et
-  questions.json. Ne rien ecrire en dur ici : ni question, ni libelle, ni nom de client.
--->
+  <form id="f" novalidate>
+    <!-- 0 Accueil -->
+    <section class="carte etape" data-etape="0">
+      <h1>Bonjour</h1>
+      <p class="aide" style="margin:0">Ce questionnaire prépare la nouvelle version de l'outil de gestion. Il prend environ 10 minutes. Vos réponses restent sur ce téléphone tant que vous ne les envoyez pas. Vous pouvez arrêter et reprendre plus tard.</p>
+    </section>
 
-<a class="lien-evitement" href="#zone-principale" id="lien-evitement"></a>
+    <!-- 1 Équipe -->
+    <section class="carte etape" data-etape="1" hidden>
+      <h2 style="margin-bottom:16px">Toute l'équipe</h2>
+      <div class="bloc" id="membres"></div>
+      <div class="actions"><button type="button" class="bouton vide" id="ajoutMembre">+ Ajouter une personne</button></div>
+    </section>
 
-<header class="entete" id="entete" hidden>
-  <div class="entete__haut">
-    <img class="entete__logo" id="logo" alt="" hidden>
-    <p class="entete__client" id="entete-client"></p>
-    <button type="button" class="bouton bouton--discret entete__sommaire" id="btn-sommaire"
-            aria-expanded="false" aria-controls="sommaire"></button>
-  </div>
+    <!-- 2 Qui fait quoi -->
+    <section class="carte etape" data-etape="2" hidden>
+      <h2>Qui fait quoi, vraiment</h2>
+      <p class="aide">Pour chaque tâche, touchez les personnes qui la font aujourd'hui, même de temps en temps. Puis dites où c'est noté.</p>
+      <div class="bloc" id="taches"></div>
+    </section>
 
-  <div class="progression" id="progression" hidden>
-    <div class="progression__ligne">
-      <span class="progression__etape" id="progression-etape"></span>
-      <span class="progression__pourcent" id="progression-pourcent"></span>
-    </div>
-    <div class="progression__piste" id="progression-piste"
-         role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-      <div class="progression__jauge" id="progression-jauge"></div>
-    </div>
-  </div>
-</header>
+    <!-- 3 Montants + ce qui coince -->
+    <section class="carte etape" data-etape="3" hidden>
+      <h2>Les montants</h2>
+      <p class="aide">Dans l'outil, chacun ne voit que sa partie. Dites qui doit pouvoir voir l'argent.</p>
+      <div class="bloc">
+        <div>
+          <p class="tache" style="border:0;padding:0;margin:0 0 8px;font-weight:500">Qui doit voir combien chaque famille a payé ?</p>
+          <div class="puces" id="voitMontants"></div>
+        </div>
+        <label class="champ" for="coince">Ce qui coince aujourd'hui (une ligne par personne si possible)
+          <textarea id="coince" placeholder="Exemple : la secrétaire encaisse quand la comptable n'est pas là, et le reçu n'est pas toujours fait."></textarea>
+        </label>
+      </div>
+    </section>
 
-<!-- Sommaire : panneau lateral, accessible depuis n'importe quelle section -->
-<div class="sommaire" id="sommaire" hidden>
-  <div class="sommaire__voile" id="sommaire-voile"></div>
-  <nav class="sommaire__panneau" aria-labelledby="sommaire-titre">
-    <div class="sommaire__entete">
-      <h2 class="sommaire__titre" id="sommaire-titre"></h2>
-      <button type="button" class="bouton-icone" id="btn-fermer-sommaire"></button>
-    </div>
-    <ul class="sommaire__liste" id="sommaire-liste"></ul>
-  </nav>
+    <!-- 4 Frais -->
+    <section class="carte etape" data-etape="4" hidden>
+      <h2>Les frais par classe</h2>
+      <p class="aide">En francs CFA. Laissez vide ce que vous ne savez pas, Ousseynou vous redemandera.</p>
+      <div class="defile">
+        <table class="frais">
+          <thead><tr><th>Classe</th><th>Inscription</th><th>Mensualité</th></tr></thead>
+          <tbody id="fraisCorps"></tbody>
+        </table>
+      </div>
+      <div class="bloc" style="margin-top:16px">
+        <label class="champ" for="nbMois">Combien de mois de mensualité par an ?
+          <input type="number" id="nbMois" inputmode="numeric" min="1" max="12" placeholder="Exemple : 9">
+        </label>
+        <label class="champ" for="fraisAutres">Autres frais (tenue, fournitures, cantine, transport…)
+          <input type="text" id="fraisAutres" placeholder="Exemple : tenue 10 000 F, une fois">
+        </label>
+      </div>
+    </section>
+
+    <!-- 5 L'école en chiffres -->
+    <section class="carte etape" data-etape="5" hidden>
+      <h2>L'école en chiffres</h2>
+      <p class="aide">Des chiffres approximatifs suffisent.</p>
+      <div class="bloc">
+        <div class="trio">
+          <label class="champ" for="nbEleves">Élèves<input type="number" id="nbEleves" inputmode="numeric" min="0"></label>
+          <label class="champ" for="nbFamilles">Familles<input type="number" id="nbFamilles" inputmode="numeric" min="0"></label>
+          <label class="champ" for="nbProfs">Professeurs<input type="number" id="nbProfs" inputmode="numeric" min="0"></label>
+        </div>
+        <label class="champ" for="role4">Comment s'appelle le poste de la personne qui contrôle que les professeurs viennent et font cours ?
+          <input type="text" id="role4" placeholder="Exemple : Surveillant général">
+        </label>
+        <div>
+          <p style="margin:0 0 4px;font-weight:500;font-size:14px;color:var(--titre)">Sur la fiche d'un élève, vous voulez noter aussi :</p>
+          <div id="fiche"></div>
+          <label class="champ" for="ficheAutre" style="margin-top:8px">Autre chose
+            <input type="text" id="ficheAutre">
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Récap -->
+    <section class="carte etape" data-etape="7" hidden>
+      <h2>C'est envoyé, merci</h2>
+      <p class="aide" style="margin:0">Ousseynou a bien reçu vos réponses. Vous pouvez fermer cette page.</p>
+    </section>
+
+    <section class="carte etape" data-etape="6" hidden>
+      <h2>Vérifiez puis envoyez</h2>
+      <p class="aide">Voici ce qui partira. Vous pouvez revenir en arrière pour corriger.</p>
+      <div class="recap" id="recap" tabindex="0"></div>
+      <div class="actions">
+        <button type="button" class="bouton plein" id="envoyer">Envoyer</button>
+        <p class="petit" id="envoiEtat" role="status"></p>
+        <div id="secours" hidden>
+          <div class="actions" style="margin-top:0">
+            <a class="bouton lien" id="wa" href="#" target="_blank" rel="noopener">Envoyer sur WhatsApp</a>
+            <button type="button" class="bouton vide" id="copier">Copier le texte</button>
+            <p class="petit" id="copieEtat" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+  <p class="enregistre" id="enregistre" role="status"></p>
 </div>
 
-<main class="zone" id="zone-principale" tabindex="-1">
-  <!-- Annonce des changements d'ecran aux lecteurs d'ecran -->
-  <p class="lecteur-seul" aria-live="polite" id="annonce"></p>
-
-  <!-- Rappel non bloquant : penser a telecharger une copie. Affiche une seule fois. -->
-  <div class="bandeau" id="bandeau" hidden>
-    <p class="bandeau__texte" id="bandeau-texte"></p>
-    <button type="button" class="bouton-icone" id="bandeau-fermer"></button>
+<nav class="pied">
+  <div class="dedans">
+    <button type="button" class="bouton vide" id="prec">Retour</button>
+    <button type="button" class="bouton plein" id="suiv">Commencer</button>
   </div>
+</nav>
 
-  <div id="ecran"></div>
-</main>
+<script>
+(function(){
+  const CLE='aucocon-questionnaire-directrice-v1';
+  const POSTES=['Secrétaire','Comptable','Contrôle des profs','Autre'];
+  const TACHES=['Inscrire un élève','Encaisser l’argent','Faire le reçu','Garder la caisse','Relancer une famille en retard','Noter les absences des élèves','Pointer la présence des profs','Faire les comptes du mois','Appeler les parents'];
+  const OU=['Cahier','Excel','WhatsApp','Rien'];
+  const CLASSES=['Crèche','Toute petite section','Petite section','Moyenne section','Grande section','CI','CP','CE1','CE2','CM1','CM2'];
+  const FICHE=['Allergies','Personne autorisée à récupérer l’enfant','Problème de santé à connaître','Médecin ou numéro d’urgence','Photo de l’enfant'];
+  const ETAPES=7;
+  const ENVOI='https://formspree.io/f/xrennzzp';
 
-<!-- Barre d'action fixe en bas : atteignable au pouce -->
-<div class="barre-bas" id="barre-bas" hidden>
-  <button type="button" class="bouton bouton--contour" id="btn-precedent"></button>
-  <button type="button" class="bouton bouton--principal" id="btn-suivant"></button>
-</div>
+  let etat={etape:0,membres:[{nom:'',poste:'Secrétaire'},{nom:'',poste:'Comptable'},{nom:'',poste:'Contrôle des profs'}],qui:{},ou:{},voit:[],coince:'',frais:{},nbMois:'',fraisAutres:'',nbEleves:'',nbFamilles:'',nbProfs:'',role4:'',fiche:[],ficheAutre:''};
+  try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
 
-<footer class="pied" id="pied" hidden>
-  <button type="button" class="bouton bouton--lien" id="btn-telecharger"></button>
-</footer>
-
-<!--
-  Copie embarquee de config.json et questions.json, pour que la page fonctionne
-  sans reseau (rechargement hors connexion) et en file://.
-  LES FICHIERS .json RESTENT LA SOURCE DE VERITE.
-  Apres toute modification de l'un d'eux : node sync-inline.mjs
--->
-<script type="application/json" id="config-inline">
-{
-  "_note": "Configuration du formulaire. Pour un nouveau client : dupliquer ce fichier et questions.json, remplacer les valeurs, redeployer. Aucun code a modifier. Les couleurs sont injectees en variables CSS au chargement par app.js.",
-
-  "projet": {
-    "id": "au-cocon-du-bonheur",
-    "client": "Au Cocon Du Bonheur",
-    "titre_page": "Informations pour votre nouveau site",
-    "logo": "assets/logo.png",
-    "langue": "fr"
-  },
-
-  "messages": {
-    "accueil_titre": "Construisons votre site ensemble",
-    "accueil_texte": "Ce formulaire rassemble tout ce dont j'ai besoin pour créer le site de l'école. Comptez une trentaine de minutes, mais vous n'êtes pas obligée de tout faire d'un coup : vos réponses sont enregistrées automatiquement. Vous pouvez fermer la page et revenir quand vous voulez, vous retrouverez tout où vous l'aviez laissé.\n\nSi une question vous bloque, appuyez sur « Je ne sais pas » et passez à la suivante.",
-    "accueil_bouton": "Commencer",
-    "restauration": "J'ai retrouvé vos réponses précédentes. Vous pouvez continuer où vous vous étiez arrêtée.",
-    "recap_titre": "Relisez avant d'envoyer",
-    "recap_texte": "Vérifiez vos réponses. Vous pouvez modifier n'importe quelle ligne en appuyant dessus.",
-    "envoi_bouton": "Envoyer mes réponses",
-    "succes_titre": "C'est envoyé, merci",
-    "succes_texte": "J'ai bien reçu vos réponses. Je reviens vers vous rapidement. Vous pouvez revenir sur cette page à tout moment pour compléter ce qui manque.",
-    "echec_titre": "L'envoi n'a pas fonctionné",
-    "echec_texte": "Vos réponses ne sont pas perdues, elles sont enregistrées sur votre téléphone. Appuyez sur « Télécharger mes réponses » puis envoyez-moi le fichier par WhatsApp.",
-    "telecharger_bouton": "Télécharger mes réponses",
-    "je_ne_sais_pas": "Je ne sais pas, je vous dirai plus tard"
-  },
-
-  "envoi": {
-    "endpoint": "https://formspree.io/f/xrennzzp",
-    "methode": "POST",
-    "whatsapp_secours": "+221 76 463 44 89",
-    "nom_fichier_export": "reponses-au-cocon-du-bonheur"
-  },
-
-  "design": {
-    "_source": "Valeurs extraites du flyer imprime livre (echantillonnage du PDF rendu a 200 dpi).",
-    "_contraintes": [
-      "Le jaune #FFD400 ne doit JAMAIS servir de texte sur creme : contraste 1.33:1. Uniquement sur violet (4.82:1) ou en aplat avec texte violet dessus.",
-      "Le flyer contient deux violets quasi identiques (#873897 et #792F89). On n'en garde qu'un. --violet-fonce ci-dessous est un assombrissement volontaire, pas une valeur du flyer.",
-      "Le jaune doit apparaitre au moins une fois par ecran de contenu, sinon la charte n'est pas executee."
-    ],
-    "couleurs": {
-      "creme":         "#FDF6E6",
-      "creme-fonce":   "#FBF2D8",
-      "violet":        "#873897",
-      "violet-fonce":  "#5A2166",
-      "jaune":         "#FFD400",
-      "jaune-pale":    "#F8E6A5",
-      "titre":         "#5E4966",
-      "encre":         "#331F3A",
-      "blanc":         "#FFFFFF"
-    },
-    "roles": {
-      "fond_page":        "creme",
-      "fond_alternatif":  "blanc",
-      "fond_accentue":    "violet",
-      "texte_courant":    "encre",
-      "texte_titre":      "titre",
-      "bouton_principal": { "fond": "violet", "texte": "creme" },
-      "bouton_action":    { "fond": "jaune",  "texte": "violet-fonce" },
-      "focus":            { "sur_fond_clair": "violet", "sur_fond_violet": "jaune" },
-      "filets":           "jaune-pale"
-    },
-    "typographie": {
-      "_note": "Polices systeme volontairement. Aucun chargement externe : la connexion peut etre lente ou absente.",
-      "titres": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-      "corps": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-      "graisse_titre": 700,
-      "interlignage_titre": 1.1,
-      "interlignage_corps": 1.6
-    },
-    "formes": {
-      "rayon": "4px",
-      "ombre": "aucune",
-      "transition": "180ms ease"
-    }
+  const $=id=>document.getElementById(id);
+  let minuteur;
+  function sauver(){
+    try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Enregistré sur ce téléphone';}catch(e){}
+    clearTimeout(minuteur);minuteur=setTimeout(()=>{$('enregistre').textContent='';},1500);
   }
-}
-</script>
-<script type="application/json" id="questions-inline">
-{
-  "_schema": {
-    "version": "1.0",
-    "note": "Fichier de contenu du formulaire de collecte. Le moteur (app.js) lit ce fichier et construit l'interface. Pour un nouveau client : dupliquer ce fichier, remplacer les sections. Ne jamais ecrire de question en dur dans le HTML.",
-    "types_supportes": [
-      "text", "textarea", "number", "tel", "email", "url",
-      "select", "radio", "checkbox", "repeater", "confirmation", "info"
-    ],
-    "notes_types": {
-      "confirmation": "Affiche une valeur pre-remplie (champ 'valeur') avec deux boutons : 'C'est correct' / 'A corriger'. Si 'A corriger', ouvre un champ texte pre-rempli avec la valeur, editable. Sert a valider une info deja connue sans faire retaper le client.",
-      "info": "Pas un champ. Bloc de texte explicatif affiche dans le flux. Aucune donnee collectee.",
-      "repeater": "Groupe de sous-champs (cle 'champs') repetable. 'entrees_initiales' pre-cree des entrees deja remplies."
-    },
-    "cle_bouton_je_ne_sais_pas": "Toute question sans 'skippable': false doit afficher le bouton 'Je ne sais pas, je vous dirai plus tard'. Valeur enregistree : 'A COMPLETER'."
-  },
 
-  "sections": [
+  function personnes(){
+    const l=etat.membres.filter(m=>m.nom.trim()||m.poste).map(m=>m.nom.trim()?m.nom.trim()+' ('+m.poste.toLowerCase()+')':m.poste);
+    return l.concat(['Directrice']);
+  }
 
-    {
-      "id": "verifications",
-      "titre": "Vérifions ce que j'ai déjà",
-      "intro": "J'ai repris ces informations sur votre flyer et sur votre page Facebook. Vérifiez simplement qu'elles sont exactes. C'est la partie la plus rapide.",
-      "questions": [
-        {
-          "id": "nom_exact",
-          "type": "confirmation",
-          "label": "Le nom de l'école, tel qu'il doit apparaître sur le site",
-          "valeur": "Au Cocon Du Bonheur",
-          "aide": "Vérifiez les majuscules. Faut-il écrire « Du » ou « du » ?",
-          "requis": true
-        },
-        {
-          "id": "adresse",
-          "type": "confirmation",
-          "label": "L'adresse complète",
-          "valeur": "Cité El Hadj Malick Sy, Ouakam, après le Monument de la Renaissance, Dakar",
-          "aide": "C'est cette adresse qui servira pour le plan et l'itinéraire.",
-          "requis": true
-        },
-        {
-          "id": "tel_principal",
-          "type": "confirmation",
-          "label": "Le téléphone principal",
-          "valeur": "+221 77 884 53 53",
-          "aide": "Ce numéro sera cliquable : un parent appuie dessus et l'appel démarre.",
-          "requis": true
-        },
-        {
-          "id": "tel_secondaire",
-          "type": "confirmation",
-          "label": "Le deuxième numéro",
-          "valeur": "+221 77 393 74 67",
-          "aide": "Souhaitez-vous qu'il apparaisse aussi sur le site ?",
-          "requis": false
-        },
-        {
-          "id": "tel_fixe",
-          "type": "confirmation",
-          "label": "Le fixe",
-          "valeur": "+221 33 865 65 75",
-          "aide": "Trouvé sur votre page Facebook mais absent du flyer. Est-il toujours actif ?",
-          "requis": false
-        },
-        {
-          "id": "email_conflit",
-          "type": "radio",
-          "label": "Deux adresses email différentes circulent. Laquelle utilise-t-on ?",
-          "aide": "Le flyer affiche l'une, Facebook affiche l'autre. Il faut n'en garder qu'une sur le site pour éviter de perdre des messages.",
-          "options": [
-            "contact@aucocondubonheur.com",
-            "aucocondubonheur@gmail.com",
-            "Les deux, mais une seule est affichée",
-            "Autre adresse"
-          ],
-          "requis": true
-        },
-        {
-          "id": "autorisation",
-          "type": "confirmation",
-          "label": "Le numéro d'autorisation officielle",
-          "valeur": "Autorisation 604 IA/DK/BEP — Arrêté n°07486 du 27/10/2016",
-          "aide": "Cette mention rassure les parents. Elle sera affichée en bas du site.",
-          "requis": false
-        },
-        {
-          "id": "annee_ouverture",
-          "type": "text",
-          "label": "En quelle année l'école a-t-elle ouvert ses portes ?",
-          "aide": "L'autorisation date de 2016, mais l'école a peut-être ouvert avant. Je veux la vraie date.",
-          "exemple": "2016",
-          "requis": true
-        },
-        {
-          "id": "annee_scolaire",
-          "type": "confirmation",
-          "label": "L'année scolaire concernée par les inscriptions",
-          "valeur": "2026 – 2027",
-          "requis": true
-        }
-      ]
-    },
+  function puce(texte,actif,clic){
+    const b=document.createElement('button');b.type='button';b.className='puce';b.textContent=texte;
+    b.setAttribute('aria-pressed',actif?'true':'false');
+    b.addEventListener('click',()=>{clic();});return b;
+  }
 
-    {
-      "id": "site_existant",
-      "titre": "Votre site actuel",
-      "intro": "Vous avez déjà un site à l'adresse aucocondubonheur.com. Il n'a plus été mis à jour depuis 2022. J'ai besoin de savoir dans quel état il est pour décider si on le remplace ou si on repart de zéro.",
-      "questions": [
-        {
-          "id": "site_acces",
-          "type": "radio",
-          "label": "Avez-vous les accès pour modifier ce site ?",
-          "aide": "Identifiant et mot de passe, ou le contact de la personne qui l'a fait.",
-          "options": [
-            "Oui, j'ai les accès",
-            "Non, c'est quelqu'un d'autre qui les a",
-            "Je ne sais plus qui l'a fait",
-            "Je ne sais pas"
-          ],
-          "requis": true
-        },
-        {
-          "id": "site_qui",
-          "type": "text",
-          "label": "Si quelqu'un d'autre s'en occupe, qui ?",
-          "aide": "Nom et contact, même approximatif. Je pourrai le joindre directement.",
-          "requis": false
-        },
-        {
-          "id": "site_paiement",
-          "type": "radio",
-          "label": "Payez-vous encore quelque chose pour ce site ou pour l'adresse internet ?",
-          "aide": "Un abonnement annuel, un renouvellement de nom de domaine.",
-          "options": [
-            "Oui, je paie chaque année",
-            "Non, plus rien",
-            "Je ne sais pas"
-          ],
-          "requis": true
-        },
-        {
-          "id": "site_avis",
-          "type": "textarea",
-          "label": "Qu'est-ce qui ne vous plaît pas dans le site actuel ?",
-          "aide": "Dites-le simplement. C'est ce qui m'indique quoi éviter.",
-          "requis": false
-        },
-        {
-          "id": "site_garder",
-          "type": "textarea",
-          "label": "Y a-t-il quelque chose que vous voulez absolument garder ?",
-          "aide": "Un texte, une photo, les témoignages de parents.",
-          "requis": false
-        }
-      ]
-    },
+  function dessinerMembres(){
+    const z=$('membres');z.innerHTML='';
+    etat.membres.forEach((m,i)=>{
+      const d=document.createElement('div');d.className='ligne-membre';
+      const n=document.createElement('input');n.type='text';n.id='nom'+i;n.placeholder='Prénom';n.value=m.nom;n.setAttribute('aria-label','Prénom de la personne '+(i+1));
+      n.addEventListener('input',()=>{m.nom=n.value;sauver();});
+      const s=document.createElement('select');s.id='poste'+i;s.setAttribute('aria-label','Poste de la personne '+(i+1));
+      POSTES.forEach(p=>{const o=document.createElement('option');o.textContent=p;if(p===m.poste)o.selected=true;s.appendChild(o);});
+      s.addEventListener('change',()=>{m.poste=s.value;sauver();});
+      const x=document.createElement('button');x.type='button';x.textContent='×';x.setAttribute('aria-label','Retirer cette ligne');
+      x.addEventListener('click',()=>{etat.membres.splice(i,1);sauver();dessinerMembres();});
+      d.append(n,s,x);z.appendChild(d);
+    });
+  }
+  $('ajoutMembre').addEventListener('click',()=>{etat.membres.push({nom:'',poste:'Autre'});sauver();dessinerMembres();$('nom'+(etat.membres.length-1)).focus();});
 
-    {
-      "id": "ecole",
-      "titre": "Votre école en quelques mots",
-      "intro": "C'est la partie qui demande le plus de réflexion. Prenez votre temps, vous pouvez revenir plus tard.",
-      "questions": [
-        {
-          "id": "difference",
-          "type": "textarea",
-          "label": "En 3 phrases : pourquoi un parent devrait choisir votre école plutôt qu'une autre du quartier ?",
-          "aide": "C'est la question la plus importante du formulaire. Écrivez comme vous le diriez à une amie, je me charge de la mise en forme.",
-          "requis": true
-        },
-        {
-          "id": "valeurs",
-          "type": "textarea",
-          "label": "Quelles sont les 4 valeurs qui comptent le plus pour vous dans l'éducation des enfants ?",
-          "aide": "Un mot chacune, plus une phrase d'explication. Exemple : « Bienveillance — chaque enfant est accueilli comme il est. » Ces 4 valeurs occuperont une grande place sur la page d'accueil.",
-          "requis": true
-        },
-        {
-          "id": "nb_eleves",
-          "type": "number",
-          "label": "Combien d'enfants accueillez-vous en tout ?",
-          "aide": "Une estimation suffit. Les chiffres rassurent les parents.",
-          "requis": false
-        },
-        {
-          "id": "nb_par_classe",
-          "type": "text",
-          "label": "Combien d'enfants par classe en moyenne ?",
-          "aide": "Si c'est un petit effectif, c'est un argument fort. On l'affichera.",
-          "requis": false
-        },
-        {
-          "id": "nb_personnel",
-          "type": "text",
-          "label": "Combien d'enseignantes et d'encadrants au total ?",
-          "requis": false
-        },
-        {
-          "id": "temoignages",
-          "type": "textarea",
-          "label": "Une ou deux phrases de parents satisfaits",
-          "aide": "Il y en a déjà sur votre ancien site, je peux les reprendre. Mais si vous en avez de plus récentes, elles seront meilleures. Prénom seul suffit, avec l'accord de la personne.",
-          "requis": false
-        },
-        {
-          "id": "activites_confirm",
-          "type": "confirmation",
-          "label": "Les activités annoncées sur le flyer",
-          "valeur": "Langues : français, anglais, arabe (coranique), chinois en option — Initiation à l'informatique — Récréation-jardinage et récréation-contes — Sorties pédagogiques — Ramassage des enfants",
-          "aide": "Est-ce toujours d'actualité ? Manque-t-il quelque chose ?",
-          "requis": true
-        },
-        {
-          "id": "activites_plus",
-          "type": "textarea",
-          "label": "D'autres activités à ajouter ?",
-          "aide": "Sport, musique, camp de vacances, soutien scolaire…",
-          "requis": false
-        }
-      ]
-    },
+  function dessinerTaches(){
+    const z=$('taches');z.innerHTML='';const gens=personnes();
+    TACHES.forEach(t=>{
+      const c=document.createElement('div');c.className='tache';
+      const h=document.createElement('h3');h.textContent=t;c.appendChild(h);
+      const p=document.createElement('div');p.className='puces';
+      const choisis=(etat.qui[t]||[]).filter(g=>gens.includes(g));etat.qui[t]=choisis;
+      const al=document.createElement('p');al.className='alerte';al.textContent='Plusieurs personnes font cette tâche.';
+      const maj=()=>{al.classList.toggle('vue',etat.qui[t].length>1);};
+      gens.forEach(g=>{const b=puce(g,choisis.includes(g),()=>{const a=etat.qui[t];const k=a.indexOf(g);if(k<0)a.push(g);else a.splice(k,1);b.setAttribute('aria-pressed',k<0?'true':'false');maj();sauver();});p.appendChild(b);});
+      c.appendChild(p);c.appendChild(al);maj();
+      const s=document.createElement('p');s.className='sous';s.textContent='Où c’est noté';c.appendChild(s);
+      const q=document.createElement('div');q.className='puces';
+      OU.forEach(o=>{const b=puce(o,etat.ou[t]===o,()=>{etat.ou[t]=etat.ou[t]===o?'':o;q.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',x.textContent===etat.ou[t]?'true':'false'));sauver();});q.appendChild(b);});
+      c.appendChild(q);z.appendChild(c);
+    });
+  }
 
-    {
-      "id": "cycles",
-      "titre": "Les cycles que vous proposez",
-      "intro": "J'ai pré-rempli les 4 cycles de votre flyer. Complétez ce que vous pouvez, corrigez ce qui a changé, et supprimez un cycle s'il n'existe plus.",
-      "questions": [
-        {
-          "id": "liste_cycles",
-          "type": "repeater",
-          "label": "Vos cycles",
-          "aide": "Chaque cycle aura sa propre section sur le site.",
-          "bouton_ajouter": "Ajouter un cycle",
-          "requis": true,
-          "champs": [
-            { "id": "nom", "type": "text", "label": "Nom du cycle", "requis": true },
-            { "id": "ages", "type": "text", "label": "Âges concernés", "exemple": "de 3 mois à 2 ans" },
-            { "id": "horaires", "type": "text", "label": "Horaires", "exemple": "7h30 – 17h30, du lundi au vendredi" },
-            { "id": "effectif", "type": "text", "label": "Nombre d'enfants maximum par groupe" },
-            { "id": "description", "type": "textarea", "label": "En 3 ou 4 lignes : ce qu'on y fait, ce qu'on y apprend" },
-            { "id": "specificite", "type": "text", "label": "Une chose que ce cycle a de particulier", "aide": "Un atelier, une méthode, un moment de la journée." }
-          ],
-          "entrees_initiales": [
-            { "nom": "Crèche", "ages": "dès 3 mois" },
-            { "nom": "Garderie", "ages": "2 – 3 ans" },
-            { "nom": "Préscolaire", "ages": "", "specificite": "programme français" },
-            { "nom": "Élémentaire", "ages": "", "specificite": "cycle complet" }
-          ]
-        },
-        {
-          "id": "programme",
-          "type": "radio",
-          "label": "Quel programme suivez-vous ?",
-          "aide": "Le flyer dit « programme français », l'ancien site dit « programme officiel sénégalais ». Les deux ne disent pas la même chose et un parent le remarquera.",
-          "options": [
-            "Programme français uniquement",
-            "Programme sénégalais uniquement",
-            "Les deux, selon le cycle",
-            "Les deux, combinés"
-          ],
-          "requis": true
-        },
-        {
-          "id": "programme_precision",
-          "type": "textarea",
-          "label": "Précisez si nécessaire",
-          "aide": "Par exemple : programme français au préscolaire, sénégalais à l'élémentaire.",
-          "requis": false
-        },
-        {
-          "id": "garderie_horaires",
-          "type": "text",
-          "label": "Y a-t-il un accueil avant ou après la classe ? À quelle heure ?",
-          "aide": "Beaucoup de parents choisissent une école pour ça.",
-          "requis": false
-        },
-        {
-          "id": "cantine",
-          "type": "radio",
-          "label": "Y a-t-il une cantine ?",
-          "options": ["Oui, tous les jours", "Oui, certains jours", "Non, les enfants apportent leur repas", "Non"],
-          "requis": true
-        },
-        {
-          "id": "transport",
-          "type": "textarea",
-          "label": "Le ramassage des enfants : quels quartiers desservez-vous ?",
-          "aide": "Le flyer dit « On vient chercher votre enfant ». C'est un argument fort, mais il faut dire jusqu'où vous allez.",
-          "requis": false
-        }
-      ]
-    },
+  function dessinerVoit(){
+    const z=$('voitMontants');z.innerHTML='';const gens=personnes();
+    etat.voit=etat.voit.filter(g=>gens.includes(g));
+    gens.forEach(g=>{const b=puce(g,etat.voit.includes(g),()=>{const k=etat.voit.indexOf(g);if(k<0)etat.voit.push(g);else etat.voit.splice(k,1);b.setAttribute('aria-pressed',k<0?'true':'false');sauver();});z.appendChild(b);});
+  }
 
-    {
-      "id": "inscription",
-      "titre": "L'inscription et les tarifs",
-      "intro": "C'est la section la plus consultée d'un site d'école. Un parent qui ne trouve pas ces informations appelle une autre école.",
-      "questions": [
-        {
-          "id": "periode",
-          "type": "text",
-          "label": "À partir de quand les inscriptions sont-elles ouvertes ?",
-          "aide": "Une date, ou « toute l'année ».",
-          "requis": true
-        },
-        {
-          "id": "documents",
-          "type": "textarea",
-          "label": "Quels documents un parent doit-il apporter ?",
-          "aide": "Extrait de naissance, carnet de vaccination, photos d'identité, bulletin de l'école précédente…",
-          "requis": true
-        },
-        {
-          "id": "entretien",
-          "type": "radio",
-          "label": "Y a-t-il un entretien ou un test avant l'admission ?",
-          "options": ["Oui, un entretien avec les parents", "Oui, un test pour l'enfant", "Les deux", "Non, inscription directe"],
-          "requis": true
-        },
-        {
-          "id": "frais_inscription",
-          "type": "text",
-          "label": "Frais d'inscription",
-          "aide": "Le montant payé une fois à l'entrée. En FCFA.",
-          "requis": false
-        },
-        {
-          "id": "tarifs_par_cycle",
-          "type": "textarea",
-          "label": "Les frais de scolarité, cycle par cycle",
-          "aide": "Mensuel ou trimestriel, précisez lequel. Exemple : « Crèche : 45 000 F/mois. Préscolaire : 40 000 F/mois. »",
-          "requis": false
-        },
-        {
-          "id": "tarifs_inclus",
-          "type": "textarea",
-          "label": "Qu'est-ce qui est compris dans ce prix ?",
-          "aide": "Fournitures, uniforme, cantine, transport, assurance : compris ou à payer en plus ?",
-          "requis": false
-        },
-        {
-          "id": "reductions",
-          "type": "text",
-          "label": "Y a-t-il une réduction pour plusieurs enfants d'une même famille ?",
-          "requis": false
-        },
-        {
-          "id": "paiement",
-          "type": "checkbox",
-          "label": "Comment les parents peuvent-ils payer ?",
-          "options": ["Espèces", "Virement bancaire", "Wave", "Orange Money", "Chèque", "Autre"],
-          "requis": false
-        }
-      ]
-    },
+  function dessinerFrais(){
+    const z=$('fraisCorps');z.innerHTML='';
+    CLASSES.forEach((c,i)=>{
+      const f=etat.frais[c]||(etat.frais[c]={ins:'',mens:''});
+      const tr=document.createElement('tr');
+      const td0=document.createElement('td');td0.textContent=c;tr.appendChild(td0);
+      [['ins','Inscription'],['mens','Mensualité']].forEach(([k,lib])=>{
+        const td=document.createElement('td');const inp=document.createElement('input');
+        inp.type='number';inp.inputMode='numeric';inp.min='0';inp.id=k+i;inp.value=f[k];inp.placeholder='F';inp.setAttribute('aria-label',lib+' '+c);
+        inp.addEventListener('input',()=>{f[k]=inp.value;sauver();});td.appendChild(inp);tr.appendChild(td);
+      });
+      z.appendChild(tr);
+    });
+  }
 
-    {
-      "id": "contact",
-      "titre": "Vous joindre",
-      "intro": "Presque terminé.",
-      "questions": [
-        {
-          "id": "whatsapp",
-          "type": "tel",
-          "label": "Quel numéro WhatsApp faut-il mettre sur le site ?",
-          "aide": "Le site aura un bouton WhatsApp visible en permanence sur téléphone. C'est par là que la plupart des parents vous écriront. Si c'est le même numéro que le téléphone principal, écrivez « le même ».",
-          "requis": true
-        },
-        {
-          "id": "horaires_reponse",
-          "type": "text",
-          "label": "À quelles heures et quels jours quelqu'un répond-il ?",
-          "aide": "Pour éviter qu'un parent appelle un dimanche à 21h et pense que vous l'ignorez.",
-          "requis": true
-        },
-        {
-          "id": "repere",
-          "type": "text",
-          "label": "Un point de repère pour trouver l'école",
-          "aide": "« En face de… », « juste après… ». Plus utile qu'une adresse à Dakar.",
-          "requis": true
-        },
-        {
-          "id": "reseaux",
-          "type": "textarea",
-          "label": "Vos pages sur les réseaux sociaux",
-          "aide": "J'ai trouvé Facebook et Instagram (@aucocondubonheur). Confirmez, et ajoutez YouTube ou TikTok si vous en avez.",
-          "requis": false
-        },
-        {
-          "id": "visite",
-          "type": "radio",
-          "label": "Un parent peut-il venir visiter l'école sans rendez-vous ?",
-          "options": ["Oui, quand il veut pendant les heures d'ouverture", "Seulement sur rendez-vous", "Certains jours uniquement"],
-          "requis": false
-        }
-      ]
-    },
+  function dessinerFiche(){
+    const z=$('fiche');z.innerHTML='';
+    FICHE.forEach((x,i)=>{
+      const l=document.createElement('label');l.className='coche';l.htmlFor='fiche'+i;
+      const c=document.createElement('input');c.type='checkbox';c.id='fiche'+i;c.checked=etat.fiche.includes(x);
+      c.addEventListener('change',()=>{const k=etat.fiche.indexOf(x);if(c.checked&&k<0)etat.fiche.push(x);if(!c.checked&&k>=0)etat.fiche.splice(k,1);sauver();});
+      l.append(c,document.createTextNode(x));z.appendChild(l);
+    });
+  }
 
-    {
-      "id": "photos",
-      "titre": "Les photos",
-      "intro": "Les photos font 80 % de l'effet d'un site d'école. C'est la partie qui prend le plus de temps, donc commencez dès maintenant. Envoyez-les par WhatsApp, pas par ce formulaire.",
-      "questions": [
-        {
-          "id": "photos_explication",
-          "type": "info",
-          "label": "Comment envoyer les photos",
-          "contenu": "Envoyez-les par WhatsApp au numéro indiqué à la fin de ce formulaire. Important : dans WhatsApp, choisissez « Document » plutôt que « Photo » au moment de les envoyer. Sinon WhatsApp les compresse et elles deviennent floues sur un écran d'ordinateur. Ce qui est invisible sur un téléphone se voit énormément sur un site."
-        },
-        {
-          "id": "photos_liste",
-          "type": "checkbox",
-          "label": "Cochez les photos que vous avez déjà",
-          "aide": "Cochez au fur et à mesure que vous les envoyez. Ça vous permet de suivre où vous en êtes.",
-          "options": [
-            "Les photos d'origine du flyer (les fichiers sortis de l'appareil, pas les versions recadrées)",
-            "La façade ou l'entrée de l'école",
-            "Une salle de classe vide, propre et rangée",
-            "Des enfants en activité : lecture, jeu, repas, cour, atelier",
-            "L'équipe ou les enseignantes",
-            "Le logo en fichier d'origine (.ai, .eps, .svg ou .pdf)"
-          ],
-          "requis": false
-        },
-        {
-          "id": "photos_conseils",
-          "type": "info",
-          "label": "Trois conseils pour de bonnes photos",
-          "contenu": "1. Tenez le téléphone à l'horizontale. Un site web est large, une photo verticale devra être coupée. 2. Photographiez près d'une fenêtre ou dehors. La lumière naturelle change tout, le flash abîme. 3. Rangez avant de photographier. Un fond en désordre se remarque énormément sur grand écran. Il me faut 6 à 10 très bonnes photos, pas 60 moyennes."
-        },
-        {
-          "id": "photos_manque",
-          "type": "radio",
-          "label": "Avez-vous les photos qu'il faut, ou faut-il en refaire ?",
-          "aide": "S'il en manque, une séance d'une heure sur place couvre tout le nécessaire. Mieux vaut le dire maintenant que dans trois semaines.",
-          "options": [
-            "J'ai tout ce qu'il faut",
-            "J'ai une partie, il en manque",
-            "Il faut refaire des photos sur place",
-            "Je ne sais pas encore"
-          ],
-          "requis": true
-        },
-        {
-          "id": "autorisation_parentale",
-          "type": "radio",
-          "label": "Avez-vous l'accord des parents pour publier des photos de leurs enfants sur internet ?",
-          "aide": "Ce point est important et différent du flyer. Un flyer papier circule dans le quartier ; un site est accessible au monde entier et reste indexé par Google. Si l'accord n'est pas écrit, je peux flouter les visages ou n'utiliser que des photos de dos.",
-          "options": [
-            "Oui, j'ai un accord écrit des parents",
-            "Oui, mais seulement verbal",
-            "Non, il faut que je le demande",
-            "Non, préférons les photos sans visage identifiable"
-          ],
-          "requis": true,
-          "skippable": false
-        },
-        {
-          "id": "logo_source",
-          "type": "radio",
-          "label": "Avez-vous le fichier d'origine du logo ?",
-          "aide": "Celui qu'a utilisé la personne qui l'a créé. Extension .ai, .eps, .svg ou .pdf. Sans lui, le logo risque d'être flou en grand sur le site.",
-          "options": [
-            "Oui, je l'ai",
-            "Non, mais je sais qui l'a créé",
-            "Non, je n'ai qu'une image",
-            "Je ne sais pas"
-          ],
-          "requis": true
-        }
-      ]
-    },
+  ['coince','nbMois','fraisAutres','nbEleves','nbFamilles','nbProfs','role4','ficheAutre'].forEach(id=>{
+    const el=$(id);el.value=etat[id]||'';el.addEventListener('input',()=>{etat[id]=el.value;sauver();});
+  });
 
-    {
-      "id": "decisions",
-      "titre": "Trois décisions à prendre",
-      "intro": "Dernière étape. Ces choix orientent tout le site, autant les faire maintenant.",
-      "questions": [
-        {
-          "id": "afficher_tarifs",
-          "type": "radio",
-          "label": "Affiche-t-on les tarifs sur le site ?",
-          "aide": "Mon conseil : oui. Une école qui cache ses prix inquiète, et vous recevrez des appels de familles hors budget. Si vos tarifs varient selon les cas, on peut afficher « à partir de ».",
-          "options": [
-            "Oui, les montants exacts",
-            "Oui, mais seulement « à partir de »",
-            "Non, sur demande uniquement",
-            "Je préfère en discuter avec vous"
-          ],
-          "requis": true
-        },
-        {
-          "id": "langue",
-          "type": "radio",
-          "label": "En quelle langue le site doit-il être ?",
-          "aide": "Une version anglaise double le travail. À ne faire que si vous accueillez réellement des familles anglophones.",
-          "options": ["Français uniquement", "Français et anglais", "Je ne sais pas"],
-          "requis": true
-        },
-        {
-          "id": "priorite",
-          "type": "radio",
-          "label": "Si vous ne deviez obtenir qu'une seule chose de ce site, ce serait quoi ?",
-          "aide": "Il n'y a pas de mauvaise réponse. Ça me dit ce qu'il faut mettre en premier sur la page d'accueil.",
-          "options": [
-            "Recevoir plus d'appels de nouveaux parents",
-            "Que l'école paraisse sérieuse et professionnelle",
-            "Éviter de répéter les mêmes informations au téléphone",
-            "Être trouvée sur Google"
-          ],
-          "requis": true
-        },
-        {
-          "id": "libre",
-          "type": "textarea",
-          "label": "Autre chose que je devrais savoir ?",
-          "aide": "Tout ce qui vous vient. Même une remarque en passant peut changer le site.",
-          "requis": false
-        }
-      ]
-    }
+  function fmt(v){return v===''||v==null?'?':Number(v).toLocaleString('fr-FR').replace(/ | /g,' ')+' F';}
 
-  ]
-}
+  function texte(){
+    const L=[];
+    L.push('QUESTIONNAIRE DIRECTRICE — Au Cocon Du Bonheur');
+    L.push('');L.push('1. L’ÉQUIPE');
+    etat.membres.forEach(m=>L.push('- '+(m.nom.trim()||'(sans nom)')+' : '+m.poste));
+    L.push('');L.push('2. QUI FAIT QUOI');
+    TACHES.forEach(t=>{const g=etat.qui[t]||[];L.push('- '+t+' : '+(g.length?g.join(', '):'?')+' | noté : '+(etat.ou[t]||'?')+(g.length>1?'  ⚠ mélange':''));});
+    L.push('');L.push('3. MONTANTS');
+    L.push('Voient les montants : '+(etat.voit.length?etat.voit.join(', '):'?'));
+    L.push('Ce qui coince : '+(etat.coince.trim()||'?'));
+    L.push('');L.push('4. FRAIS (inscription / mensualité)');
+    CLASSES.forEach(c=>{const f=etat.frais[c]||{};L.push('- '+c+' : '+fmt(f.ins)+' / '+fmt(f.mens));});
+    L.push('Mois par an : '+(etat.nbMois||'?'));
+    L.push('Autres frais : '+(etat.fraisAutres.trim()||'?'));
+    L.push('');L.push('5. L’ÉCOLE EN CHIFFRES');
+    L.push('Élèves : '+(etat.nbEleves||'?')+' | Familles : '+(etat.nbFamilles||'?')+' | Profs : '+(etat.nbProfs||'?'));
+    L.push('Poste contrôle des profs : '+(etat.role4.trim()||'?'));
+    L.push('Fiche élève : '+(etat.fiche.concat(etat.ficheAutre.trim()?[etat.ficheAutre.trim()]:[]).join(', ')||'rien de plus'));
+    return L.join('\n');
+  }
+
+  function montrer(n){
+    etat.etape=Math.max(0,Math.min(ETAPES-1,n));sauver();
+    document.querySelectorAll('.etape').forEach(s=>{s.hidden=Number(s.dataset.etape)!==etat.etape;});
+    if(etat.etape===ETAPES-1){$('secours').hidden=true;$('envoiEtat').textContent='';}
+    if(etat.etape===2)dessinerTaches();
+    if(etat.etape===3)dessinerVoit();
+    if(etat.etape===6){const t=texte();$('recap').textContent=t;$('wa').href='https://wa.me/?text='+encodeURIComponent(t);}
+    $('etapeNum').textContent='Étape '+(etat.etape+1)+' sur '+ETAPES;
+    $('barre').style.width=((etat.etape+1)/ETAPES*100)+'%';
+    $('prec').hidden=etat.etape===0;
+    $('suiv').hidden=etat.etape===ETAPES-1;
+    $('suiv').textContent=etat.etape===0?'Commencer':(etat.etape===ETAPES-2?'Voir le résumé':'Suivant');
+    window.scrollTo({top:0});
+    const t=document.querySelector('.etape:not([hidden]) h1, .etape:not([hidden]) h2');if(t){t.tabIndex=-1;t.focus({preventScroll:true});}
+  }
+  $('suiv').addEventListener('click',()=>montrer(etat.etape+1));
+  $('prec').addEventListener('click',()=>montrer(etat.etape-1));
+  $('f').addEventListener('submit',e=>e.preventDefault());
+
+  $('envoyer').addEventListener('click',async()=>{
+    const b=$('envoyer');b.disabled=true;$('envoiEtat').textContent='Envoi en cours…';
+    try{
+      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({_subject:'Questionnaire de la Directrice — Au Cocon',reponses:texte()})});
+      if(!r.ok)throw new Error(r.status);
+      etat.envoye=true;sauver();
+      document.querySelectorAll('.etape').forEach(x=>{x.hidden=x.dataset.etape!=='7';});
+      $('prec').hidden=true;$('suiv').hidden=true;$('etapeNum').textContent='Envoyé';$('barre').style.width='100%';
+    }catch(e){
+      $('envoiEtat').textContent='L\u2019envoi n\u2019a pas marché. Vos réponses sont gardées sur ce téléphone. Envoyez-les sur WhatsApp :';
+      $('secours').hidden=false;
+    }finally{b.disabled=false;}
+  });
+  $('copier').addEventListener('click',()=>{
+    const t=texte();
+    const repli=()=>{const r=document.createRange();r.selectNodeContents($('recap'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('copieEtat').textContent='Texte sélectionné : appuyez longuement puis « Copier ».';};
+    try{navigator.clipboard.writeText(t).then(()=>{$('copieEtat').textContent='Copié. Collez-le dans WhatsApp.';},repli);}catch(e){repli();}
+  });
+
+  dessinerMembres();dessinerFrais();dessinerFiche();montrer(etat.etape);
+})();
 </script>
 
-<script src="app.js"></script>
 </body>
 </html>
