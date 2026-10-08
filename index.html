@@ -162,6 +162,9 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
     <section class="carte etape" data-etape="7" hidden>
       <h2>C'est envoyé, merci</h2>
       <p class="aide" style="margin:0">Ousseynou a bien reçu vos réponses. Vous pouvez fermer cette page.</p>
+      <div class="actions">
+        <button type="button" class="bouton vide" id="modifier">Modifier mes réponses</button>
+      </div>
     </section>
 
     <section class="carte etape" data-etape="6" hidden>
@@ -330,6 +333,13 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
     window.scrollTo({top:0});
     const t=document.querySelector('.etape:not([hidden]) h1, .etape:not([hidden]) h2');if(t){t.tabIndex=-1;t.focus({preventScroll:true});}
   }
+  function montrerEnvoye(){
+    document.querySelectorAll('.etape').forEach(x=>{x.hidden=x.dataset.etape!=='7';});
+    $('prec').hidden=true;$('suiv').hidden=true;$('etapeNum').textContent='Envoyé';$('barre').style.width='100%';
+    window.scrollTo({top:0});
+    const t=document.querySelector('.etape[data-etape="7"] h2');t.tabIndex=-1;t.focus({preventScroll:true});
+  }
+  $('modifier').addEventListener('click',()=>{etat.envoye=false;montrer(1);});
   $('suiv').addEventListener('click',()=>montrer(etat.etape+1));
   $('prec').addEventListener('click',()=>montrer(etat.etape-1));
   $('f').addEventListener('submit',e=>e.preventDefault());
@@ -340,8 +350,7 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
       const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({_subject:'Questionnaire de la Directrice — Au Cocon',reponses:texte()})});
       if(!r.ok)throw new Error(r.status);
       etat.envoye=true;sauver();
-      document.querySelectorAll('.etape').forEach(x=>{x.hidden=x.dataset.etape!=='7';});
-      $('prec').hidden=true;$('suiv').hidden=true;$('etapeNum').textContent='Envoyé';$('barre').style.width='100%';
+      montrerEnvoye();
     }catch(e){
       $('envoiEtat').textContent='L\u2019envoi n\u2019a pas marché. Vos réponses sont gardées sur ce téléphone. Envoyez-les sur WhatsApp :';
       $('secours').hidden=false;
@@ -353,7 +362,7 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
     try{navigator.clipboard.writeText(t).then(()=>{$('copieEtat').textContent='Copié. Collez-le dans WhatsApp.';},repli);}catch(e){repli();}
   });
 
-  dessinerMembres();dessinerFrais();dessinerFiche();montrer(etat.etape);
+  dessinerMembres();dessinerFrais();dessinerFiche();if(etat.envoye)montrerEnvoye();else montrer(etat.etape);
 })();
 </script>
 
