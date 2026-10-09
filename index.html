@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 <style>
+[hidden]{display:none!important}
 /* Charte Au Cocon : une étape par écran, carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. */
 :root{
   --violet:#873897; --violet-fonce:#5A2166; --violet-clair:#F6EDF8;
@@ -69,125 +70,25 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
 .petit{font-size:13px;color:var(--doux)}
 .enregistre{font-size:12px;color:var(--ok);min-height:18px}
 @media (prefers-reduced-motion:reduce){.barre i{transition:none}}
+.question{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);font-size:23px;line-height:1.2;margin:0 0 16px;text-wrap:balance}
+.sous{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--doux);margin:18px 0 8px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.duo{grid-template-columns:1fr}}
+.facultatif{font-weight:400;color:var(--doux)}
 </style>
 </head>
 <body>
 <div class="cadre">
   <header class="haut">
     <span class="marque">Au Cocon Du Bonheur</span>
-    <span class="etape-num" id="etapeNum">Étape 1 sur 7</span>
+    <span class="etape-num" id="etapeNum"></span>
   </header>
   <div class="barre" aria-hidden="true"><i id="barre"></i></div>
-
-  <form id="f" novalidate>
-    <!-- 0 Accueil -->
-    <section class="carte etape" data-etape="0">
-      <h1>Bonjour</h1>
-      <p class="aide" style="margin:0">Ce questionnaire prépare la nouvelle version de l'outil de gestion. Il prend environ 10 minutes. Vos réponses restent sur ce téléphone tant que vous ne les envoyez pas. Vous pouvez arrêter et reprendre plus tard.</p>
-    </section>
-
-    <!-- 1 Équipe -->
-    <section class="carte etape" data-etape="1" hidden>
-      <h2 style="margin-bottom:16px">Toute l'équipe</h2>
-      <div class="bloc" id="membres"></div>
-      <div class="actions"><button type="button" class="bouton vide" id="ajoutMembre">+ Ajouter une personne</button></div>
-    </section>
-
-    <!-- 2 Qui fait quoi -->
-    <section class="carte etape" data-etape="2" hidden>
-      <h2>Qui fait quoi, vraiment</h2>
-      <p class="aide">Pour chaque tâche, touchez les personnes qui la font aujourd'hui, même de temps en temps. Puis dites où c'est noté.</p>
-      <div class="bloc" id="taches"></div>
-    </section>
-
-    <!-- 3 Montants + ce qui coince -->
-    <section class="carte etape" data-etape="3" hidden>
-      <h2>Les montants</h2>
-      <p class="aide">Dans l'outil, chacun ne voit que sa partie. Dites qui doit pouvoir voir l'argent.</p>
-      <div class="bloc">
-        <div>
-          <p class="tache" style="border:0;padding:0;margin:0 0 8px;font-weight:500">Qui doit voir combien chaque famille a payé ?</p>
-          <div class="puces" id="voitMontants"></div>
-        </div>
-        <label class="champ" for="coince">Ce qui coince aujourd'hui (une ligne par personne si possible)
-          <textarea id="coince" placeholder="Exemple : la secrétaire encaisse quand la comptable n'est pas là, et le reçu n'est pas toujours fait."></textarea>
-        </label>
-      </div>
-    </section>
-
-    <!-- 4 Frais -->
-    <section class="carte etape" data-etape="4" hidden>
-      <h2>Les frais par classe</h2>
-      <p class="aide">En francs CFA. Laissez vide ce que vous ne savez pas, Ousseynou vous redemandera.</p>
-      <div class="defile">
-        <table class="frais">
-          <thead><tr><th>Classe</th><th>Inscription</th><th>Mensualité</th></tr></thead>
-          <tbody id="fraisCorps"></tbody>
-        </table>
-      </div>
-      <div class="bloc" style="margin-top:16px">
-        <label class="champ" for="nbMois">Combien de mois de mensualité par an ?
-          <input type="number" id="nbMois" inputmode="numeric" min="1" max="12" placeholder="Exemple : 9">
-        </label>
-        <label class="champ" for="fraisAutres">Autres frais (tenue, fournitures, cantine, transport…)
-          <input type="text" id="fraisAutres" placeholder="Exemple : tenue 10 000 F, une fois">
-        </label>
-      </div>
-    </section>
-
-    <!-- 5 L'école en chiffres -->
-    <section class="carte etape" data-etape="5" hidden>
-      <h2>L'école en chiffres</h2>
-      <p class="aide">Des chiffres approximatifs suffisent.</p>
-      <div class="bloc">
-        <div class="trio">
-          <label class="champ" for="nbEleves">Élèves<input type="number" id="nbEleves" inputmode="numeric" min="0"></label>
-          <label class="champ" for="nbFamilles">Familles<input type="number" id="nbFamilles" inputmode="numeric" min="0"></label>
-          <label class="champ" for="nbProfs">Professeurs<input type="number" id="nbProfs" inputmode="numeric" min="0"></label>
-        </div>
-        <label class="champ" for="role4">Comment s'appelle le poste de la personne qui contrôle que les professeurs viennent et font cours ?
-          <input type="text" id="role4" placeholder="Exemple : Surveillant général">
-        </label>
-        <div>
-          <p style="margin:0 0 4px;font-weight:500;font-size:14px;color:var(--titre)">Sur la fiche d'un élève, vous voulez noter aussi :</p>
-          <div id="fiche"></div>
-          <label class="champ" for="ficheAutre" style="margin-top:8px">Autre chose
-            <input type="text" id="ficheAutre">
-          </label>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6 Récap -->
-    <section class="carte etape" data-etape="7" hidden>
-      <h2>C'est envoyé, merci</h2>
-      <p class="aide" style="margin:0">Ousseynou a bien reçu vos réponses. Vous pouvez fermer cette page.</p>
-      <div class="actions">
-        <button type="button" class="bouton vide" id="modifier">Modifier mes réponses</button>
-      </div>
-    </section>
-
-    <section class="carte etape" data-etape="6" hidden>
-      <h2>Vérifiez puis envoyez</h2>
-      <p class="aide">Voici ce qui partira. Vous pouvez revenir en arrière pour corriger.</p>
-      <div class="recap" id="recap" tabindex="0"></div>
-      <div class="actions">
-        <button type="button" class="bouton plein" id="envoyer">Envoyer</button>
-        <p class="petit" id="envoiEtat" role="status"></p>
-        <div id="secours" hidden>
-          <div class="actions" style="margin-top:0">
-            <a class="bouton lien" id="wa" href="#" target="_blank" rel="noopener">Envoyer sur WhatsApp</a>
-            <button type="button" class="bouton vide" id="copier">Copier le texte</button>
-            <p class="petit" id="copieEtat" role="status"></p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </form>
+  <form id="f" novalidate><section class="carte" id="ecran" aria-live="polite"></section></form>
   <p class="enregistre" id="enregistre" role="status"></p>
 </div>
 
-<nav class="pied">
+<nav class="pied" id="pied">
   <div class="dedans">
     <button type="button" class="bouton vide" id="prec">Retour</button>
     <button type="button" class="bouton plein" id="suiv">Commencer</button>
@@ -196,173 +97,181 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
 
 <script>
 (function(){
-  const CLE='aucocon-questionnaire-directrice-v1';
-  const POSTES=['Secrétaire','Comptable','Contrôle des profs','Autre'];
-  const TACHES=['Inscrire un élève','Encaisser l’argent','Faire le reçu','Garder la caisse','Relancer une famille en retard','Noter les absences des élèves','Pointer la présence des profs','Faire les comptes du mois','Appeler les parents'];
-  const OU=['Cahier','Excel','WhatsApp','Rien'];
-  const CLASSES=['Crèche','Toute petite section','Petite section','Moyenne section','Grande section','CI','CP','CE1','CE2','CM1','CM2'];
-  const FICHE=['Allergies','Personne autorisée à récupérer l’enfant','Problème de santé à connaître','Médecin ou numéro d’urgence','Photo de l’enfant'];
-  const ETAPES=7;
+  const CLE='aucocon-questionnaire-directrice-v2';
   const ENVOI='https://formspree.io/f/xrennzzp';
-
-  let etat={etape:0,membres:[{nom:'',poste:'Secrétaire'},{nom:'',poste:'Comptable'},{nom:'',poste:'Contrôle des profs'}],qui:{},ou:{},voit:[],coince:'',frais:{},nbMois:'',fraisAutres:'',nbEleves:'',nbFamilles:'',nbProfs:'',role4:'',fiche:[],ficheAutre:''};
+  const MOIS=['Septembre','Octobre','Novembre','Décembre','Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août'];
+  const OU=['Cahier','Excel','WhatsApp','Rien'];
+  const TACHES=[
+    ['encaisser','Qui encaisse l’argent des familles ?'],
+    ['recu','Qui fait le reçu ?'],
+    ['caisse','Qui garde la caisse ?'],
+    ['relance','Qui relance une famille en retard de paiement ?'],
+    ['absences','Qui note les absences des élèves ?'],
+    ['presence','Qui pointe la présence des professeurs ?'],
+    ['comptes','Qui fait les comptes du mois ?'],
+    ['appels','Qui appelle les parents ?']
+  ];
+  let etat={i:0,envoye:false,noms:{sec:'',compta:'',ctrl:'',autre:''},poste:'',qui:{},ou:{},moisDebut:'',moisFin:'',collation:'',transport:'',garde1:'',garde2:'',eleves:'',familles:'',coince:''};
   try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
-
   const $=id=>document.getElementById(id);
-  let minuteur;
-  function sauver(){
-    try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Enregistré sur ce téléphone';}catch(e){}
-    clearTimeout(minuteur);minuteur=setTimeout(()=>{$('enregistre').textContent='';},1500);
-  }
+  let t;
+  function sauver(){try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Enregistré sur ce téléphone';}catch(e){}clearTimeout(t);t=setTimeout(()=>{$('enregistre').textContent='';},1500);}
 
   function personnes(){
-    const l=etat.membres.filter(m=>m.nom.trim()||m.poste).map(m=>m.nom.trim()?m.nom.trim()+' ('+m.poste.toLowerCase()+')':m.poste);
-    return l.concat(['Directrice']);
+    const n=etat.noms,l=['Directrice'];
+    l.push(n.sec.trim()?n.sec.trim()+' (secrétaire)':'Secrétaire');
+    l.push(n.compta.trim()?n.compta.trim()+' (comptable)':'Comptable');
+    const p=etat.poste.trim()||'contrôle des profs';
+    l.push(n.ctrl.trim()?n.ctrl.trim()+' ('+p.toLowerCase()+')':p.charAt(0).toUpperCase()+p.slice(1));
+    if(n.autre.trim())l.push(n.autre.trim());
+    l.push('Personne');
+    return l;
+  }
+  function el(tag,attrs,txt){const e=document.createElement(tag);if(attrs)for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
+  function puces(options,estActif,clic){
+    const z=el('div',{class:'puces'});
+    options.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':estActif(o)?'true':'false'},o);
+      b.addEventListener('click',()=>{clic(o);z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',estActif(x.textContent)?'true':'false'));sauver();});z.appendChild(b);});
+    return z;
+  }
+  function champ(lib,id,val,set,opts){
+    const l=el('label',{class:'champ',for:id});l.append(document.createTextNode(lib));
+    if(opts&&opts.facultatif){l.append(el('span',{class:'facultatif'},' (facultatif)'));}
+    const i=el('input',{type:(opts&&opts.type)||'text',id:id});if(opts&&opts.type==='number'){i.inputMode='numeric';i.min='0';}
+    if(opts&&opts.ph)i.placeholder=opts.ph;i.value=val||'';i.addEventListener('input',()=>{set(i.value);sauver();});l.appendChild(i);return l;
+  }
+  function choix(lib,id,val,set,liste){
+    const l=el('label',{class:'champ',for:id},lib);const s=el('select',{id:id});
+    s.appendChild(el('option',{value:''},'Choisir'));liste.forEach(m=>{const o=el('option',{value:m},m);if(m===val)o.selected=true;s.appendChild(o);});
+    s.addEventListener('change',()=>{set(s.value);sauver();});l.appendChild(s);return l;
   }
 
-  function puce(texte,actif,clic){
-    const b=document.createElement('button');b.type='button';b.className='puce';b.textContent=texte;
-    b.setAttribute('aria-pressed',actif?'true':'false');
-    b.addEventListener('click',()=>{clic();});return b;
-  }
+  const ECRANS=[];
+  ECRANS.push({rendu:z=>{
+    z.append(el('h1',null,'Bonjour'));
+    z.append(el('p',{class:'aide',style:'margin:0'},'Merci pour vos premières réponses. Il reste quelques questions pour finir, environ 5 minutes. Presque tout se fait en touchant un bouton. Vos réponses restent sur ce téléphone tant que vous ne les envoyez pas. Vous pouvez arrêter et reprendre plus tard.'));
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Toute l’équipe'));
+    const b=el('div',{class:'bloc'});
+    b.append(champ('Prénom de la secrétaire','nomSec',etat.noms.sec,v=>etat.noms.sec=v,{facultatif:1}));
+    b.append(champ('Prénom de la comptable','nomCompta',etat.noms.compta,v=>etat.noms.compta=v,{facultatif:1}));
+    b.append(champ('Comment s’appelle le poste de la personne qui contrôle les professeurs ?','poste',etat.poste,v=>etat.poste=v,{ph:'Exemple : Surveillant général'}));
+    b.append(champ('Son prénom','nomCtrl',etat.noms.ctrl,v=>etat.noms.ctrl=v,{facultatif:1}));
+    b.append(champ('Une autre personne travaille dans les bureaux ? Prénom et poste','nomAutre',etat.noms.autre,v=>etat.noms.autre=v,{facultatif:1,ph:'Exemple : Fatou, caissière'}));
+    z.append(b);
+  }});
+  TACHES.forEach(([k,q])=>ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},q));
+    z.append(el('p',{class:'aide',style:'margin:-8px 0 12px'},'Touchez une ou plusieurs personnes.'));
+    etat.qui[k]=(etat.qui[k]||[]).filter(g=>personnes().includes(g));
+    z.append(puces(personnes(),o=>etat.qui[k].includes(o),o=>{const a=etat.qui[k],j=a.indexOf(o);if(j<0)a.push(o);else a.splice(j,1);}));
+    z.append(el('p',{class:'sous'},'Où c’est noté ?'));
+    z.append(puces(OU,o=>etat.ou[k]===o,o=>{etat.ou[k]=etat.ou[k]===o?'':o;}));
+  }}));
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'La mensualité se paie de quel mois à quel mois ?'));
+    const d=el('div',{class:'duo'});
+    d.append(choix('Premier mois','moisDebut',etat.moisDebut,v=>etat.moisDebut=v,MOIS));
+    d.append(choix('Dernier mois','moisFin',etat.moisFin,v=>etat.moisFin=v,MOIS));
+    z.append(d);
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'La collation (12 000 F) se paie :'));
+    z.append(puces(['Une fois par an','Chaque mois'],o=>etat.collation===o,o=>{etat.collation=etat.collation===o?'':o;}));
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Le transport (20 000 ou 25 000 F) se paie :'));
+    z.append(puces(['Chaque mois','Une fois par an'],o=>etat.transport===o,o=>{etat.transport=etat.transport===o?'':o;}));
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Comment s’appellent les deux groupes de la garderie ?'));
+    const b=el('div',{class:'bloc'});
+    b.append(champ('Les bébés, dès 3 mois','garde1',etat.garde1,v=>etat.garde1=v,{ph:'Exemple : Poussinière'}));
+    b.append(champ('Les 2 ans à 2 ans ½','garde2',etat.garde2,v=>etat.garde2=v,{ph:'Exemple : Toute petite section'}));
+    z.append(b);
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'L’école en chiffres'));
+    z.append(el('p',{class:'aide',style:'margin:-8px 0 12px'},'Un chiffre approximatif suffit.'));
+    const d=el('div',{class:'duo'});
+    d.append(champ('Élèves','eleves',etat.eleves,v=>etat.eleves=v,{type:'number'}));
+    d.append(champ('Familles','familles',etat.familles,v=>etat.familles=v,{type:'number'}));
+    z.append(d);
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Qu’est-ce qui vous fait perdre du temps aujourd’hui ?'));
+    const l=el('label',{class:'champ',for:'coince'});l.append(el('span',{class:'facultatif'},'Facultatif'));
+    const a=el('textarea',{id:'coince',placeholder:'Exemple : je dois appeler pour savoir qui a payé.'});a.value=etat.coince;a.addEventListener('input',()=>{etat.coince=a.value;sauver();});l.append(a);z.append(l);
+  }});
+  ECRANS.push({recap:true,rendu:z=>{
+    z.append(el('h2',null,'Vérifiez puis envoyez'));
+    z.append(el('p',{class:'aide'},'Voici ce qui partira. Vous pouvez revenir en arrière pour corriger.'));
+    z.append(el('div',{class:'recap',id:'recap',tabindex:'0'},texte()));
+    const a=el('div',{class:'actions'});
+    const b=el('button',{type:'button',class:'bouton plein',id:'envoyer'},'Envoyer');b.addEventListener('click',envoyer);a.append(b);
+    a.append(el('p',{class:'petit',id:'envoiEtat',role:'status'}));
+    const s=el('div',{class:'actions',id:'secours',style:'margin-top:0'});s.hidden=true;
+    const wa=el('a',{class:'bouton lien',id:'wa',href:'https://wa.me/?text='+encodeURIComponent(texte()),target:'_blank',rel:'noopener'},'Envoyer sur WhatsApp');
+    const cp=el('button',{type:'button',class:'bouton vide',id:'copier'},'Copier le texte');cp.addEventListener('click',copier);
+    s.append(wa,cp,el('p',{class:'petit',id:'copieEtat',role:'status'}));a.append(s);z.append(a);
+  }});
 
-  function dessinerMembres(){
-    const z=$('membres');z.innerHTML='';
-    etat.membres.forEach((m,i)=>{
-      const d=document.createElement('div');d.className='ligne-membre';
-      const n=document.createElement('input');n.type='text';n.id='nom'+i;n.placeholder='Prénom';n.value=m.nom;n.setAttribute('aria-label','Prénom de la personne '+(i+1));
-      n.addEventListener('input',()=>{m.nom=n.value;sauver();});
-      const s=document.createElement('select');s.id='poste'+i;s.setAttribute('aria-label','Poste de la personne '+(i+1));
-      POSTES.forEach(p=>{const o=document.createElement('option');o.textContent=p;if(p===m.poste)o.selected=true;s.appendChild(o);});
-      s.addEventListener('change',()=>{m.poste=s.value;sauver();});
-      const x=document.createElement('button');x.type='button';x.textContent='×';x.setAttribute('aria-label','Retirer cette ligne');
-      x.addEventListener('click',()=>{etat.membres.splice(i,1);sauver();dessinerMembres();});
-      d.append(n,s,x);z.appendChild(d);
-    });
-  }
-  $('ajoutMembre').addEventListener('click',()=>{etat.membres.push({nom:'',poste:'Autre'});sauver();dessinerMembres();$('nom'+(etat.membres.length-1)).focus();});
-
-  function dessinerTaches(){
-    const z=$('taches');z.innerHTML='';const gens=personnes();
-    TACHES.forEach(t=>{
-      const c=document.createElement('div');c.className='tache';
-      const h=document.createElement('h3');h.textContent=t;c.appendChild(h);
-      const p=document.createElement('div');p.className='puces';
-      const choisis=(etat.qui[t]||[]).filter(g=>gens.includes(g));etat.qui[t]=choisis;
-      const al=document.createElement('p');al.className='alerte';al.textContent='Plusieurs personnes font cette tâche.';
-      const maj=()=>{al.classList.toggle('vue',etat.qui[t].length>1);};
-      gens.forEach(g=>{const b=puce(g,choisis.includes(g),()=>{const a=etat.qui[t];const k=a.indexOf(g);if(k<0)a.push(g);else a.splice(k,1);b.setAttribute('aria-pressed',k<0?'true':'false');maj();sauver();});p.appendChild(b);});
-      c.appendChild(p);c.appendChild(al);maj();
-      const s=document.createElement('p');s.className='sous';s.textContent='Où c’est noté';c.appendChild(s);
-      const q=document.createElement('div');q.className='puces';
-      OU.forEach(o=>{const b=puce(o,etat.ou[t]===o,()=>{etat.ou[t]=etat.ou[t]===o?'':o;q.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',x.textContent===etat.ou[t]?'true':'false'));sauver();});q.appendChild(b);});
-      c.appendChild(q);z.appendChild(c);
-    });
-  }
-
-  function dessinerVoit(){
-    const z=$('voitMontants');z.innerHTML='';const gens=personnes();
-    etat.voit=etat.voit.filter(g=>gens.includes(g));
-    gens.forEach(g=>{const b=puce(g,etat.voit.includes(g),()=>{const k=etat.voit.indexOf(g);if(k<0)etat.voit.push(g);else etat.voit.splice(k,1);b.setAttribute('aria-pressed',k<0?'true':'false');sauver();});z.appendChild(b);});
-  }
-
-  function dessinerFrais(){
-    const z=$('fraisCorps');z.innerHTML='';
-    CLASSES.forEach((c,i)=>{
-      const f=etat.frais[c]||(etat.frais[c]={ins:'',mens:''});
-      const tr=document.createElement('tr');
-      const td0=document.createElement('td');td0.textContent=c;tr.appendChild(td0);
-      [['ins','Inscription'],['mens','Mensualité']].forEach(([k,lib])=>{
-        const td=document.createElement('td');const inp=document.createElement('input');
-        inp.type='number';inp.inputMode='numeric';inp.min='0';inp.id=k+i;inp.value=f[k];inp.placeholder='F';inp.setAttribute('aria-label',lib+' '+c);
-        inp.addEventListener('input',()=>{f[k]=inp.value;sauver();});td.appendChild(inp);tr.appendChild(td);
-      });
-      z.appendChild(tr);
-    });
-  }
-
-  function dessinerFiche(){
-    const z=$('fiche');z.innerHTML='';
-    FICHE.forEach((x,i)=>{
-      const l=document.createElement('label');l.className='coche';l.htmlFor='fiche'+i;
-      const c=document.createElement('input');c.type='checkbox';c.id='fiche'+i;c.checked=etat.fiche.includes(x);
-      c.addEventListener('change',()=>{const k=etat.fiche.indexOf(x);if(c.checked&&k<0)etat.fiche.push(x);if(!c.checked&&k>=0)etat.fiche.splice(k,1);sauver();});
-      l.append(c,document.createTextNode(x));z.appendChild(l);
-    });
-  }
-
-  ['coince','nbMois','fraisAutres','nbEleves','nbFamilles','nbProfs','role4','ficheAutre'].forEach(id=>{
-    const el=$(id);el.value=etat[id]||'';el.addEventListener('input',()=>{etat[id]=el.value;sauver();});
-  });
-
-  function fmt(v){return v===''||v==null?'?':Number(v).toLocaleString('fr-FR').replace(/ | /g,' ')+' F';}
-
+  function v(x){return (x&&String(x).trim())||'?';}
   function texte(){
-    const L=[];
-    L.push('QUESTIONNAIRE DIRECTRICE — Au Cocon Du Bonheur');
-    L.push('');L.push('1. L’ÉQUIPE');
-    etat.membres.forEach(m=>L.push('- '+(m.nom.trim()||'(sans nom)')+' : '+m.poste));
-    L.push('');L.push('2. QUI FAIT QUOI');
-    TACHES.forEach(t=>{const g=etat.qui[t]||[];L.push('- '+t+' : '+(g.length?g.join(', '):'?')+' | noté : '+(etat.ou[t]||'?')+(g.length>1?'  ⚠ mélange':''));});
-    L.push('');L.push('3. MONTANTS');
-    L.push('Voient les montants : '+(etat.voit.length?etat.voit.join(', '):'?'));
-    L.push('Ce qui coince : '+(etat.coince.trim()||'?'));
-    L.push('');L.push('4. FRAIS (inscription / mensualité)');
-    CLASSES.forEach(c=>{const f=etat.frais[c]||{};L.push('- '+c+' : '+fmt(f.ins)+' / '+fmt(f.mens));});
-    L.push('Mois par an : '+(etat.nbMois||'?'));
-    L.push('Autres frais : '+(etat.fraisAutres.trim()||'?'));
-    L.push('');L.push('5. L’ÉCOLE EN CHIFFRES');
-    L.push('Élèves : '+(etat.nbEleves||'?')+' | Familles : '+(etat.nbFamilles||'?')+' | Profs : '+(etat.nbProfs||'?'));
-    L.push('Poste contrôle des profs : '+(etat.role4.trim()||'?'));
-    L.push('Fiche élève : '+(etat.fiche.concat(etat.ficheAutre.trim()?[etat.ficheAutre.trim()]:[]).join(', ')||'rien de plus'));
+    const n=etat.noms,L=['QUESTIONNAIRE DIRECTRICE (suite) — Au Cocon Du Bonheur',''];
+    L.push('1. L’ÉQUIPE');
+    L.push('- Secrétaire : '+v(n.sec));L.push('- Comptable : '+v(n.compta));
+    L.push('- Poste contrôle des profs : '+v(etat.poste)+' | prénom : '+v(n.ctrl));
+    if(n.autre.trim())L.push('- Autre : '+n.autre.trim());
+    L.push('');L.push('2. QUI FAIT QUOI (inscription : Directrice, déjà répondu)');
+    TACHES.forEach(([k,q])=>{const g=(etat.qui[k]||[]);L.push('- '+q.replace('Qui ','').replace(' ?','')+' : '+(g.length?g.join(', '):'?')+' | noté : '+v(etat.ou[k])+(g.filter(x=>x!=='Personne').length>1?'  ⚠ plusieurs':''));});
+    L.push('');L.push('3. FRAIS');
+    L.push('- Mensualité : de '+v(etat.moisDebut)+' à '+v(etat.moisFin));
+    L.push('- Collation : '+v(etat.collation));L.push('- Transport : '+v(etat.transport));
+    L.push('- Garderie dès 3 mois : '+v(etat.garde1));L.push('- Garderie 2 ans à 2 ans ½ : '+v(etat.garde2));
+    L.push('');L.push('4. CHIFFRES');
+    L.push('- Élèves : '+v(etat.eleves)+' | Familles : '+v(etat.familles));
+    L.push('');L.push('5. CE QUI FAIT PERDRE DU TEMPS');L.push(v(etat.coince));
     return L.join('\n');
   }
 
-  function montrer(n){
-    etat.etape=Math.max(0,Math.min(ETAPES-1,n));sauver();
-    document.querySelectorAll('.etape').forEach(s=>{s.hidden=Number(s.dataset.etape)!==etat.etape;});
-    if(etat.etape===ETAPES-1){$('secours').hidden=true;$('envoiEtat').textContent='';}
-    if(etat.etape===2)dessinerTaches();
-    if(etat.etape===3)dessinerVoit();
-    if(etat.etape===6){const t=texte();$('recap').textContent=t;$('wa').href='https://wa.me/?text='+encodeURIComponent(t);}
-    $('etapeNum').textContent='Étape '+(etat.etape+1)+' sur '+ETAPES;
-    $('barre').style.width=((etat.etape+1)/ETAPES*100)+'%';
-    $('prec').hidden=etat.etape===0;
-    $('suiv').hidden=etat.etape===ETAPES-1;
-    $('suiv').textContent=etat.etape===0?'Commencer':(etat.etape===ETAPES-2?'Voir le résumé':'Suivant');
-    window.scrollTo({top:0});
-    const t=document.querySelector('.etape:not([hidden]) h1, .etape:not([hidden]) h2');if(t){t.tabIndex=-1;t.focus({preventScroll:true});}
+  function succes(){
+    const z=$('ecran');z.innerHTML='';
+    z.append(el('h2',null,'C’est envoyé, merci'));
+    z.append(el('p',{class:'aide'},'Ousseynou a bien reçu vos réponses. Vous pouvez fermer cette page.'));
+    const b=el('button',{type:'button',class:'bouton vide'},'Modifier mes réponses');
+    b.addEventListener('click',()=>{etat.envoye=false;montrer(1);});z.append(b);
+    $('pied').hidden=true;$('etapeNum').textContent='Envoyé';$('barre').style.width='100%';
   }
-  function montrerEnvoye(){
-    document.querySelectorAll('.etape').forEach(x=>{x.hidden=x.dataset.etape!=='7';});
-    $('prec').hidden=true;$('suiv').hidden=true;$('etapeNum').textContent='Envoyé';$('barre').style.width='100%';
-    window.scrollTo({top:0});
-    const t=document.querySelector('.etape[data-etape="7"] h2');t.tabIndex=-1;t.focus({preventScroll:true});
-  }
-  $('modifier').addEventListener('click',()=>{etat.envoye=false;montrer(1);});
-  $('suiv').addEventListener('click',()=>montrer(etat.etape+1));
-  $('prec').addEventListener('click',()=>montrer(etat.etape-1));
-  $('f').addEventListener('submit',e=>e.preventDefault());
-
-  $('envoyer').addEventListener('click',async()=>{
+  async function envoyer(){
     const b=$('envoyer');b.disabled=true;$('envoiEtat').textContent='Envoi en cours…';
     try{
-      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({_subject:'Questionnaire de la Directrice — Au Cocon',reponses:texte()})});
+      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({_subject:'Questionnaire de la Directrice (suite) — Au Cocon',reponses:texte()})});
       if(!r.ok)throw new Error(r.status);
-      etat.envoye=true;sauver();
-      montrerEnvoye();
-    }catch(e){
-      $('envoiEtat').textContent='L\u2019envoi n\u2019a pas marché. Vos réponses sont gardées sur ce téléphone. Envoyez-les sur WhatsApp :';
-      $('secours').hidden=false;
-    }finally{b.disabled=false;}
-  });
-  $('copier').addEventListener('click',()=>{
-    const t=texte();
+      etat.envoye=true;sauver();succes();
+    }catch(e){$('envoiEtat').textContent='L’envoi n’a pas marché. Vos réponses sont gardées sur ce téléphone. Envoyez-les sur WhatsApp :';$('secours').hidden=false;b.disabled=false;}
+  }
+  function copier(){
     const repli=()=>{const r=document.createRange();r.selectNodeContents($('recap'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('copieEtat').textContent='Texte sélectionné : appuyez longuement puis « Copier ».';};
-    try{navigator.clipboard.writeText(t).then(()=>{$('copieEtat').textContent='Copié. Collez-le dans WhatsApp.';},repli);}catch(e){repli();}
-  });
-
-  dessinerMembres();dessinerFrais();dessinerFiche();if(etat.envoye)montrerEnvoye();else montrer(etat.etape);
+    try{navigator.clipboard.writeText(texte()).then(()=>{$('copieEtat').textContent='Copié. Collez-le dans WhatsApp.';},repli);}catch(e){repli();}
+  }
+  function montrer(n){
+    etat.i=Math.max(0,Math.min(ECRANS.length-1,n));sauver();
+    const z=$('ecran');z.innerHTML='';ECRANS[etat.i].rendu(z);
+    const total=ECRANS.length-1;
+    $('pied').hidden=false;
+    $('etapeNum').textContent=etat.i===0?'':(ECRANS[etat.i].recap?'Résumé':'Question '+etat.i+' sur '+(total-1));
+    $('barre').style.width=((etat.i)/total*100)+'%';
+    $('prec').hidden=etat.i===0;$('suiv').hidden=!!ECRANS[etat.i].recap;
+    $('suiv').textContent=etat.i===0?'Commencer':(etat.i===total-1?'Voir le résumé':'Suivant');
+    window.scrollTo({top:0});
+    const h=z.querySelector('h1,h2');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}
+  }
+  $('suiv').addEventListener('click',()=>montrer(etat.i+1));
+  $('prec').addEventListener('click',()=>montrer(etat.i-1));
+  $('f').addEventListener('submit',e=>e.preventDefault());
+  if(etat.envoye)succes();else montrer(etat.i);
 })();
 </script>
 
