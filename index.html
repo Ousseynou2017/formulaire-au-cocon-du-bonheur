@@ -3,277 +3,273 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="robots" content="noindex">
-<title>Questionnaire de la Directrice</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://formspree.io; form-action https://formspree.io; base-uri 'none'">
+<title>Réunion Anna 03/11</title>
 <style>
 [hidden]{display:none!important}
-/* Charte Au Cocon : une étape par écran, carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. */
+/* Charte Au Cocon : carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. Polices du téléphone, rien d'externe. */
 :root{
   --violet:#873897; --violet-fonce:#5A2166; --violet-clair:#F6EDF8;
   --creme:#FDF6E6; --fond:#EFE9F1; --carte:#FFFFFF;
   --encre:#331F3A; --titre:#5E4966; --doux:#5A4862; --filet:#EADFEC;
   --ok:#1D6B44;
-  --f-titre:'Baloo 2','Poppins',system-ui,sans-serif;
-  --f-texte:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-texte:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.55}
+body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.5}
 .cadre{max-width:640px;margin:0 auto;padding-block:20px 120px;padding-inline:16px}
-header.haut{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.marque{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);font-size:18px}
-.etape-num{font-size:13px;color:var(--doux);font-variant-numeric:tabular-nums}
-.barre{height:6px;background:var(--filet);border-radius:999px;overflow:hidden;margin-bottom:18px}
+.marque{font-weight:600;color:var(--violet-fonce);font-size:15px;margin:0 0 4px}
+h1,h2{font-weight:700;color:var(--violet-fonce);line-height:1.2;margin:0 0 6px;text-wrap:balance}
+h1{font-size:26px} h2{font-size:21px} h2:focus{outline:none}
+.aide{color:var(--doux);font-size:14px;margin:0 0 14px}
+.barre{height:6px;background:var(--filet);border-radius:999px;overflow:hidden;margin:6px 0 16px}
 .barre i{display:block;height:100%;background:var(--violet);width:0;transition:width .25s}
-.carte{background:var(--carte);border:1px solid var(--filet);border-radius:20px;padding:22px 18px}
-h1,h2{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);line-height:1.2;margin:0 0 6px;text-wrap:balance}
-h1{font-size:28px} h2{font-size:23px}
-.aide{color:var(--doux);font-size:14px;margin:0 0 18px}
-.bloc{display:flex;flex-direction:column;gap:14px}
-label.champ{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;color:var(--titre)}
-input[type=text],input[type=number],textarea,select{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:11px 12px;width:100%;min-width:0}
-textarea{min-height:120px;resize:vertical}
-input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.ligne-membre{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center}
-.ligne-membre button{border:0;background:none;color:var(--doux);font-size:22px;width:40px;height:44px;cursor:pointer;border-radius:10px}
-@media (max-width:420px){.ligne-membre{grid-template-columns:1fr auto}.ligne-membre select{grid-column:1/2}}
-.tache{border-top:1px solid var(--filet);padding-top:14px}
-.tache:first-child{border-top:0;padding-top:0}
-.tache h3{font-family:var(--f-texte);font-weight:500;font-size:16px;margin:0 0 8px;color:var(--encre)}
-.tache .sous{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--doux);margin:10px 0 6px}
+details.partie{background:var(--carte);border:1px solid var(--filet);border-radius:18px;margin-bottom:12px}
+details.partie>summary{list-style:none;cursor:pointer;padding:16px 16px;display:flex;align-items:center;gap:10px;border-radius:18px;min-height:56px}
+details.partie>summary::-webkit-details-marker{display:none}
+details.partie>summary:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
+summary .titre{flex:1;min-width:0;font-weight:600;color:var(--violet-fonce);font-size:16px;line-height:1.3}
+summary .compte{font-size:12px;color:var(--doux);white-space:nowrap;font-variant-numeric:tabular-nums;background:var(--violet-clair);border-radius:999px;padding:3px 9px}
+summary .compte.plein{background:#E3F2E9;color:var(--ok)}
+summary .fleche{width:10px;height:10px;border-right:2px solid var(--doux);border-bottom:2px solid var(--doux);transform:rotate(45deg);transition:transform .2s;flex:none;margin-top:-4px}
+details[open]>summary .fleche{transform:rotate(-135deg);margin-top:4px}
+.corps{padding:0 16px 16px}
+.corps>.aide{margin-top:-4px}
+.q{border-top:1px solid var(--filet);padding:14px 0 4px}
+.q:first-of-type{border-top:0;padding-top:4px}
+.q .lib{font-weight:500;font-size:15px;margin:0 0 8px;color:var(--encre)}
 .puces{display:flex;flex-wrap:wrap;gap:8px}
-.puce{font:inherit;font-size:14px;border:1px solid var(--filet);background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
+.puce{font:inherit;font-size:14px;border:1px solid #D9C8DE;background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:42px;text-align:left}
+.puce:hover{border-color:var(--violet)}
+.puce:active{transform:scale(.97)}
 .puce[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:#fff}
-.alerte{display:none;margin-top:8px;font-size:13px;color:#8F430C;background:#FDF5EE;border-radius:10px;padding:6px 10px}
-.alerte.vue{display:block}
-.frais{width:100%;border-collapse:collapse;font-size:14px}
-.frais th{font-weight:500;text-align:left;color:var(--doux);font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:0 6px 8px}
-.frais td{padding:4px 6px;border-top:1px solid var(--filet)}
-.frais td:first-child{font-weight:500;white-space:nowrap}
-.frais input{padding:9px 10px;font-variant-numeric:tabular-nums}
-.defile{overflow-x:auto}
-.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media (max-width:420px){.trio{grid-template-columns:1fr}}
-.coche{display:flex;gap:10px;align-items:center;font-size:15px;padding:6px 0}
-.coche input{width:22px;height:22px;accent-color:var(--violet)}
-.recap{white-space:pre-wrap;background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:14px;font-size:14px;max-height:340px;overflow:auto}
+.puce:focus-visible,.bouton:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+label.note{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--titre);margin-top:10px}
+input[type=text],input[type=number],input[type=date],textarea{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:10px 12px;width:100%;min-width:0}
+textarea{min-height:76px;resize:vertical}
+.facultatif{color:var(--doux);font-weight:400}
+.carte{background:var(--carte);border:1px solid var(--filet);border-radius:18px;padding:20px 16px}
+.recap{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:14px;font-size:14px;max-height:55vh;overflow:auto}
 nav.pied{position:fixed;left:0;right:0;bottom:0;background:var(--carte);border-top:1px solid var(--filet);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
-nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
-.bouton{font:inherit;font-weight:500;font-size:16px;border-radius:999px;padding:12px 20px;cursor:pointer;border:1px solid var(--violet);min-height:48px}
+nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.total{font-size:13px;color:var(--doux);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bouton{font:inherit;font-weight:600;font-size:16px;border-radius:999px;padding:12px 18px;cursor:pointer;border:1px solid var(--violet);min-height:48px}
+.bouton:active{transform:scale(.98)}
 .bouton.plein{background:var(--violet);color:#fff;flex:1}
-.bouton.vide{background:var(--carte);color:var(--violet-fonce);border-color:var(--filet)}
-.bouton.lien{display:block;text-align:center;text-decoration:none;background:var(--violet);color:#fff}
-.actions{display:flex;flex-direction:column;gap:10px;margin-top:16px}
-.petit{font-size:13px;color:var(--doux)}
-.enregistre{font-size:12px;color:var(--ok);min-height:18px}
-@media (prefers-reduced-motion:reduce){.barre i{transition:none}}
-.question{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);font-size:23px;line-height:1.2;margin:0 0 16px;text-wrap:balance}
-.sous{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--doux);margin:18px 0 8px}
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media (max-width:420px){.duo{grid-template-columns:1fr}}
-.facultatif{font-weight:400;color:var(--doux)}
+.bouton.plein:hover{background:var(--violet-fonce)}
+.bouton.vide{background:var(--carte);color:var(--violet-fonce);border-color:#D9C8DE}
+.bouton.vide:hover{border-color:var(--violet)}
+.bouton[disabled]{opacity:.6;cursor:wait}
+.petit{font-size:13px;color:var(--doux);margin:8px 0 0}
+.enregistre{font-size:12px;color:var(--ok);min-height:18px;margin:0}
+.piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.barre i,summary .fleche{transition:none}.puce:active,.bouton:active{transform:none}}
 </style>
 </head>
 <body>
 <div class="cadre">
-  <header class="haut">
-    <span class="marque">Au Cocon Du Bonheur</span>
-    <span class="etape-num" id="etapeNum"></span>
-  </header>
+  <p class="marque">Au Cocon Du Bonheur</p>
+  <h1>Réunion avec Anna, 03/11</h1>
+  <p class="aide">Les photos (cahiers, feuilles de présence) : envoie-les à part sur WhatsApp.</p>
   <div class="barre" aria-hidden="true"><i id="barre"></i></div>
-  <form id="f" novalidate><section class="carte" id="ecran" aria-live="polite"></section></form>
+
+  <form id="f" novalidate>
+    <div class="piege" aria-hidden="true"><label>Ne pas remplir <input type="text" name="_gotcha" id="gotcha" tabindex="-1" autocomplete="off"></label></div>
+    <div id="parties"></div>
+    <section class="carte" id="vueRecap" hidden>
+      <h2 tabindex="-1" id="titreRecap">Récapitulatif</h2>
+      <p class="aide">Voici ce qui partira. Touche « Modifier » pour corriger.</p>
+      <div class="recap" id="recap" tabindex="0"></div>
+      <p class="petit" id="envoiEtat" role="status"></p>
+    </section>
+    <section class="carte" id="vueFin" hidden>
+      <h2 tabindex="-1" id="titreFin">C’est envoyé</h2>
+      <p class="aide">Les réponses sont parties sur Formspree. Elles restent aussi sur ce téléphone.</p>
+      <button type="button" class="bouton vide" id="rouvrir">Modifier les réponses</button>
+    </section>
+  </form>
   <p class="enregistre" id="enregistre" role="status"></p>
 </div>
 
 <nav class="pied" id="pied">
-  <div class="dedans">
-    <button type="button" class="bouton vide" id="prec">Retour</button>
-    <button type="button" class="bouton plein" id="suiv">Commencer</button>
+  <div class="dedans" id="piedForm">
+    <span class="total" id="total"></span>
+    <button type="button" class="bouton plein" id="voir">Voir le récapitulatif</button>
+  </div>
+  <div class="dedans" id="piedRecap" hidden>
+    <button type="button" class="bouton vide" id="modifier">Modifier</button>
+    <button type="button" class="bouton plein" id="envoyer">Envoyer</button>
   </div>
 </nav>
 
 <script>
 (function(){
-  const CLE='aucocon-questionnaire-directrice-v2';
+  const CLE='aucocon-reunion-anna-0311';
   const ENVOI='https://formspree.io/f/xrennzzp';
-  const MOIS=['Septembre','Octobre','Novembre','Décembre','Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août'];
-  const OU=['Cahier','Excel','WhatsApp','Rien'];
-  const TACHES=[
-    ['encaisser','Qui encaisse l’argent des familles ?'],
-    ['recu','Qui fait le reçu ?'],
-    ['caisse','Qui garde la caisse ?'],
-    ['relance','Qui relance une famille en retard de paiement ?'],
-    ['absences','Qui note les absences des élèves ?'],
-    ['presence','Qui pointe la présence des professeurs ?'],
-    ['comptes','Qui fait les comptes du mois ?'],
-    ['appels','Qui appelle les parents ?']
+  const TEST=new URLSearchParams(location.search).has('test');
+  const SUJET=(TEST?'TEST – ':'')+'Au Cocon – réunion Anna 03/11';
+
+  /* Une question : id, q (texte complet repris dans la réponse), o (choix), n (note : si = choix qui l'ouvrent, vide = toujours ; t = text, number, date, long) */
+  const OK=['OK','Erreur'],NOTE_ERR={si:['Erreur'],lib:'Note'};
+  const PAYE=['Payé','Pas payé','Ne sait pas'],MONTANT={si:['Payé'],t:'number',lib:'Montant payé (en F)'};
+  const ON=['Oui','Non'];
+  const CLASSES=['Crèche','TPS','PS','MS','GS','CI','CP','CE1','CE2','CM1','CM2'];
+  const INSCRITS=['Dieynabou S. (62 000 F dans le fichier)','Sokhna Diarra G.','Aïcha G.','Aïssatou N.','Ramatoulaye N.','Cheikh Ahmadou Bamba M.','Mouhamadou Mansour D.','Ndeye Cathy F.'];
+  const PARTIES=[
+    {t:'Élèves : vérification par échantillon',aide:'1 élève par classe, comparé au registre d’Anna : nom, classe, date d’arrivée.',qs:[
+      ...CLASSES.map(c=>({id:'ech-'+c,q:'Élève vérifié en '+c+' :',o:OK,n:NOTE_ERR})),
+      {id:'ech-partis',q:'Élèves partis (3 vérifiés) :',o:OK,n:NOTE_ERR}
+    ]},
+    {t:'Qui est qui',qs:[
+      {id:'qui-aminata',q:'Aminata Rassoul W. (MS) et Aminata Rassoul S. :',o:['Même enfant','Deux enfants','À vérifier']},
+      {id:'qui-adja',q:'Adja Fatou F., notée en CP et en CE1 :',o:['CP','CE1','Deux enfants différents']},
+      {id:'qui-ndeye',q:'Ndeye Maguette G., en double en CE1 :',o:['Même enfant','Deux enfants']},
+      {id:'qui-moustapha',q:'Moustapha S., noté parti le 23/10 :',o:['Parti pour de bon','Toujours à l’école']}
+    ]},
+    {t:'Inscriptions marquées non payées',aide:'Pour chacun : payé ou non, et le montant si payé.',qs:
+      INSCRITS.map((x,i)=>({id:'insc-'+i,q:'Inscription de '+x+' :',o:PAYE,n:MONTANT}))
+    },
+    {t:'Montants',qs:[
+      {id:'mt-collation',q:'38 enfants notés sans collation :',o:['Bon nombre','Pas bon'],n:{si:['Pas bon'],t:'number',lib:'Nombre exact'}},
+      ...['Loucia','Pape Ibrahima Ndao N.','Marieme F.'].map((x,i)=>({id:'mt-double-'+i,q:'Montant écrit 2 fois dans le fichier, '+x+' :',o:['Payé une fois','Payé deux fois','Ne sait pas']})),
+      ...['Abdoulaye S.','Ndeye Fatou G.','Sokhna Diarra G.'].map((x,i)=>({id:'mt-absent-'+i,q:'Absent des mensualités, '+x+' :',o:['Toujours inscrit','Parti','Ne sait pas']})),
+      {id:'mt-creche-juillet',q:'La crèche paie juillet :',o:ON},
+      {id:'mt-tps-juillet',q:'La TPS paie juillet :',o:ON},
+      {id:'mt-reclame',q:'Une inscription non payée est réclamée à partir du :',o:['01/10','01/11','Autre date'],n:{si:['Autre date'],t:'date',lib:'Date'}},
+      {id:'mt-valide',q:'Section Paiements validée par Anna (échantillon 1 élève par classe concordant) :',o:['Oui','Non, erreurs'],n:{si:['Non, erreurs'],lib:'Note'}}
+    ]},
+    {t:'Familles (frères et sœurs)',qs:[
+      {id:'fam-comment',q:'Comment l’école sait que deux enfants sont frères et sœurs :',o:['Même téléphone du parent','Même nom du père','Elle ne le note pas','Autre'],n:{si:['Autre'],lib:'Note'}},
+      {id:'fam-tel',q:'Les parents ont un numéro de téléphone noté :',o:['Tous','Certains','Aucun']},
+      {id:'fam-reduc',q:'Une réduction existe pour les frères et sœurs :',o:ON,n:{si:['Oui'],lib:'Laquelle'}},
+      {id:'fam-corriger',q:'Fratries à corriger :',o:[],n:{si:[],t:'long',lib:'Note'}}
+    ]},
+    {t:'Enseignants : présences',qs:[
+      {id:'ens-papier',q:'Anciennes présences, absences ou retards notés sur papier :',o:ON,n:{si:['Oui'],t:'date',lib:'Depuis le'}},
+      {id:'ens-photos',q:'Photos prises :',o:ON},
+      {id:'ens-bilan',q:'Le bilan sert à :',o:['Salaire','Rapport à la direction','Les deux','Autre'],n:{si:['Autre'],lib:'Note'}},
+      {id:'ens-periode',q:'Période la plus utile :',o:['Mois','2 mois','Trimestre']},
+      {id:'ens-total',q:'Ajouter le total des présences dans le bilan :',o:ON},
+      {id:'ens-menu',q:'Mettre le bilan aussi dans le menu Enseignants :',o:ON},
+      {id:'ens-heure',q:'Noter l’heure d’arrivée pour un retard :',o:ON},
+      {id:'ens-par',q:'Présence notée par :',o:['Classe (comme aujourd’hui)','Enseignant (suit la personne si elle change de classe)']}
+    ]},
+    {t:'Élèves : absences',qs:[
+      {id:'abs-appel',q:'L’appel se fait :',o:['Dans l’appli par les enseignants','Sur cahier','Pas encore fait']},
+      {id:'abs-papier',q:'Anciennes absences sur papier à saisir :',o:ON}
+    ]},
+    {t:'Emploi du temps',qs:[
+      {id:'edt-rempli',q:'Rempli dans l’appli :',o:['Toutes les classes','Certaines','Aucune']},
+      {id:'edt-semaine',q:'Semaine type ou semaine datée :',o:['Semaine type suffit','Besoin d’une semaine datée']},
+      {id:'edt-imprimer',q:'Imprimer toutes les classes d’un coup :',o:ON},
+      {id:'edt-feuille',q:'Une feuille pour toute l’école affichée à l’entrée :',o:ON}
+    ]},
+    {t:'Autre',qs:[
+      {id:'autre',q:'Autre :',o:[],n:{si:[],t:'long',lib:'Note'}}
+    ]}
   ];
-  let etat={i:0,envoye:false,noms:{sec:'',compta:'',ctrl:'',autre:''},poste:'',qui:{},ou:{},moisDebut:'',moisFin:'',collation:'',transport:'',garde1:'',garde2:'',eleves:'',familles:'',coince:''};
+
+  let etat={r:{},n:{},ouvert:[0],vue:'form',envoye:false};
   try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
   const $=id=>document.getElementById(id);
   let t;
-  function sauver(){try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Enregistré sur ce téléphone';}catch(e){}clearTimeout(t);t=setTimeout(()=>{$('enregistre').textContent='';},1500);}
-
-  function personnes(){
-    const n=etat.noms,l=['Directrice'];
-    l.push(n.sec.trim()?n.sec.trim()+' (secrétaire)':'Secrétaire');
-    l.push(n.compta.trim()?n.compta.trim()+' (comptable)':'Comptable');
-    const p=etat.poste.trim()||'contrôle des profs';
-    l.push(n.ctrl.trim()?n.ctrl.trim()+' ('+p.toLowerCase()+')':p.charAt(0).toUpperCase()+p.slice(1));
-    if(n.autre.trim())l.push(n.autre.trim());
-    l.push('Personne');
-    return l;
-  }
+  function sauver(){try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Brouillon enregistré sur ce téléphone';}catch(e){}clearTimeout(t);t=setTimeout(()=>{$('enregistre').textContent='';},1500);}
   function el(tag,attrs,txt){const e=document.createElement(tag);if(attrs)for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
-  function puces(options,estActif,clic){
-    const z=el('div',{class:'puces'});
-    options.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':estActif(o)?'true':'false'},o);
-      b.addEventListener('click',()=>{clic(o);z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',estActif(x.textContent)?'true':'false'));sauver();});z.appendChild(b);});
-    return z;
-  }
-  function champ(lib,id,val,set,opts){
-    const l=el('label',{class:'champ',for:id});l.append(document.createTextNode(lib));
-    if(opts&&opts.facultatif){l.append(el('span',{class:'facultatif'},' (facultatif)'));}
-    const i=el('input',{type:(opts&&opts.type)||'text',id:id});if(opts&&opts.type==='number'){i.inputMode='numeric';i.min='0';}
-    if(opts&&opts.ph)i.placeholder=opts.ph;i.value=val||'';i.addEventListener('input',()=>{set(i.value);sauver();});l.appendChild(i);return l;
-  }
-  function choix(lib,id,val,set,liste){
-    const l=el('label',{class:'champ',for:id},lib);const s=el('select',{id:id});
-    s.appendChild(el('option',{value:''},'Choisir'));liste.forEach(m=>{const o=el('option',{value:m},m);if(m===val)o.selected=true;s.appendChild(o);});
-    s.addEventListener('change',()=>{set(s.value);sauver();});l.appendChild(s);return l;
+
+  const noteVue=q=>!!q.n&&(q.n.si.length===0||q.n.si.includes(etat.r[q.id]));
+  const repondu=q=>q.o.length?!!etat.r[q.id]:!!(etat.n[q.id]||'').trim();
+  function compte(p){return [p.qs.filter(repondu).length,p.qs.length];}
+  function majCompteurs(){
+    let a=0,b=0;
+    PARTIES.forEach((p,i)=>{const [x,y]=compte(p);a+=x;b+=y;const c=$('compte'+i);c.textContent=x+' / '+y+' répondu';c.classList.toggle('plein',x===y);});
+    $('total').textContent=a+' / '+b;$('barre').style.width=(a/b*100)+'%';
   }
 
-  const ECRANS=[];
-  ECRANS.push({rendu:z=>{
-    z.append(el('h1',null,'Bonjour'));
-    z.append(el('p',{class:'aide',style:'margin:0'},'Merci pour vos premières réponses. Il reste quelques questions pour finir, environ 5 minutes. Presque tout se fait en touchant un bouton. Vos réponses restent sur ce téléphone tant que vous ne les envoyez pas. Vous pouvez arrêter et reprendre plus tard.'));
-  }});
-  ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},'Toute l’équipe'));
-    const b=el('div',{class:'bloc'});
-    b.append(champ('Prénom de la secrétaire','nomSec',etat.noms.sec,v=>etat.noms.sec=v,{facultatif:1}));
-    b.append(champ('Prénom de la comptable','nomCompta',etat.noms.compta,v=>etat.noms.compta=v,{facultatif:1}));
-    b.append(champ('Comment s’appelle le poste de la personne qui contrôle les professeurs ?','poste',etat.poste,v=>etat.poste=v,{ph:'Exemple : Surveillant général'}));
-    b.append(champ('Son prénom','nomCtrl',etat.noms.ctrl,v=>etat.noms.ctrl=v,{facultatif:1}));
-    b.append(champ('Une autre personne travaille dans les bureaux ? Prénom et poste','nomAutre',etat.noms.autre,v=>etat.noms.autre=v,{facultatif:1,ph:'Exemple : Fatou, caissière'}));
-    z.append(b);
-  }});
-  TACHES.forEach(([k,q])=>ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},q));
-    z.append(el('p',{class:'aide',style:'margin:-8px 0 12px'},'Touchez une ou plusieurs personnes.'));
-    etat.qui[k]=(etat.qui[k]||[]).filter(g=>personnes().includes(g));
-    z.append(puces(personnes(),o=>etat.qui[k].includes(o),o=>{const a=etat.qui[k],j=a.indexOf(o);if(j<0)a.push(o);else a.splice(j,1);}));
-    z.append(el('p',{class:'sous'},'Où c’est noté ?'));
-    z.append(puces(OU,o=>etat.ou[k]===o,o=>{etat.ou[k]=etat.ou[k]===o?'':o;}));
-  }}));
-  ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},'La mensualité se paie de quel mois à quel mois ?'));
-    const d=el('div',{class:'duo'});
-    d.append(choix('Premier mois','moisDebut',etat.moisDebut,v=>etat.moisDebut=v,MOIS));
-    d.append(choix('Dernier mois','moisFin',etat.moisFin,v=>etat.moisFin=v,MOIS));
-    z.append(d);
-  }});
-  ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},'La collation (12 000 F) se paie :'));
-    z.append(puces(['Une fois par an','Chaque mois'],o=>etat.collation===o,o=>{etat.collation=etat.collation===o?'':o;}));
-  }});
-  ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},'Le transport (20 000 ou 25 000 F) se paie :'));
-    z.append(puces(['Chaque mois','Une fois par an'],o=>etat.transport===o,o=>{etat.transport=etat.transport===o?'':o;}));
-  }});
-  ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},'Comment s’appellent les deux groupes de la garderie ?'));
-    const b=el('div',{class:'bloc'});
-    b.append(champ('Les bébés, dès 3 mois','garde1',etat.garde1,v=>etat.garde1=v,{ph:'Exemple : Poussinière'}));
-    b.append(champ('Les 2 ans à 2 ans ½','garde2',etat.garde2,v=>etat.garde2=v,{ph:'Exemple : Toute petite section'}));
-    z.append(b);
-  }});
-  ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},'L’école en chiffres'));
-    z.append(el('p',{class:'aide',style:'margin:-8px 0 12px'},'Un chiffre approximatif suffit.'));
-    const d=el('div',{class:'duo'});
-    d.append(champ('Élèves','eleves',etat.eleves,v=>etat.eleves=v,{type:'number'}));
-    d.append(champ('Familles','familles',etat.familles,v=>etat.familles=v,{type:'number'}));
-    z.append(d);
-  }});
-  ECRANS.push({rendu:z=>{
-    z.append(el('h2',{class:'question'},'Qu’est-ce qui vous fait perdre du temps aujourd’hui ?'));
-    const l=el('label',{class:'champ',for:'coince'});l.append(el('span',{class:'facultatif'},'Facultatif'));
-    const a=el('textarea',{id:'coince',placeholder:'Exemple : je dois appeler pour savoir qui a payé.'});a.value=etat.coince;a.addEventListener('input',()=>{etat.coince=a.value;sauver();});l.append(a);z.append(l);
-  }});
-  ECRANS.push({recap:true,rendu:z=>{
-    z.append(el('h2',null,'Vérifiez puis envoyez'));
-    z.append(el('p',{class:'aide'},'Voici ce qui partira. Vous pouvez revenir en arrière pour corriger.'));
-    z.append(el('div',{class:'recap',id:'recap',tabindex:'0'},texte()));
-    const a=el('div',{class:'actions'});
-    const b=el('button',{type:'button',class:'bouton plein',id:'envoyer'},'Envoyer');b.addEventListener('click',envoyer);a.append(b);
-    a.append(el('p',{class:'petit',id:'envoiEtat',role:'status'}));
-    const s=el('div',{class:'actions',id:'secours',style:'margin-top:0'});s.hidden=true;
-    const wa=el('a',{class:'bouton lien',id:'wa',href:'https://wa.me/?text='+encodeURIComponent(texte()),target:'_blank',rel:'noopener'},'Envoyer sur WhatsApp');
-    const cp=el('button',{type:'button',class:'bouton vide',id:'copier'},'Copier le texte');cp.addEventListener('click',copier);
-    s.append(wa,cp,el('p',{class:'petit',id:'copieEtat',role:'status'}));a.append(s);z.append(a);
-  }});
+  function champNote(q,box){
+    box.innerHTML='';if(!noteVue(q))return;
+    const id='n-'+q.id,l=el('label',{class:'note',for:id});
+    const t=el('span',null,q.n.lib);t.append(el('span',{class:'facultatif'},' (facultatif)'));l.append(t);
+    const i=q.n.t==='long'?el('textarea',{id:id}):el('input',{id:id,type:q.n.t||'text'});
+    if(q.n.t==='number'){i.inputMode='numeric';i.min='0';i.step='500';}
+    i.value=etat.n[q.id]||'';i.addEventListener('input',()=>{etat.n[q.id]=i.value;sauver();majCompteurs();});
+    l.append(i);box.append(l);
+  }
+  function question(q){
+    const d=el('div',{class:'q'}),lid='l-'+q.id;
+    d.append(el('p',{class:'lib',id:lid},q.q));
+    const box=el('div');
+    if(q.o.length){
+      const z=el('div',{class:'puces',role:'group','aria-labelledby':lid});
+      q.o.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':etat.r[q.id]===o?'true':'false'},o);
+        b.addEventListener('click',()=>{etat.r[q.id]=etat.r[q.id]===o?'':o;
+          z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',etat.r[q.id]===x.textContent?'true':'false'));
+          champNote(q,box);sauver();majCompteurs();});
+        z.append(b);});
+      d.append(z);
+    }
+    champNote(q,box);d.append(box);return d;
+  }
+  function construire(){
+    const w=$('parties');
+    PARTIES.forEach((p,i)=>{
+      const det=el('details',{class:'partie'});if(etat.ouvert.includes(i))det.open=true;
+      const s=el('summary');s.append(el('span',{class:'titre'},(i+1)+'. '+p.t),el('span',{class:'compte',id:'compte'+i}),el('span',{class:'fleche','aria-hidden':'true'}));
+      det.append(s);const c=el('div',{class:'corps'});if(p.aide)c.append(el('p',{class:'aide'},p.aide));
+      p.qs.forEach(q=>c.append(question(q)));det.append(c);
+      det.addEventListener('toggle',()=>{etat.ouvert=etat.ouvert.filter(x=>x!==i);if(det.open)etat.ouvert.push(i);sauver();});
+      w.append(det);
+    });
+    majCompteurs();
+  }
 
-  function v(x){return (x&&String(x).trim())||'?';}
+  function dateFr(v){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||'');return m?m[3]+'/'+m[2]+'/'+m[1]:v;}
   function texte(){
-    const n=etat.noms,L=['QUESTIONNAIRE DIRECTRICE (suite) — Au Cocon Du Bonheur',''];
-    L.push('1. L’ÉQUIPE');
-    L.push('- Secrétaire : '+v(n.sec));L.push('- Comptable : '+v(n.compta));
-    L.push('- Poste contrôle des profs : '+v(etat.poste)+' | prénom : '+v(n.ctrl));
-    if(n.autre.trim())L.push('- Autre : '+n.autre.trim());
-    L.push('');L.push('2. QUI FAIT QUOI (inscription : Directrice, déjà répondu)');
-    TACHES.forEach(([k,q])=>{const g=(etat.qui[k]||[]);L.push('- '+q.replace('Qui ','').replace(' ?','')+' : '+(g.length?g.join(', '):'?')+' | noté : '+v(etat.ou[k])+(g.filter(x=>x!=='Personne').length>1?'  ⚠ plusieurs':''));});
-    L.push('');L.push('3. FRAIS');
-    L.push('- Mensualité : de '+v(etat.moisDebut)+' à '+v(etat.moisFin));
-    L.push('- Collation : '+v(etat.collation));L.push('- Transport : '+v(etat.transport));
-    L.push('- Garderie dès 3 mois : '+v(etat.garde1));L.push('- Garderie 2 ans à 2 ans ½ : '+v(etat.garde2));
-    L.push('');L.push('4. CHIFFRES');
-    L.push('- Élèves : '+v(etat.eleves)+' | Familles : '+v(etat.familles));
-    L.push('');L.push('5. CE QUI FAIT PERDRE DU TEMPS');L.push(v(etat.coince));
-    return L.join('\n');
+    let a=0,b=0;PARTIES.forEach(p=>{const [x,y]=compte(p);a+=x;b+=y;});
+    const L=['AU COCON : RÉUNION AVEC ANNA, 03/11',a+' / '+b+' questions répondues',''];
+    PARTIES.forEach((p,i)=>{
+      L.push((i+1)+'. '+p.t.toUpperCase());if(p.aide)L.push('('+p.aide+')');
+      p.qs.forEach(q=>{
+        let r=q.o.length?(etat.r[q.id]||'(pas répondu)'):'';
+        let n=noteVue(q)?(etat.n[q.id]||'').trim():'';
+        if(n&&q.n.t==='date')n=dateFr(n);
+        if(n&&q.n.lib.includes('(en F)'))n=n+' F';
+        if(q.o.length){L.push('- '+q.q+' '+r+(n?' ; '+q.n.lib.replace(' (en F)','')+' : '+n:''));}
+        else L.push('- '+q.q+' '+(n||'(rien)'));
+      });
+      L.push('');
+    });
+    return L.join('\n').trim();
   }
 
-  function succes(){
-    const z=$('ecran');z.innerHTML='';
-    z.append(el('h2',null,'C’est envoyé, merci'));
-    z.append(el('p',{class:'aide'},'Ousseynou a bien reçu vos réponses. Vous pouvez fermer cette page.'));
-    const b=el('button',{type:'button',class:'bouton vide'},'Modifier mes réponses');
-    b.addEventListener('click',()=>{etat.envoye=false;montrer(1);});z.append(b);
-    $('pied').hidden=true;$('etapeNum').textContent='Envoyé';$('barre').style.width='100%';
+  function vue(v){
+    etat.vue=v;sauver();
+    $('parties').hidden=v!=='form';$('vueRecap').hidden=v!=='recap';$('vueFin').hidden=v!=='fin';
+    $('pied').hidden=v==='fin';$('piedForm').hidden=v!=='form';$('piedRecap').hidden=v!=='recap';
+    if(v==='recap'){$('recap').textContent=texte();$('envoiEtat').textContent='';}
+    window.scrollTo({top:0});
+    const h=v==='recap'?$('titreRecap'):v==='fin'?$('titreFin'):null;if(h)h.focus({preventScroll:true});
   }
   async function envoyer(){
     const b=$('envoyer');b.disabled=true;$('envoiEtat').textContent='Envoi en cours…';
     try{
-      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({_subject:'Questionnaire de la Directrice (suite) — Au Cocon',reponses:texte()})});
-      if(!r.ok)throw new Error(r.status);
-      etat.envoye=true;sauver();succes();
-    }catch(e){$('envoiEtat').textContent='L’envoi n’a pas marché. Vos réponses sont gardées sur ce téléphone. Envoyez-les sur WhatsApp :';$('secours').hidden=false;b.disabled=false;}
+      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},
+        body:JSON.stringify({_subject:SUJET,_gotcha:$('gotcha').value,reponses:texte()})});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||j.ok!==true)throw new Error(r.status);
+      etat.envoye=true;vue('fin');
+    }catch(e){$('envoiEtat').textContent='L’envoi n’a pas marché (réseau ?). Les réponses restent sur ce téléphone : réessaie un peu plus tard.';}
+    b.disabled=false;
   }
-  function copier(){
-    const repli=()=>{const r=document.createRange();r.selectNodeContents($('recap'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('copieEtat').textContent='Texte sélectionné : appuyez longuement puis « Copier ».';};
-    try{navigator.clipboard.writeText(texte()).then(()=>{$('copieEtat').textContent='Copié. Collez-le dans WhatsApp.';},repli);}catch(e){repli();}
-  }
-  function montrer(n){
-    etat.i=Math.max(0,Math.min(ECRANS.length-1,n));sauver();
-    const z=$('ecran');z.innerHTML='';ECRANS[etat.i].rendu(z);
-    const total=ECRANS.length-1;
-    $('pied').hidden=false;
-    $('etapeNum').textContent=etat.i===0?'':(ECRANS[etat.i].recap?'Résumé':'Question '+etat.i+' sur '+(total-1));
-    $('barre').style.width=((etat.i)/total*100)+'%';
-    $('prec').hidden=etat.i===0;$('suiv').hidden=!!ECRANS[etat.i].recap;
-    $('suiv').textContent=etat.i===0?'Commencer':(etat.i===total-1?'Voir le résumé':'Suivant');
-    window.scrollTo({top:0});
-    const h=z.querySelector('h1,h2');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}
-  }
-  $('suiv').addEventListener('click',()=>montrer(etat.i+1));
-  $('prec').addEventListener('click',()=>montrer(etat.i-1));
+  $('voir').addEventListener('click',()=>vue('recap'));
+  $('modifier').addEventListener('click',()=>vue('form'));
+  $('rouvrir').addEventListener('click',()=>vue('form'));
+  $('envoyer').addEventListener('click',envoyer);
   $('f').addEventListener('submit',e=>e.preventDefault());
-  if(etat.envoye)succes();else montrer(etat.i);
+  construire();
+  vue(etat.vue==='recap'||etat.vue==='fin'?etat.vue:'form');
 })();
 </script>
-
 </body>
 </html>

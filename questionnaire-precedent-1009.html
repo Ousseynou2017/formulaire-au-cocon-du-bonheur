@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Questionnaire de la Directrice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<style>
+[hidden]{display:none!important}
+/* Charte Au Cocon : une étape par écran, carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. */
+:root{
+  --violet:#873897; --violet-fonce:#5A2166; --violet-clair:#F6EDF8;
+  --creme:#FDF6E6; --fond:#EFE9F1; --carte:#FFFFFF;
+  --encre:#331F3A; --titre:#5E4966; --doux:#5A4862; --filet:#EADFEC;
+  --ok:#1D6B44;
+  --f-titre:'Baloo 2','Poppins',system-ui,sans-serif;
+  --f-texte:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.55}
+.cadre{max-width:640px;margin:0 auto;padding-block:20px 120px;padding-inline:16px}
+header.haut{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.marque{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);font-size:18px}
+.etape-num{font-size:13px;color:var(--doux);font-variant-numeric:tabular-nums}
+.barre{height:6px;background:var(--filet);border-radius:999px;overflow:hidden;margin-bottom:18px}
+.barre i{display:block;height:100%;background:var(--violet);width:0;transition:width .25s}
+.carte{background:var(--carte);border:1px solid var(--filet);border-radius:20px;padding:22px 18px}
+h1,h2{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);line-height:1.2;margin:0 0 6px;text-wrap:balance}
+h1{font-size:28px} h2{font-size:23px}
+.aide{color:var(--doux);font-size:14px;margin:0 0 18px}
+.bloc{display:flex;flex-direction:column;gap:14px}
+label.champ{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;color:var(--titre)}
+input[type=text],input[type=number],textarea,select{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:11px 12px;width:100%;min-width:0}
+textarea{min-height:120px;resize:vertical}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.ligne-membre{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center}
+.ligne-membre button{border:0;background:none;color:var(--doux);font-size:22px;width:40px;height:44px;cursor:pointer;border-radius:10px}
+@media (max-width:420px){.ligne-membre{grid-template-columns:1fr auto}.ligne-membre select{grid-column:1/2}}
+.tache{border-top:1px solid var(--filet);padding-top:14px}
+.tache:first-child{border-top:0;padding-top:0}
+.tache h3{font-family:var(--f-texte);font-weight:500;font-size:16px;margin:0 0 8px;color:var(--encre)}
+.tache .sous{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--doux);margin:10px 0 6px}
+.puces{display:flex;flex-wrap:wrap;gap:8px}
+.puce{font:inherit;font-size:14px;border:1px solid var(--filet);background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
+.puce[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:#fff}
+.alerte{display:none;margin-top:8px;font-size:13px;color:#8F430C;background:#FDF5EE;border-radius:10px;padding:6px 10px}
+.alerte.vue{display:block}
+.frais{width:100%;border-collapse:collapse;font-size:14px}
+.frais th{font-weight:500;text-align:left;color:var(--doux);font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:0 6px 8px}
+.frais td{padding:4px 6px;border-top:1px solid var(--filet)}
+.frais td:first-child{font-weight:500;white-space:nowrap}
+.frais input{padding:9px 10px;font-variant-numeric:tabular-nums}
+.defile{overflow-x:auto}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:420px){.trio{grid-template-columns:1fr}}
+.coche{display:flex;gap:10px;align-items:center;font-size:15px;padding:6px 0}
+.coche input{width:22px;height:22px;accent-color:var(--violet)}
+.recap{white-space:pre-wrap;background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:14px;font-size:14px;max-height:340px;overflow:auto}
+nav.pied{position:fixed;left:0;right:0;bottom:0;background:var(--carte);border-top:1px solid var(--filet);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px}
+.bouton{font:inherit;font-weight:500;font-size:16px;border-radius:999px;padding:12px 20px;cursor:pointer;border:1px solid var(--violet);min-height:48px}
+.bouton.plein{background:var(--violet);color:#fff;flex:1}
+.bouton.vide{background:var(--carte);color:var(--violet-fonce);border-color:var(--filet)}
+.bouton.lien{display:block;text-align:center;text-decoration:none;background:var(--violet);color:#fff}
+.actions{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.petit{font-size:13px;color:var(--doux)}
+.enregistre{font-size:12px;color:var(--ok);min-height:18px}
+@media (prefers-reduced-motion:reduce){.barre i{transition:none}}
+.question{font-family:var(--f-titre);font-weight:500;color:var(--violet-fonce);font-size:23px;line-height:1.2;margin:0 0 16px;text-wrap:balance}
+.sous{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--doux);margin:18px 0 8px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.duo{grid-template-columns:1fr}}
+.facultatif{font-weight:400;color:var(--doux)}
+</style>
+</head>
+<body>
+<div class="cadre">
+  <header class="haut">
+    <span class="marque">Au Cocon Du Bonheur</span>
+    <span class="etape-num" id="etapeNum"></span>
+  </header>
+  <div class="barre" aria-hidden="true"><i id="barre"></i></div>
+  <form id="f" novalidate><section class="carte" id="ecran" aria-live="polite"></section></form>
+  <p class="enregistre" id="enregistre" role="status"></p>
+</div>
+
+<nav class="pied" id="pied">
+  <div class="dedans">
+    <button type="button" class="bouton vide" id="prec">Retour</button>
+    <button type="button" class="bouton plein" id="suiv">Commencer</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  const CLE='aucocon-questionnaire-directrice-v2';
+  const ENVOI='https://formspree.io/f/xrennzzp';
+  const MOIS=['Septembre','Octobre','Novembre','Décembre','Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août'];
+  const OU=['Cahier','Excel','WhatsApp','Rien'];
+  const TACHES=[
+    ['encaisser','Qui encaisse l’argent des familles ?'],
+    ['recu','Qui fait le reçu ?'],
+    ['caisse','Qui garde la caisse ?'],
+    ['relance','Qui relance une famille en retard de paiement ?'],
+    ['absences','Qui note les absences des élèves ?'],
+    ['presence','Qui pointe la présence des professeurs ?'],
+    ['comptes','Qui fait les comptes du mois ?'],
+    ['appels','Qui appelle les parents ?']
+  ];
+  let etat={i:0,envoye:false,noms:{sec:'',compta:'',ctrl:'',autre:''},poste:'',qui:{},ou:{},moisDebut:'',moisFin:'',collation:'',transport:'',garde1:'',garde2:'',eleves:'',familles:'',coince:''};
+  try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
+  const $=id=>document.getElementById(id);
+  let t;
+  function sauver(){try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Enregistré sur ce téléphone';}catch(e){}clearTimeout(t);t=setTimeout(()=>{$('enregistre').textContent='';},1500);}
+
+  function personnes(){
+    const n=etat.noms,l=['Directrice'];
+    l.push(n.sec.trim()?n.sec.trim()+' (secrétaire)':'Secrétaire');
+    l.push(n.compta.trim()?n.compta.trim()+' (comptable)':'Comptable');
+    const p=etat.poste.trim()||'contrôle des profs';
+    l.push(n.ctrl.trim()?n.ctrl.trim()+' ('+p.toLowerCase()+')':p.charAt(0).toUpperCase()+p.slice(1));
+    if(n.autre.trim())l.push(n.autre.trim());
+    l.push('Personne');
+    return l;
+  }
+  function el(tag,attrs,txt){const e=document.createElement(tag);if(attrs)for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
+  function puces(options,estActif,clic){
+    const z=el('div',{class:'puces'});
+    options.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':estActif(o)?'true':'false'},o);
+      b.addEventListener('click',()=>{clic(o);z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',estActif(x.textContent)?'true':'false'));sauver();});z.appendChild(b);});
+    return z;
+  }
+  function champ(lib,id,val,set,opts){
+    const l=el('label',{class:'champ',for:id});l.append(document.createTextNode(lib));
+    if(opts&&opts.facultatif){l.append(el('span',{class:'facultatif'},' (facultatif)'));}
+    const i=el('input',{type:(opts&&opts.type)||'text',id:id});if(opts&&opts.type==='number'){i.inputMode='numeric';i.min='0';}
+    if(opts&&opts.ph)i.placeholder=opts.ph;i.value=val||'';i.addEventListener('input',()=>{set(i.value);sauver();});l.appendChild(i);return l;
+  }
+  function choix(lib,id,val,set,liste){
+    const l=el('label',{class:'champ',for:id},lib);const s=el('select',{id:id});
+    s.appendChild(el('option',{value:''},'Choisir'));liste.forEach(m=>{const o=el('option',{value:m},m);if(m===val)o.selected=true;s.appendChild(o);});
+    s.addEventListener('change',()=>{set(s.value);sauver();});l.appendChild(s);return l;
+  }
+
+  const ECRANS=[];
+  ECRANS.push({rendu:z=>{
+    z.append(el('h1',null,'Bonjour'));
+    z.append(el('p',{class:'aide',style:'margin:0'},'Merci pour vos premières réponses. Il reste quelques questions pour finir, environ 5 minutes. Presque tout se fait en touchant un bouton. Vos réponses restent sur ce téléphone tant que vous ne les envoyez pas. Vous pouvez arrêter et reprendre plus tard.'));
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Toute l’équipe'));
+    const b=el('div',{class:'bloc'});
+    b.append(champ('Prénom de la secrétaire','nomSec',etat.noms.sec,v=>etat.noms.sec=v,{facultatif:1}));
+    b.append(champ('Prénom de la comptable','nomCompta',etat.noms.compta,v=>etat.noms.compta=v,{facultatif:1}));
+    b.append(champ('Comment s’appelle le poste de la personne qui contrôle les professeurs ?','poste',etat.poste,v=>etat.poste=v,{ph:'Exemple : Surveillant général'}));
+    b.append(champ('Son prénom','nomCtrl',etat.noms.ctrl,v=>etat.noms.ctrl=v,{facultatif:1}));
+    b.append(champ('Une autre personne travaille dans les bureaux ? Prénom et poste','nomAutre',etat.noms.autre,v=>etat.noms.autre=v,{facultatif:1,ph:'Exemple : Fatou, caissière'}));
+    z.append(b);
+  }});
+  TACHES.forEach(([k,q])=>ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},q));
+    z.append(el('p',{class:'aide',style:'margin:-8px 0 12px'},'Touchez une ou plusieurs personnes.'));
+    etat.qui[k]=(etat.qui[k]||[]).filter(g=>personnes().includes(g));
+    z.append(puces(personnes(),o=>etat.qui[k].includes(o),o=>{const a=etat.qui[k],j=a.indexOf(o);if(j<0)a.push(o);else a.splice(j,1);}));
+    z.append(el('p',{class:'sous'},'Où c’est noté ?'));
+    z.append(puces(OU,o=>etat.ou[k]===o,o=>{etat.ou[k]=etat.ou[k]===o?'':o;}));
+  }}));
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'La mensualité se paie de quel mois à quel mois ?'));
+    const d=el('div',{class:'duo'});
+    d.append(choix('Premier mois','moisDebut',etat.moisDebut,v=>etat.moisDebut=v,MOIS));
+    d.append(choix('Dernier mois','moisFin',etat.moisFin,v=>etat.moisFin=v,MOIS));
+    z.append(d);
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'La collation (12 000 F) se paie :'));
+    z.append(puces(['Une fois par an','Chaque mois'],o=>etat.collation===o,o=>{etat.collation=etat.collation===o?'':o;}));
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Le transport (20 000 ou 25 000 F) se paie :'));
+    z.append(puces(['Chaque mois','Une fois par an'],o=>etat.transport===o,o=>{etat.transport=etat.transport===o?'':o;}));
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Comment s’appellent les deux groupes de la garderie ?'));
+    const b=el('div',{class:'bloc'});
+    b.append(champ('Les bébés, dès 3 mois','garde1',etat.garde1,v=>etat.garde1=v,{ph:'Exemple : Poussinière'}));
+    b.append(champ('Les 2 ans à 2 ans ½','garde2',etat.garde2,v=>etat.garde2=v,{ph:'Exemple : Toute petite section'}));
+    z.append(b);
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'L’école en chiffres'));
+    z.append(el('p',{class:'aide',style:'margin:-8px 0 12px'},'Un chiffre approximatif suffit.'));
+    const d=el('div',{class:'duo'});
+    d.append(champ('Élèves','eleves',etat.eleves,v=>etat.eleves=v,{type:'number'}));
+    d.append(champ('Familles','familles',etat.familles,v=>etat.familles=v,{type:'number'}));
+    z.append(d);
+  }});
+  ECRANS.push({rendu:z=>{
+    z.append(el('h2',{class:'question'},'Qu’est-ce qui vous fait perdre du temps aujourd’hui ?'));
+    const l=el('label',{class:'champ',for:'coince'});l.append(el('span',{class:'facultatif'},'Facultatif'));
+    const a=el('textarea',{id:'coince',placeholder:'Exemple : je dois appeler pour savoir qui a payé.'});a.value=etat.coince;a.addEventListener('input',()=>{etat.coince=a.value;sauver();});l.append(a);z.append(l);
+  }});
+  ECRANS.push({recap:true,rendu:z=>{
+    z.append(el('h2',null,'Vérifiez puis envoyez'));
+    z.append(el('p',{class:'aide'},'Voici ce qui partira. Vous pouvez revenir en arrière pour corriger.'));
+    z.append(el('div',{class:'recap',id:'recap',tabindex:'0'},texte()));
+    const a=el('div',{class:'actions'});
+    const b=el('button',{type:'button',class:'bouton plein',id:'envoyer'},'Envoyer');b.addEventListener('click',envoyer);a.append(b);
+    a.append(el('p',{class:'petit',id:'envoiEtat',role:'status'}));
+    const s=el('div',{class:'actions',id:'secours',style:'margin-top:0'});s.hidden=true;
+    const wa=el('a',{class:'bouton lien',id:'wa',href:'https://wa.me/?text='+encodeURIComponent(texte()),target:'_blank',rel:'noopener'},'Envoyer sur WhatsApp');
+    const cp=el('button',{type:'button',class:'bouton vide',id:'copier'},'Copier le texte');cp.addEventListener('click',copier);
+    s.append(wa,cp,el('p',{class:'petit',id:'copieEtat',role:'status'}));a.append(s);z.append(a);
+  }});
+
+  function v(x){return (x&&String(x).trim())||'?';}
+  function texte(){
+    const n=etat.noms,L=['QUESTIONNAIRE DIRECTRICE (suite) — Au Cocon Du Bonheur',''];
+    L.push('1. L’ÉQUIPE');
+    L.push('- Secrétaire : '+v(n.sec));L.push('- Comptable : '+v(n.compta));
+    L.push('- Poste contrôle des profs : '+v(etat.poste)+' | prénom : '+v(n.ctrl));
+    if(n.autre.trim())L.push('- Autre : '+n.autre.trim());
+    L.push('');L.push('2. QUI FAIT QUOI (inscription : Directrice, déjà répondu)');
+    TACHES.forEach(([k,q])=>{const g=(etat.qui[k]||[]);L.push('- '+q.replace('Qui ','').replace(' ?','')+' : '+(g.length?g.join(', '):'?')+' | noté : '+v(etat.ou[k])+(g.filter(x=>x!=='Personne').length>1?'  ⚠ plusieurs':''));});
+    L.push('');L.push('3. FRAIS');
+    L.push('- Mensualité : de '+v(etat.moisDebut)+' à '+v(etat.moisFin));
+    L.push('- Collation : '+v(etat.collation));L.push('- Transport : '+v(etat.transport));
+    L.push('- Garderie dès 3 mois : '+v(etat.garde1));L.push('- Garderie 2 ans à 2 ans ½ : '+v(etat.garde2));
+    L.push('');L.push('4. CHIFFRES');
+    L.push('- Élèves : '+v(etat.eleves)+' | Familles : '+v(etat.familles));
+    L.push('');L.push('5. CE QUI FAIT PERDRE DU TEMPS');L.push(v(etat.coince));
+    return L.join('\n');
+  }
+
+  function succes(){
+    const z=$('ecran');z.innerHTML='';
+    z.append(el('h2',null,'C’est envoyé, merci'));
+    z.append(el('p',{class:'aide'},'Ousseynou a bien reçu vos réponses. Vous pouvez fermer cette page.'));
+    const b=el('button',{type:'button',class:'bouton vide'},'Modifier mes réponses');
+    b.addEventListener('click',()=>{etat.envoye=false;montrer(1);});z.append(b);
+    $('pied').hidden=true;$('etapeNum').textContent='Envoyé';$('barre').style.width='100%';
+  }
+  async function envoyer(){
+    const b=$('envoyer');b.disabled=true;$('envoiEtat').textContent='Envoi en cours…';
+    try{
+      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({_subject:'Questionnaire de la Directrice (suite) — Au Cocon',reponses:texte()})});
+      if(!r.ok)throw new Error(r.status);
+      etat.envoye=true;sauver();succes();
+    }catch(e){$('envoiEtat').textContent='L’envoi n’a pas marché. Vos réponses sont gardées sur ce téléphone. Envoyez-les sur WhatsApp :';$('secours').hidden=false;b.disabled=false;}
+  }
+  function copier(){
+    const repli=()=>{const r=document.createRange();r.selectNodeContents($('recap'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('copieEtat').textContent='Texte sélectionné : appuyez longuement puis « Copier ».';};
+    try{navigator.clipboard.writeText(texte()).then(()=>{$('copieEtat').textContent='Copié. Collez-le dans WhatsApp.';},repli);}catch(e){repli();}
+  }
+  function montrer(n){
+    etat.i=Math.max(0,Math.min(ECRANS.length-1,n));sauver();
+    const z=$('ecran');z.innerHTML='';ECRANS[etat.i].rendu(z);
+    const total=ECRANS.length-1;
+    $('pied').hidden=false;
+    $('etapeNum').textContent=etat.i===0?'':(ECRANS[etat.i].recap?'Résumé':'Question '+etat.i+' sur '+(total-1));
+    $('barre').style.width=((etat.i)/total*100)+'%';
+    $('prec').hidden=etat.i===0;$('suiv').hidden=!!ECRANS[etat.i].recap;
+    $('suiv').textContent=etat.i===0?'Commencer':(etat.i===total-1?'Voir le résumé':'Suivant');
+    window.scrollTo({top:0});
+    const h=z.querySelector('h1,h2');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}
+  }
+  $('suiv').addEventListener('click',()=>montrer(etat.i+1));
+  $('prec').addEventListener('click',()=>montrer(etat.i-1));
+  $('f').addEventListener('submit',e=>e.preventDefault());
+  if(etat.envoye)succes();else montrer(etat.i);
+})();
+</script>
+
+</body>
+</html>
