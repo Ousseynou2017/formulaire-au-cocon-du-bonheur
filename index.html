@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://formspree.io; form-action https://formspree.io; base-uri 'none'">
-<title>Réunion Anna 03/11</title>
+<title>Validation Au Cocon 04/11</title>
 <style>
 [hidden]{display:none!important}
 /* Charte Au Cocon : carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. Polices du téléphone, rien d'externe. */
@@ -18,7 +18,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.5}
+body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.5;overflow-wrap:break-word}
 .cadre{max-width:640px;margin:0 auto;padding-block:20px 120px;padding-inline:16px}
 .marque{font-weight:600;color:var(--violet-fonce);font-size:15px;margin:0 0 4px}
 h1,h2{font-weight:700;color:var(--violet-fonce);line-height:1.2;margin:0 0 6px;text-wrap:balance}
@@ -38,18 +38,25 @@ details[open]>summary .fleche{transform:rotate(-135deg);margin-top:4px}
 .corps{padding:0 16px 16px}
 .corps>.aide{margin-top:-4px}
 .q{border-top:1px solid var(--filet);padding:14px 0 4px}
-.q:first-of-type{border-top:0;padding-top:4px}
+.corps>.q:first-of-type{border-top:0;padding-top:4px}
 .q .lib{font-weight:500;font-size:15px;margin:0 0 8px;color:var(--encre)}
+.sous{font-weight:700;font-size:14px;color:var(--violet-fonce);margin:18px 0 0;padding-top:14px;border-top:2px solid var(--filet)}
+.sous+.q{border-top:0}
 .puces{display:flex;flex-wrap:wrap;gap:8px}
-.puce{font:inherit;font-size:14px;border:1px solid #D9C8DE;background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:42px;text-align:left}
+.puce{font:inherit;font-size:14px;border:1px solid #D9C8DE;background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:42px;max-width:100%;text-align:left}
 .puce:hover{border-color:var(--violet)}
 .puce:active{transform:scale(.97)}
 .puce[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:#fff}
-.puce:focus-visible,.bouton:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.puce:focus-visible,.bouton:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,details.prec>summary:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
 label.note{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--titre);margin-top:10px}
-input[type=text],input[type=number],input[type=date],textarea{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:10px 12px;width:100%;min-width:0}
+input[type=text],input[type=number],input[type=date],textarea,select{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:10px 12px;width:100%;min-width:0}
 textarea{min-height:76px;resize:vertical}
 .facultatif{color:var(--doux);font-weight:400}
+.enfant{background:var(--violet-clair);border-radius:12px;padding:4px 12px 12px;margin-top:10px}
+.enfant .num{font-size:13px;font-weight:600;color:var(--violet-fonce);margin:8px 0 0}
+.ajout{margin-top:14px}
+details.prec{margin-top:16px;border-top:2px solid var(--filet);padding-top:12px}
+details.prec>summary{cursor:pointer;font-size:14px;color:var(--violet-fonce);font-weight:600;border-radius:8px;padding:6px 0;min-height:36px}
 .carte{background:var(--carte);border:1px solid var(--filet);border-radius:18px;padding:20px 16px}
 .recap{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:14px;font-size:14px;max-height:55vh;overflow:auto}
 nav.pied{position:fixed;left:0;right:0;bottom:0;background:var(--carte);border-top:1px solid var(--filet);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
@@ -71,8 +78,8 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px;align-items
 <body>
 <div class="cadre">
   <p class="marque">Au Cocon Du Bonheur</p>
-  <h1>Réunion avec Anna, 03/11</h1>
-  <p class="aide">Les photos (cahiers, feuilles de présence) : envoie-les à part sur WhatsApp.</p>
+  <h1>Validation, 04/11</h1>
+  <p class="aide">Tout est facultatif : envoie même si des questions restent vides.</p>
   <div class="barre" aria-hidden="true"><i id="barre"></i></div>
 
   <form id="f" novalidate>
@@ -106,118 +113,183 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px;align-items
 
 <script>
 (function(){
-  const CLE='aucocon-reunion-anna-0311';
+  const CLE='aucocon-validation-0411';
   const ENVOI='https://formspree.io/f/xrennzzp';
   const TEST=new URLSearchParams(location.search).has('test');
-  const SUJET=(TEST?'TEST – ':'')+'Au Cocon – réunion Anna 03/11';
+  const SUJET=(TEST?'TEST – ':'')+'Au Cocon – validation 04/11';
 
-  /* Une question : id, q (texte complet repris dans la réponse), o (choix), n (note : si = choix qui l'ouvrent, vide = toujours ; t = text, number, date, long) */
-  const OK=['OK','Erreur'],NOTE_ERR={si:['Erreur'],lib:'Note'};
-  const PAYE=['Payé','Pas payé','Ne sait pas'],MONTANT={si:['Payé'],t:'number',lib:'Montant payé (en F)'};
+  /* Une question : id, q (texte repris dans la réponse), o (choix), multi (plusieurs choix), n (notes : si = choix qui l'ouvrent, vide = toujours ; t = text, number, date, long).
+     Genres à part : titre (sous-titre), perso (personne du personnel + ses enfants), ajout (bouton « + Autre personne »). */
   const ON=['Oui','Non'];
-  const CLASSES=['Crèche','TPS','PS','MS','GS','CI','CP','CE1','CE2','CM1','CM2'];
-  const INSCRITS=['Dieynabou S. (62 000 F dans le fichier)','Sokhna Diarra G.','Aïcha G.','Aïssatou N.','Ramatoulaye N.','Cheikh Ahmadou Bamba M.','Mouhamadou Mansour D.','Ndeye Cathy F.'];
+  const F=n=>n.toLocaleString('fr-FR').replace(/\s/g,' ')+' F';
+  const CLASSES=['Poussinière','TPS','PS','MS','GS','CI','CP','CE1','CE2','CM1','CM2'];
+  const PERSONNEL=['Aïssata S.','Khady','Waldé W.','Awa Kassary B.','Maïmouna S.','Ramatoulaye B.','Ndèye Coura D.','Mame B.','Hélène Isabelle B.','Khardiata N.','Fatou S.','Aminata G.','Anna T.','« T. » (seul sur la feuille)','M. D. (directeur des études)','Mme S. (intervenante)','La directrice'];
+  const CAR_NOV=['Mathys J. (PS)','Mouhamed Askia T. (MS)','Astou G. (CE1)','Ndeye Penda T. (CE1)','Serigne Saliou G. (CE1)','Ndeye Ngone D. (CI)','Mouhamed Rassoul D. (MS)','Sophia O. (CI)','Cherif Maleyni B. (CI)'];
+  const PROBABLES=[
+    ['car','Seydina Mouhammad T.','Seydina Mouhamed T. (TPS)'],
+    ['car','Adja Binetou D.','Adja Binetou Naby D. (GS)'],
+    ['car','David Samb S.','David Samba S. (MS)'],
+    ['car','Yaya Omar B.','Yahya Omar B. (CM1)'],
+    ['car','Maymouna C.','Maïmouna Diarra C. (GS)'],
+    ['car','Ibrahima D.','Ibrahim D. (GS)'],
+    ['études CI','Adama Moundor N.','Adama Moundor N. (CI), nom écrit autrement'],
+    ['études CM2','Pendant S.','Penda S. (CM2)'],
+    ['études CM2','Mouhamadou Mahdiyou G.','Mouhamadou Mahdihou G. (CM2)']
+  ];
+  const ECHANTILLON=[
+    ['PS','Abdou D.',85500,30000],['GS','Sassoum Zahra D.',85500,30000],['CI','Fatimata Zahra T.',74000,25000],['CP','Yaye Fatou D.',74000,25000],
+    ['CE1','Cheikh Ahmed Tidjane G.',74000,25000],['CE2','Mame Diarra S.',62000,25000],['CM1','Adjaratou Paya D.',74000,25000],['CM2','Daouda Yague G.',62000,25000]
+  ];
+  const INSC_PAYEE=['Aïcha G.','Aïssatou N.','Ramatoulaye N.','Mouhamadou Mansour D.'];
+
+  let etat={r:{},n:{},ouvert:[0],vue:'form',envoye:false,autres:0};
+  try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
+
   const PARTIES=[
-    {t:'Élèves : vérification par échantillon',aide:'1 élève par classe, comparé au registre d’Anna : nom, classe, date d’arrivée.',qs:[
-      ...CLASSES.map(c=>({id:'ech-'+c,q:'Élève vérifié en '+c+' :',o:OK,n:NOTE_ERR})),
-      {id:'ech-partis',q:'Élèves partis (3 vérifiés) :',o:OK,n:NOTE_ERR}
+    {t:'Règles de l’école',aide:'Avec la directrice.',qs:[
+      {id:'a-insc',q:'Une inscription non payée passe en retard après le 5 du mois, comme les mensualités :',o:ON,n:{si:['Non'],lib:'À partir de quand (date ou jour du mois)'}},
+      {id:'a-juin',q:'Juin divisé en 5 parts ajoutées de janvier à mai, collation de juin comprise :',o:ON},
+      {id:'a-prix-car',q:'Transport : la fiche dit '+F(20000)+' (Ouakam) / '+F(25000)+' (hors Ouakam), mais les parents paient surtout '+F(15000)+'. Le vrai prix :',o:[F(15000)+' pour tous',F(20000)+' ou '+F(25000)+' selon la zone','Ça dépend de l’élève','Autre'],n:{si:['Autre'],t:'number',lib:'Montant (en F)'}},
+      {id:'a-ibrahima',q:'Ibrahima D. paie '+F(10000)+' de car :',o:['Demi-trajet','Réduction','Erreur','Ne sait pas']},
+      {id:'a-feuille-car',q:'Feuille du car d’octobre : elle écrit '+F(317000)+' encaissés, les lignes font '+F(327000)+' ; reste après dépenses : '+F(47500)+' écrit, '+F(67500)+' calculé. Le bon chiffre :',o:['Celui de la feuille','Celui des lignes','À revérifier avec Aminata']},
+      {id:'a-presence',q:'Présence du personnel notée par personne, comme la feuille papier, retard après 8 h 15 :',o:ON,n:{si:['Non'],lib:'Autre heure'}},
+      {id:'a-mathys',q:'Mathys J. : il reste '+F(8000)+' sur le transport d’octobre. On les réclame :',o:['Oui','Non','Déjà réglé']},
+      {id:'a-visite-note',q:'Visites de classe : la note écrite par la direction après sa visite (ex. « revoir le tableau de lecture ») :',o:['Visible par l’enseignant','Privée à la direction']},
+      {id:'a-visite-planning',q:'Visites de classe : qui saisit le planning :',o:['Directrice et directeur des études','Aussi la secrétaire']}
     ]},
-    {t:'Qui est qui',qs:[
-      {id:'qui-aminata',q:'Aminata Rassoul W. (MS) et Aminata Rassoul S. :',o:['Même enfant','Deux enfants','À vérifier']},
-      {id:'qui-adja',q:'Adja Fatou F., notée en CP et en CE1 :',o:['CP','CE1','Deux enfants différents']},
-      {id:'qui-ndeye',q:'Ndeye Maguette G., en double en CE1 :',o:['Même enfant','Deux enfants']},
-      {id:'qui-moustapha',q:'Moustapha S., noté parti le 23/10 :',o:['Parti pour de bon','Toujours à l’école']}
+    {t:'Enfants du personnel et réductions',aide:'Certains élèves ont un parent qui travaille à l’école et ont une réduction.',qs:()=>[
+      {id:'b-reduc',q:'Les enfants du personnel ont une réduction :',o:['Oui','Non','Ça dépend de la personne']},
+      {id:'b-quoi',q:'Sur quoi (plusieurs choix possibles) :',multi:true,o:['Inscription','Mensualités','Juillet','Collation','Tenue ou blouse','Transport','Études','Tout']},
+      {id:'b-combien',q:'Combien :',o:['25 %','50 %','100 % (gratuit)','Montant fixe par mois','Autre'],n:[{si:['Montant fixe par mois'],t:'number',lib:'Montant par mois (en F)'},{si:['Autre'],lib:'Combien'}]},
+      {id:'b-meme',q:'La même réduction pour tout le personnel (si non : précise par enfant juste en dessous) :',o:ON},
+      {titre:'Qui a un enfant à l’école ? (feuille de présence du 03/11)'},
+      ...PERSONNEL.map((x,i)=>({id:'b-p'+i,perso:x,q:x+' : a un enfant à l’école ?',o:['Non','Oui']})),
+      ...Array.from({length:etat.autres},(_,k)=>({id:'b-autre'+k,perso:'',q:'Autre personne : a un enfant à l’école ?',o:['Non','Oui']})),
+      {ajout:true},
+      {id:'b-depuis',q:'Ces réductions existent depuis :',o:['Rentrée 2026-2027','Avant','Ne sait pas']},
+      {id:'b-corriger',q:'Les mois déjà payés plein tarif cette année :',o:['On les corrige (avoir sur les prochains mois)','On laisse','Ne sait pas']}
     ]},
-    {t:'Inscriptions marquées non payées',aide:'Pour chacun : payé ou non, et le montant si payé.',qs:
-      INSCRITS.map((x,i)=>({id:'insc-'+i,q:'Inscription de '+x+' :',o:PAYE,n:MONTANT}))
-    },
-    {t:'Montants',qs:[
-      {id:'mt-collation',q:'38 enfants notés sans collation :',o:['Bon nombre','Pas bon'],n:{si:['Pas bon'],t:'number',lib:'Nombre exact'}},
-      ...['Loucia','Pape Ibrahima Ndao N.','Marieme F.'].map((x,i)=>({id:'mt-double-'+i,q:'Montant écrit 2 fois dans le fichier, '+x+' :',o:['Payé une fois','Payé deux fois','Ne sait pas']})),
-      ...['Abdoulaye S.','Ndeye Fatou G.','Sokhna Diarra G.'].map((x,i)=>({id:'mt-absent-'+i,q:'Absent des mensualités, '+x+' :',o:['Toujours inscrit','Parti','Ne sait pas']})),
-      {id:'mt-creche-juillet',q:'La crèche paie juillet :',o:ON},
-      {id:'mt-tps-juillet',q:'La TPS paie juillet :',o:ON},
-      {id:'mt-reclame',q:'Une inscription non payée est réclamée à partir du :',o:['01/10','01/11','Autre date'],n:{si:['Autre date'],t:'date',lib:'Date'}},
-      {id:'mt-valide',q:'Section Paiements validée par Anna (échantillon 1 élève par classe concordant) :',o:['Oui','Non, erreurs'],n:{si:['Non, erreurs'],lib:'Note'}}
+    {t:'Personnel',qs:[
+      {id:'c-dir-etudes',q:'M. D. (directeur des études) signe la feuille de présence :',o:ON},
+      {id:'c-intervenante',q:'Mme S. (intervenante) signe la feuille de présence :',o:ON},
+      {id:'c-t-seul',q:'« T. » seul sur la feuille, c’est :',o:['La directrice','Une autre personne'],n:{si:['Une autre personne'],lib:'Nom et fonction'}},
+      {id:'c-ndeye',q:'Ndèye Coura D. : son nom s’écrit avec :',o:['« tt » (Dia-tta)','« ll » (Dia-lla)']}
     ]},
-    {t:'Familles (frères et sœurs)',qs:[
-      {id:'fam-comment',q:'Comment l’école sait que deux enfants sont frères et sœurs :',o:['Même téléphone du parent','Même nom du père','Elle ne le note pas','Autre'],n:{si:['Autre'],lib:'Note'}},
-      {id:'fam-tel',q:'Les parents ont un numéro de téléphone noté :',o:['Tous','Certains','Aucun']},
-      {id:'fam-reduc',q:'Une réduction existe pour les frères et sœurs :',o:ON,n:{si:['Oui'],lib:'Laquelle'}},
-      {id:'fam-corriger',q:'Fratries à corriger :',o:[],n:{si:[],t:'long',lib:'Note'}}
+    {t:'Inscriptions et élèves',aide:'Avec Anna.',qs:[
+      ...INSC_PAYEE.map((x,i)=>({id:'d-insc'+i,q:x+' : inscription payée :',o:['Oui','Non','En partie'],n:{si:['Oui','En partie'],t:'number',lib:'Montant payé (en F)'}})),
+      {id:'d-bamba',q:'Cheikh Ahmadou Bamba M. : les '+F(25000)+' qui restent, c’est :',o:['L’inscription','Tenue + assurance + collation ('+F(24000)+')','Autre'],n:{si:['Autre'],lib:'Quoi'}},
+      {id:'d-aminata-s',q:'Aminata Rassoul S. (PS) : montant payé pour l’inscription (on ne connaît que juillet, '+F(30000)+') :',o:[],n:{si:[],t:'number',lib:'Montant (en F)'}},
+      {id:'d-aminata-w',q:'Aminata Rassoul W. : sa classe :',o:['PS','MS']},
+      {id:'d-loucia',q:'Loucia : c’est bien « Loucia B. » dans l’appli :',o:ON},
+      {id:'d-garderie',q:'Garderie : le carnet note '+F(30000)+' (TPS) / '+F(40000)+' (Poussinière) à l’inscription. La blouse et le 1er mois sont payés à part :',o:['Oui','Non','Inclus']}
     ]},
-    {t:'Enseignants : présences',qs:[
-      {id:'ens-papier',q:'Anciennes présences, absences ou retards notés sur papier :',o:ON,n:{si:['Oui'],t:'date',lib:'Depuis le'}},
-      {id:'ens-photos',q:'Photos prises :',o:ON},
-      {id:'ens-bilan',q:'Le bilan sert à :',o:['Salaire','Rapport à la direction','Les deux','Autre'],n:{si:['Autre'],lib:'Note'}},
-      {id:'ens-periode',q:'Période la plus utile :',o:['Mois','2 mois','Trimestre']},
-      {id:'ens-total',q:'Ajouter le total des présences dans le bilan :',o:ON},
-      {id:'ens-menu',q:'Mettre le bilan aussi dans le menu Enseignants :',o:ON},
-      {id:'ens-heure',q:'Noter l’heure d’arrivée pour un retard :',o:ON},
-      {id:'ens-par',q:'Présence notée par :',o:['Classe (comme aujourd’hui)','Enseignant (suit la personne si elle change de classe)']}
+    {t:'Car et études',qs:[
+      {titre:'Payés en octobre, pas en novembre : prend le car en novembre ?'},
+      ...CAR_NOV.map((x,i)=>({id:'e-nov'+i,q:x+' :',o:['Oui','Non','Arrêté']})),
+      {titre:'Même élève ? (feuille d’Aminata → appli)'},
+      ...PROBABLES.map(([f,a,b],i)=>({id:'e-prob'+i,q:'Feuille '+f+' « '+a+' » → appli « '+b+' » :',o:['Même élève','Pas le même','Ne sait pas']})),
+      {titre:'Dépenses du car d’octobre sans date'},
+      {id:'e-dep1',q:'Nettoyage du car, '+F(3000)+' :',o:[],n:{si:[],t:'date',lib:'Date'}},
+      {id:'e-dep2',q:'Achat de gasoil, '+F(50000)+' :',o:[],n:{si:[],t:'date',lib:'Date'}}
     ]},
-    {t:'Élèves : absences',qs:[
-      {id:'abs-appel',q:'L’appel se fait :',o:['Dans l’appli par les enseignants','Sur cahier','Pas encore fait']},
-      {id:'abs-papier',q:'Anciennes absences sur papier à saisir :',o:ON}
+    {t:'Vérification par échantillon',aide:'1 élève tiré au sort par classe. Ce que l’appli croit payé d’après l’import ; octobre et novembre se lisent dans l’appli.',qs:[
+      ...ECHANTILLON.map(([c,x,i,j])=>({id:'f-'+c,q:x+' ('+c+') : inscription '+F(i)+', juillet '+F(j)+' payés :',o:['Juste','Faux'],n:{si:['Faux'],lib:'Précision'}})),
+      {titre:'Élèves partis'},
+      {id:'f-parti1',q:'Moustapha S. (CE1), parti le 23/10 :',o:['Bien parti','Pas parti']},
+      {id:'f-parti2',q:'Cheikh Ahmadou Bamba D. (CI), parti le 23/10 :',o:['Bien parti','Pas parti']},
+      {id:'f-parti3',q:'Un 3e élève parti :',o:['Bien parti','Pas parti'],n:{si:[],lib:'Nom de l’élève'}}
     ]},
-    {t:'Emploi du temps',qs:[
-      {id:'edt-rempli',q:'Rempli dans l’appli :',o:['Toutes les classes','Certaines','Aucune']},
-      {id:'edt-semaine',q:'Semaine type ou semaine datée :',o:['Semaine type suffit','Besoin d’une semaine datée']},
-      {id:'edt-imprimer',q:'Imprimer toutes les classes d’un coup :',o:ON},
-      {id:'edt-feuille',q:'Une feuille pour toute l’école affichée à l’entrée :',o:ON}
-    ]},
-    {t:'Autre',qs:[
-      {id:'autre',q:'Autre :',o:[],n:{si:[],t:'long',lib:'Note'}}
+    {t:'À rapporter',qs:[
+      {id:'g-registre',q:'Photo du registre avec les numéros des parents :',o:['Rapporté','Pas encore']},
+      {id:'g-presence',q:'Feuilles de présence du personnel depuis le 08/10 :',o:['Rapporté','Pas encore']},
+      {id:'g-appel',q:'Cahier d’appel des élèves :',o:['Rapporté','Pas encore']}
     ]}
   ];
 
-  let etat={r:{},n:{},ouvert:[0],vue:'form',envoye:false};
-  try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
   const $=id=>document.getElementById(id);
   let t;
   function sauver(){try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Brouillon enregistré sur ce téléphone';}catch(e){}clearTimeout(t);t=setTimeout(()=>{$('enregistre').textContent='';},1500);}
   function el(tag,attrs,txt){const e=document.createElement(tag);if(attrs)for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
 
-  const noteVue=q=>!!q.n&&(q.n.si.length===0||q.n.si.includes(etat.r[q.id]));
-  const repondu=q=>q.o.length?!!etat.r[q.id]:!!(etat.n[q.id]||'').trim();
-  function compte(p){return [p.qs.filter(repondu).length,p.qs.length];}
+  const qsDe=p=>typeof p.qs==='function'?p.qs():p.qs;
+  const vraies=p=>qsDe(p).filter(q=>q.id);
+  const notes=q=>!q.n?[]:Array.isArray(q.n)?q.n:[q.n];
+  const choisi=(q,o)=>q.multi?(etat.r[q.id]||[]).includes(o):etat.r[q.id]===o;
+  const noteVue=(q,n)=>n.si.length===0||n.si.some(o=>choisi(q,o));
+  const repondu=q=>q.perso===''?!!(etat.n[q.id+'-nom']||'').trim()||!!etat.r[q.id]:q.o.length?(q.multi?(etat.r[q.id]||[]).length>0:!!etat.r[q.id]):!!(etat.n[q.id]||'').trim();
+  function compte(p){const v=vraies(p);return [v.filter(repondu).length,v.length];}
   function majCompteurs(){
     let a=0,b=0;
     PARTIES.forEach((p,i)=>{const [x,y]=compte(p);a+=x;b+=y;const c=$('compte'+i);c.textContent=x+' / '+y+' répondu';c.classList.toggle('plein',x===y);});
     $('total').textContent=a+' / '+b;$('barre').style.width=(a/b*100)+'%';
   }
 
-  function champNote(q,box){
-    box.innerHTML='';if(!noteVue(q))return;
-    const id='n-'+q.id,l=el('label',{class:'note',for:id});
-    const t=el('span',null,q.n.lib);t.append(el('span',{class:'facultatif'},' (facultatif)'));l.append(t);
-    const i=q.n.t==='long'?el('textarea',{id:id}):el('input',{id:id,type:q.n.t||'text'});
-    if(q.n.t==='number'){i.inputMode='numeric';i.min='0';i.step='500';}
-    i.value=etat.n[q.id]||'';i.addEventListener('input',()=>{etat.n[q.id]=i.value;sauver();majCompteurs();});
-    l.append(i);box.append(l);
+  function champ(cle,lib,type){
+    const id='n-'+cle,l=el('label',{class:'note',for:id});
+    const s=el('span',null,lib);s.append(el('span',{class:'facultatif'},' (facultatif)'));l.append(s);
+    let i;
+    if(type==='long')i=el('textarea',{id:id});
+    else if(type==='classe'){i=el('select',{id:id});i.append(el('option',{value:''},'Choisir'));CLASSES.forEach(c=>i.append(el('option',{value:c},c)));}
+    else i=el('input',{id:id,type:type||'text'});
+    if(type==='number'){i.inputMode='numeric';i.min='0';i.step='500';}
+    i.value=etat.n[cle]||'';
+    i.addEventListener(type==='classe'?'change':'input',()=>{etat.n[cle]=i.value;sauver();majCompteurs();});
+    l.append(i);return l;
   }
-  function question(q){
+  function champsNote(q,box){
+    box.innerHTML='';
+    notes(q).forEach((n,k)=>{if(noteVue(q,n))box.append(champ(q.id+(k?'-'+k:''),n.lib,n.t));});
+    if(q.perso!==undefined&&etat.r[q.id]==='Oui')enfants(q,box);
+  }
+  function enfants(q,box){
+    const nb=+etat.r[q.id+'-nb']||0,lid='l-'+q.id+'-nb';
+    const d=el('div',{class:'q'});d.style.borderTop='0';
+    d.append(el('p',{class:'lib',id:lid},'Combien d’enfants à l’école :'));
+    const z=el('div',{class:'puces',role:'group','aria-labelledby':lid});
+    ['1','2','3'].forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':String(etat.r[q.id+'-nb']===o)},o);
+      b.addEventListener('click',()=>{etat.r[q.id+'-nb']=etat.r[q.id+'-nb']===o?'':o;champsNote(q,box);sauver();});z.append(b);});
+    d.append(z);box.append(d);
+    for(let k=1;k<=nb;k++){
+      const e=el('div',{class:'enfant'});e.append(el('p',{class:'num'},'Enfant '+k));
+      const c=q.id+'-e'+k;
+      e.append(champ(c+'-nom','Nom de l’enfant'),champ(c+'-classe','Classe','classe'),champ(c+'-reduc','Réduction différente pour cet enfant'));
+      box.append(e);
+    }
+  }
+  function question(q,refaire){
+    if(q.titre)return el('p',{class:'sous'},q.titre);
+    if(q.ajout){const b=el('button',{type:'button',class:'bouton vide ajout'},'+ Autre personne');
+      b.addEventListener('click',()=>{etat.autres++;sauver();refaire(etat.autres-1);});return b;}
     const d=el('div',{class:'q'}),lid='l-'+q.id;
+    if(q.perso==='')d.append(champ(q.id+'-nom','Nom de la personne'));
     d.append(el('p',{class:'lib',id:lid},q.q));
     const box=el('div');
     if(q.o.length){
       const z=el('div',{class:'puces',role:'group','aria-labelledby':lid});
-      q.o.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':etat.r[q.id]===o?'true':'false'},o);
-        b.addEventListener('click',()=>{etat.r[q.id]=etat.r[q.id]===o?'':o;
-          z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',etat.r[q.id]===x.textContent?'true':'false'));
-          champNote(q,box);sauver();majCompteurs();});
+      q.o.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':String(choisi(q,o))},o);
+        b.addEventListener('click',()=>{
+          if(q.multi){const a=etat.r[q.id]||[];etat.r[q.id]=a.includes(o)?a.filter(x=>x!==o):a.concat(o);}
+          else etat.r[q.id]=etat.r[q.id]===o?'':o;
+          z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',String(choisi(q,x.textContent))));
+          champsNote(q,box);sauver();majCompteurs();});
         z.append(b);});
       d.append(z);
     }
-    champNote(q,box);d.append(box);return d;
+    champsNote(q,box);d.append(box);return d;
+  }
+  function remplir(c,p,i){
+    c.innerHTML='';if(p.aide)c.append(el('p',{class:'aide'},p.aide));
+    const refaire=k=>{remplir(c,p,i);majCompteurs();const n=$('n-b-autre'+k+'-nom');if(n)n.focus();};
+    qsDe(p).forEach(q=>c.append(question(q,refaire)));
+    const pr=el('details',{class:'prec'});if((etat.n['prec-'+i]||'').trim())pr.open=true;
+    pr.append(el('summary',null,'Précision'),champ('prec-'+i,'Précision sur cette partie','long'));c.append(pr);
   }
   function construire(){
     const w=$('parties');
     PARTIES.forEach((p,i)=>{
       const det=el('details',{class:'partie'});if(etat.ouvert.includes(i))det.open=true;
-      const s=el('summary');s.append(el('span',{class:'titre'},(i+1)+'. '+p.t),el('span',{class:'compte',id:'compte'+i}),el('span',{class:'fleche','aria-hidden':'true'}));
-      det.append(s);const c=el('div',{class:'corps'});if(p.aide)c.append(el('p',{class:'aide'},p.aide));
-      p.qs.forEach(q=>c.append(question(q)));det.append(c);
+      const s=el('summary');s.append(el('span',{class:'titre'},String.fromCharCode(65+i)+'. '+p.t),el('span',{class:'compte',id:'compte'+i}),el('span',{class:'fleche','aria-hidden':'true'}));
+      det.append(s);const c=el('div',{class:'corps'});remplir(c,p,i);det.append(c);
       det.addEventListener('toggle',()=>{etat.ouvert=etat.ouvert.filter(x=>x!==i);if(det.open)etat.ouvert.push(i);sauver();});
       w.append(det);
     });
@@ -225,19 +297,29 @@ nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px;align-items
   }
 
   function dateFr(v){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||'');return m?m[3]+'/'+m[2]+'/'+m[1]:v;}
+  function valeur(n,v){v=(v||'').trim();if(!v)return '';if(n.t==='date')return dateFr(v);if(n.lib.includes('(en F)'))return v+' F';return v;}
   function texte(){
     let a=0,b=0;PARTIES.forEach(p=>{const [x,y]=compte(p);a+=x;b+=y;});
-    const L=['AU COCON : RÉUNION AVEC ANNA, 03/11',a+' / '+b+' questions répondues',''];
+    const L=['AU COCON : VALIDATION DU 04/11',a+' / '+b+' questions répondues',''];
     PARTIES.forEach((p,i)=>{
-      L.push((i+1)+'. '+p.t.toUpperCase());if(p.aide)L.push('('+p.aide+')');
-      p.qs.forEach(q=>{
-        let r=q.o.length?(etat.r[q.id]||'(pas répondu)'):'';
-        let n=noteVue(q)?(etat.n[q.id]||'').trim():'';
-        if(n&&q.n.t==='date')n=dateFr(n);
-        if(n&&q.n.lib.includes('(en F)'))n=n+' F';
-        if(q.o.length){L.push('- '+q.q+' '+r+(n?' ; '+q.n.lib.replace(' (en F)','')+' : '+n:''));}
-        else L.push('- '+q.q+' '+(n||'(rien)'));
+      L.push(String.fromCharCode(65+i)+'. '+p.t.toUpperCase());
+      qsDe(p).forEach(q=>{
+        if(q.titre){L.push('['+q.titre+']');return;}
+        if(q.ajout)return;
+        const ext=notes(q).map((n,k)=>noteVue(q,n)?[n.lib.replace(' (en F)',''),valeur(n,etat.n[q.id+(k?'-'+k:'')])]:null).filter(x=>x&&x[1]).map(x=>' ; '+x[0]+' : '+x[1]).join('');
+        let lib=q.q;
+        if(q.perso===''){const nom=(etat.n[q.id+'-nom']||'').trim();if(!nom&&!etat.r[q.id])return;lib=(nom||'Autre personne (sans nom)')+' : a un enfant à l’école ?';}
+        if(q.o.length){
+          const r=q.multi?((etat.r[q.id]||[]).join(', ')||'(pas répondu)'):(etat.r[q.id]||'(pas répondu)');
+          L.push('- '+lib+' '+r+ext);
+        }else L.push('- '+lib+' '+(ext?ext.slice(3).replace(/^[^:]+: /,''):'(rien)'));
+        if(q.perso!==undefined&&etat.r[q.id]==='Oui'){
+          const nb=+etat.r[q.id+'-nb']||0;if(!nb)L.push('    nombre d’enfants : (pas répondu)');
+          for(let k=1;k<=nb;k++){const c=q.id+'-e'+k,g=s=>(etat.n[c+s]||'').trim();
+            L.push('    enfant '+k+' : '+(g('-nom')||'(nom ?)')+', '+(g('-classe')||'(classe ?)')+(g('-reduc')?', réduction : '+g('-reduc'):''));}
+        }
       });
+      const pr=(etat.n['prec-'+i]||'').trim();if(pr)L.push('- Précision : '+pr);
       L.push('');
     });
     return L.join('\n').trim();

@@ -8,7 +8,7 @@ Page unique et autonome : `index.html` contient le HTML, le CSS et le JS. Aucun 
 - **`sw.js`** : worker de retrait. Il vide les caches et se désinscrit sur les téléphones qui avaient l'ancien formulaire. Ne pas le supprimer tant que d'anciens visiteurs peuvent revenir.
 - **`noindex`** : la page n'est pas indexée par les moteurs de recherche.
 
-La page actuelle est le formulaire de la réunion avec Anna du 03/11 (clé `localStorage` `aucocon-reunion-anna-0311`, `?test` préfixe l'objet par « TEST – »). Le questionnaire précédent est gardé dans `questionnaire-precedent-1009.html`.
+La page actuelle est le formulaire de validation du 04/11 (clé `localStorage` `aucocon-validation-0411`, `?test` préfixe l'objet par « TEST – »). Les questionnaires précédents sont gardés dans `questionnaire-precedent-1009.html` et `questionnaire-precedent-0311.html` (réunion Anna du 03/11).
 
 L'ancien formulaire « site » (questions.json, config.json, app.js, style.css, tests) est conservé dans le tag `ancien-formulaire-site`.
 
