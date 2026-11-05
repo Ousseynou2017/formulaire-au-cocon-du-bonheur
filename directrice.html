@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://formspree.io; form-action https://formspree.io; base-uri 'none'">
+<title>Au Cocon, directrice 05/11</title>
+<style>
+[hidden]{display:none!important}
+/* Charte Au Cocon : carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. Polices du téléphone, rien d'externe. */
+:root{
+  --violet:#873897; --violet-fonce:#5A2166; --violet-clair:#F6EDF8;
+  --creme:#FDF6E6; --fond:#EFE9F1; --carte:#FFFFFF;
+  --encre:#331F3A; --titre:#5E4966; --doux:#5A4862; --filet:#EADFEC;
+  --ok:#1D6B44;
+  --f-texte:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.5;overflow-wrap:break-word}
+.cadre{max-width:640px;margin:0 auto;padding-block:20px 120px;padding-inline:16px}
+.marque{font-weight:600;color:var(--violet-fonce);font-size:15px;margin:0 0 4px}
+h1,h2{font-weight:700;color:var(--violet-fonce);line-height:1.2;margin:0 0 6px;text-wrap:balance}
+h1{font-size:26px} h2{font-size:21px} h2:focus{outline:none}
+.aide{color:var(--doux);font-size:14px;margin:0 0 14px}
+.barre{height:6px;background:var(--filet);border-radius:999px;overflow:hidden;margin:6px 0 16px}
+.barre i{display:block;height:100%;background:var(--violet);width:0;transition:width .25s}
+details.partie{background:var(--carte);border:1px solid var(--filet);border-radius:18px;margin-bottom:12px}
+details.partie>summary{list-style:none;cursor:pointer;padding:16px 16px;display:flex;align-items:center;gap:10px;border-radius:18px;min-height:56px}
+details.partie>summary::-webkit-details-marker{display:none}
+details.partie>summary:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
+summary .titre{flex:1;min-width:0;font-weight:600;color:var(--violet-fonce);font-size:16px;line-height:1.3}
+summary .compte{font-size:12px;color:var(--doux);white-space:nowrap;font-variant-numeric:tabular-nums;background:var(--violet-clair);border-radius:999px;padding:3px 9px}
+summary .compte.plein{background:#E3F2E9;color:var(--ok)}
+summary .fleche{width:10px;height:10px;border-right:2px solid var(--doux);border-bottom:2px solid var(--doux);transform:rotate(45deg);transition:transform .2s;flex:none;margin-top:-4px}
+details[open]>summary .fleche{transform:rotate(-135deg);margin-top:4px}
+.corps{padding:0 16px 16px}
+.q{border-top:1px solid var(--filet);padding:14px 0 4px}
+.corps>.q:first-child{border-top:0;padding-top:4px}
+.q .lib{font-weight:500;font-size:15px;margin:0 0 8px;color:var(--encre)}
+.sousq{background:var(--violet-clair);border-radius:12px;padding:0 12px 8px;margin-top:12px}
+.sousq>.q:first-child{border-top:0;padding-top:12px}
+.puces{display:flex;flex-wrap:wrap;gap:8px}
+.puce{font:inherit;font-size:14px;border:1px solid #D9C8DE;background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:42px;max-width:100%;text-align:left}
+.puce:hover{border-color:var(--violet)}
+.puce:active{transform:scale(.97)}
+.puce[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:#fff}
+.puce:focus-visible,.bouton:focus-visible,input:focus-visible,textarea:focus-visible,details.prec>summary:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+label.note{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--titre);margin-top:10px}
+input[type=text],input[type=number],input[type=time],textarea{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:10px 12px;width:100%;min-width:0;max-width:100%;min-height:44px}
+textarea{min-height:84px;resize:vertical}
+::placeholder{color:var(--doux);opacity:.8}
+details.prec{margin-top:16px;border-top:2px solid var(--filet);padding-top:12px}
+details.prec>summary{cursor:pointer;font-size:14px;color:var(--violet-fonce);font-weight:600;border-radius:8px;padding:8px 0;min-height:44px}
+.carte{background:var(--carte);border:1px solid var(--filet);border-radius:18px;padding:20px 16px}
+.recap{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:14px;font-size:14px;max-height:55vh;overflow:auto}
+.recap:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+nav.pied{position:fixed;left:0;right:0;bottom:0;background:var(--carte);border-top:1px solid var(--filet);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.total{font-size:13px;color:var(--doux);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bouton{font:inherit;font-weight:600;font-size:16px;border-radius:999px;padding:12px 18px;cursor:pointer;border:1px solid var(--violet);min-height:48px;min-width:0}
+.bouton:active{transform:scale(.98)}
+.bouton.plein{background:var(--violet);color:#fff;flex:1}
+.bouton.plein:hover{background:var(--violet-fonce)}
+.bouton.vide{background:var(--carte);color:var(--violet-fonce);border-color:#D9C8DE}
+.bouton.vide:hover{border-color:var(--violet)}
+.bouton[disabled]{opacity:.6;cursor:wait}
+.petit{font-size:13px;color:var(--doux);margin:8px 0 0}
+.enregistre{font-size:12px;color:var(--ok);min-height:18px;margin:0}
+.piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.barre i,summary .fleche{transition:none}.puce:active,.bouton:active{transform:none}}
+</style>
+</head>
+<body>
+<div class="cadre">
+  <p class="marque">Au Cocon Du Bonheur</p>
+  <h1>Questions pour la directrice</h1>
+  <p class="aide">Environ 5 minutes. Vous pouvez fermer et reprendre plus tard.</p>
+  <div class="barre" aria-hidden="true"><i id="barre"></i></div>
+
+  <form id="f" novalidate>
+    <div class="piege" aria-hidden="true"><label>Ne pas remplir <input type="text" name="_gotcha" id="gotcha" tabindex="-1" autocomplete="off"></label></div>
+    <div id="parties"></div>
+    <section class="carte" id="vueRecap" hidden>
+      <h2 tabindex="-1" id="titreRecap">Récapitulatif</h2>
+      <p class="aide">Voici ce qui partira. Touchez « Modifier » pour corriger.</p>
+      <div class="recap" id="recap" tabindex="0"></div>
+      <p class="petit" id="envoiEtat" role="status"></p>
+    </section>
+    <section class="carte" id="vueFin" hidden>
+      <h2 tabindex="-1" id="titreFin">C’est envoyé</h2>
+      <p class="aide">Vos réponses sont parties. Elles restent aussi sur ce téléphone.</p>
+      <button type="button" class="bouton vide" id="rouvrir">Modifier les réponses</button>
+    </section>
+  </form>
+  <p class="enregistre" id="enregistre" role="status"></p>
+</div>
+
+<nav class="pied" id="pied">
+  <div class="dedans" id="piedForm">
+    <span class="total" id="total"></span>
+    <button type="button" class="bouton plein" id="voir">Voir le récapitulatif</button>
+  </div>
+  <div class="dedans" id="piedRecap" hidden>
+    <button type="button" class="bouton vide" id="modifier">Modifier</button>
+    <button type="button" class="bouton plein" id="envoyer">Envoyer</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  const CLE='aucocon-directrice-0511';
+  const ENVOI='https://formspree.io/f/xrennzzp';
+  const TEST=new URLSearchParams(location.search).has('test');
+  const SUJET=(TEST?'TEST – ':'')+'Au Cocon – directrice 05/11';
+
+  /* Une question : id, q (texte repris dans la réponse), o (choix ; vide = zone de texte), multi (plusieurs choix),
+     n (champs conditionnels : si = choix qui les ouvrent ; t = text, number, time ; lib ; ph),
+     subs (sous-questions affichées seulement si un des choix de "si" est sélectionné), ph (aide de la zone de texte). */
+  const F=n=>n.toLocaleString('fr-FR').replace(/\s/g,' ')+' F';
+
+  let etat={r:{},n:{},ouvert:[0],vue:'form',envoye:false};
+  try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
+
+  const PARTIES=[
+    {t:'Paiements',qs:[
+      {id:'p1',q:'Une famille qui n’a pas payé le mois (ou l’inscription) le 5 passe « en retard » le 6 :',o:['Oui','Non, plus tard'],n:[{si:['Non, plus tard'],t:'text',lib:'À partir du'}]},
+      {id:'p2',q:'Juin est réparti sur les mois de janvier à mai, collation de juin comprise :',o:['Oui','Non']},
+      {id:'p3',q:'Le vrai prix du car par mois :',o:[F(15000)+' pour tous',F(20000)+' à Ouakam, '+F(25000)+' hors Ouakam','Ça dépend de l’élève']}
+    ]},
+    {t:'Personnel',qs:[
+      {id:'p4',q:'Le personnel est en retard après 8 h 15 :',o:['Oui','Autre heure'],n:[{si:['Autre heure'],t:'time',lib:'Heure'}]},
+      {id:'p5',q:'Les enfants du personnel ont une réduction :',o:['Non','Oui'],subs:[
+        {si:['Oui'],id:'p5a',q:'Combien :',o:['25 %','50 %','Gratuit','Montant fixe par mois'],n:[{si:['Montant fixe par mois'],t:'number',lib:'Montant par mois (en F)'}]},
+        {si:['Oui'],id:'p5b',q:'Sur quoi (plusieurs choix) :',multi:true,o:['Inscription','Mensualités','Juillet','Collation','Car','Études']},
+        {si:['Oui'],id:'p5c',q:'Quels enfants :',o:[],ph:'Un par ligne : prénom de l’enfant, puis son parent'},
+        {si:['Oui'],id:'p5d',q:'Les mois déjà payés plein tarif cette année :',o:['On les déduit des prochains mois','On laisse comme ça']}
+      ]}
+    ]},
+    {t:'Visites de classe',autre:true,qs:[
+      {id:'p6',q:'Après une visite de classe, la note écrite par la direction est :',o:['Visible par l’enseignant','Réservée à la direction']},
+      {id:'p7',q:'Les visites de classe sont planifiées par :',o:['Vous et le directeur des études','Aussi par Anna']}
+    ]}
+  ];
+
+  const $=id=>document.getElementById(id);
+  let t;
+  function sauver(){try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Brouillon enregistré sur ce téléphone';}catch(e){}clearTimeout(t);t=setTimeout(()=>{$('enregistre').textContent='';},1500);}
+  function el(tag,attrs,txt){const e=document.createElement(tag);if(attrs)for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
+
+  const choisi=(q,o)=>q.multi?(etat.r[q.id]||[]).includes(o):etat.r[q.id]===o;
+  const ouvre=(q,x)=>x.si.some(o=>choisi(q,o));
+  const sousVues=q=>(q.subs||[]).filter(s=>ouvre(q,s));
+  const champsVus=q=>(q.n||[]).map((n,k)=>({n,k})).filter(x=>ouvre(q,x.n));
+  function visibles(qs){const out=[];qs.forEach(q=>{out.push(q);out.push(...visibles(sousVues(q)));});return out;}
+  const repondu=q=>q.o.length?(q.multi?(etat.r[q.id]||[]).length>0:!!etat.r[q.id]):!!(etat.n[q.id]||'').trim();
+  function compte(p){const v=visibles(p.qs);return [v.filter(repondu).length,v.length];}
+  function majCompteurs(){
+    let a=0,b=0;
+    PARTIES.forEach((p,i)=>{const [x,y]=compte(p);a+=x;b+=y;const c=$('compte'+i);c.textContent=x+' / '+y+' répondu';c.classList.toggle('plein',x===y);});
+    $('total').textContent=a+' / '+b;$('barre').style.width=(b?a/b*100:0)+'%';
+  }
+
+  function champ(cle,lib,type){
+    const id='n-'+cle,l=el('label',{class:'note',for:id});
+    l.append(el('span',null,lib));
+    const i=el('input',{id:id,type:type||'text'});
+    if(type==='number'){i.inputMode='numeric';i.min='0';i.step='500';}
+    i.value=etat.n[cle]||'';
+    i.addEventListener('input',()=>{etat.n[cle]=i.value;sauver();majCompteurs();});
+    l.append(i);return l;
+  }
+  function zone(cle,attrs,ph){
+    const a=Object.assign({id:'n-'+cle},attrs);if(ph)a.placeholder=ph;
+    const z=el('textarea',a);z.value=etat.n[cle]||'';
+    z.addEventListener('input',()=>{etat.n[cle]=z.value;sauver();majCompteurs();});
+    return z;
+  }
+  function dyn(q,box){
+    box.innerHTML='';
+    champsVus(q).forEach(x=>box.append(champ(q.id+'-'+x.k,x.n.lib,x.n.t)));
+    const sv=sousVues(q);
+    if(sv.length){const w=el('div',{class:'sousq'});sv.forEach(s=>w.append(question(s)));box.append(w);}
+  }
+  function question(q){
+    const d=el('div',{class:'q'}),lid='l-'+q.id;
+    d.append(el('p',{class:'lib',id:lid},q.q));
+    const box=el('div');
+    if(q.o.length){
+      const z=el('div',{class:'puces',role:'group','aria-labelledby':lid});
+      q.o.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':String(choisi(q,o)),'data-v':o},o);
+        b.addEventListener('click',()=>{
+          if(q.multi){const a=etat.r[q.id]||[];etat.r[q.id]=a.includes(o)?a.filter(x=>x!==o):a.concat(o);}
+          else etat.r[q.id]=etat.r[q.id]===o?'':o;
+          z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',String(choisi(q,x.getAttribute('data-v')))));
+          dyn(q,box);sauver();majCompteurs();});
+        z.append(b);});
+      d.append(z);
+    }else d.append(zone(q.id,{'aria-labelledby':lid},q.ph));
+    dyn(q,box);d.append(box);return d;
+  }
+  function remplir(c,p){
+    c.innerHTML='';
+    p.qs.forEach(q=>c.append(question(q)));
+    if(p.autre){
+      const pr=el('details',{class:'prec'});if((etat.n.autre||'').trim())pr.open=true;
+      pr.append(el('summary',null,'Autre chose à dire ?'),zone('autre',{'aria-label':'Autre chose à dire'}));c.append(pr);
+    }
+  }
+  function construire(){
+    const w=$('parties');
+    PARTIES.forEach((p,i)=>{
+      const det=el('details',{class:'partie'});if(etat.ouvert.includes(i))det.open=true;
+      const s=el('summary');s.append(el('span',{class:'titre'},String.fromCharCode(65+i)+'. '+p.t),el('span',{class:'compte',id:'compte'+i}),el('span',{class:'fleche','aria-hidden':'true'}));
+      det.append(s);const c=el('div',{class:'corps'});remplir(c,p);det.append(c);
+      det.addEventListener('toggle',()=>{etat.ouvert=etat.ouvert.filter(x=>x!==i);if(det.open)etat.ouvert.push(i);sauver();});
+      w.append(det);
+    });
+    majCompteurs();
+  }
+
+  function valeur(n,v){
+    v=(v||'').trim();if(!v)return '';
+    if(n.t==='number'){const x=Number(v.replace(/\s/g,'').replace(',','.'));return isFinite(x)?F(x):v+' F';}
+    if(n.t==='time')return v.replace(/^0?(\d+):(\d\d)$/,'$1 h $2');
+    return v;
+  }
+  function lignes(q,niv,L){
+    const ind='    '.repeat(niv);
+    const r=q.o.length?(q.multi?(etat.r[q.id]||[]).join(', '):(etat.r[q.id]||'')):(etat.n[q.id]||'').trim();
+    L.push(ind+'- '+q.q+' '+(r?r.split('\n').join('\n'+ind+'    '):'(pas répondu)'));
+    champsVus(q).forEach(x=>{const v=valeur(x.n,etat.n[q.id+'-'+x.k]);if(v)L.push(ind+'    - '+x.n.lib.replace(' (en F)','')+' : '+v);});
+    sousVues(q).forEach(s=>lignes(s,niv+1,L));
+  }
+  function texte(){
+    let a=0,b=0;PARTIES.forEach(p=>{const [x,y]=compte(p);a+=x;b+=y;});
+    const L=['AU COCON : DIRECTRICE, 05/11',a+' / '+b+' questions répondues',''];
+    PARTIES.forEach((p,i)=>{
+      L.push(String.fromCharCode(65+i)+'. '+p.t.toUpperCase());
+      p.qs.forEach(q=>lignes(q,0,L));
+      if(p.autre){const x=(etat.n.autre||'').trim();if(x)L.push('- Autre chose à dire : '+x.split('\n').join('\n    '));}
+      L.push('');
+    });
+    return L.join('\n').trim();
+  }
+
+  function vue(v){
+    etat.vue=v;sauver();
+    $('parties').hidden=v!=='form';$('vueRecap').hidden=v!=='recap';$('vueFin').hidden=v!=='fin';
+    $('pied').hidden=v==='fin';$('piedForm').hidden=v!=='form';$('piedRecap').hidden=v!=='recap';
+    if(v==='recap'){$('recap').textContent=texte();$('envoiEtat').textContent='';}
+    window.scrollTo({top:0});
+    const h=v==='recap'?$('titreRecap'):v==='fin'?$('titreFin'):null;if(h)h.focus({preventScroll:true});
+  }
+  async function envoyer(){
+    const b=$('envoyer');b.disabled=true;$('envoiEtat').textContent='Envoi en cours…';
+    try{
+      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},
+        body:JSON.stringify({_subject:SUJET,_gotcha:$('gotcha').value,pour:'directrice',reponses:texte()})});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||j.ok!==true)throw new Error(r.status);
+      etat.envoye=true;vue('fin');
+    }catch(e){$('envoiEtat').textContent='L’envoi n’a pas marché (réseau ?). Vos réponses restent sur ce téléphone : réessayez un peu plus tard.';}
+    b.disabled=false;
+  }
+  $('voir').addEventListener('click',()=>vue('recap'));
+  $('modifier').addEventListener('click',()=>vue('form'));
+  $('rouvrir').addEventListener('click',()=>vue('form'));
+  $('envoyer').addEventListener('click',envoyer);
+  $('f').addEventListener('submit',e=>e.preventDefault());
+  construire();
+  vue(etat.vue==='recap'||etat.vue==='fin'?etat.vue:'form');
+})();
+</script>
+</body>
+</html>

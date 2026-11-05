@@ -4,354 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://formspree.io; form-action https://formspree.io; base-uri 'none'">
-<title>Validation Au Cocon 04/11</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'">
+<title>Au Cocon, questions 05/11</title>
 <style>
-[hidden]{display:none!important}
-/* Charte Au Cocon : carte blanche sur fond lilas, violet pour l'action. Thème clair seul, par choix. Polices du téléphone, rien d'externe. */
 :root{
   --violet:#873897; --violet-fonce:#5A2166; --violet-clair:#F6EDF8;
-  --creme:#FDF6E6; --fond:#EFE9F1; --carte:#FFFFFF;
-  --encre:#331F3A; --titre:#5E4966; --doux:#5A4862; --filet:#EADFEC;
-  --ok:#1D6B44;
+  --fond:#EFE9F1; --carte:#FFFFFF; --encre:#331F3A; --doux:#5A4862; --filet:#EADFEC;
   --f-texte:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--fond);color:var(--encre);font-family:var(--f-texte);font-size:16px;line-height:1.5;overflow-wrap:break-word}
-.cadre{max-width:640px;margin:0 auto;padding-block:20px 120px;padding-inline:16px}
+.cadre{max-width:640px;margin:0 auto;padding:32px 16px 48px}
 .marque{font-weight:600;color:var(--violet-fonce);font-size:15px;margin:0 0 4px}
-h1,h2{font-weight:700;color:var(--violet-fonce);line-height:1.2;margin:0 0 6px;text-wrap:balance}
-h1{font-size:26px} h2{font-size:21px} h2:focus{outline:none}
-.aide{color:var(--doux);font-size:14px;margin:0 0 14px}
-.barre{height:6px;background:var(--filet);border-radius:999px;overflow:hidden;margin:6px 0 16px}
-.barre i{display:block;height:100%;background:var(--violet);width:0;transition:width .25s}
-details.partie{background:var(--carte);border:1px solid var(--filet);border-radius:18px;margin-bottom:12px}
-details.partie>summary{list-style:none;cursor:pointer;padding:16px 16px;display:flex;align-items:center;gap:10px;border-radius:18px;min-height:56px}
-details.partie>summary::-webkit-details-marker{display:none}
-details.partie>summary:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
-summary .titre{flex:1;min-width:0;font-weight:600;color:var(--violet-fonce);font-size:16px;line-height:1.3}
-summary .compte{font-size:12px;color:var(--doux);white-space:nowrap;font-variant-numeric:tabular-nums;background:var(--violet-clair);border-radius:999px;padding:3px 9px}
-summary .compte.plein{background:#E3F2E9;color:var(--ok)}
-summary .fleche{width:10px;height:10px;border-right:2px solid var(--doux);border-bottom:2px solid var(--doux);transform:rotate(45deg);transition:transform .2s;flex:none;margin-top:-4px}
-details[open]>summary .fleche{transform:rotate(-135deg);margin-top:4px}
-.corps{padding:0 16px 16px}
-.corps>.aide{margin-top:-4px}
-.q{border-top:1px solid var(--filet);padding:14px 0 4px}
-.corps>.q:first-of-type{border-top:0;padding-top:4px}
-.q .lib{font-weight:500;font-size:15px;margin:0 0 8px;color:var(--encre)}
-.sous{font-weight:700;font-size:14px;color:var(--violet-fonce);margin:18px 0 0;padding-top:14px;border-top:2px solid var(--filet)}
-.sous+.q{border-top:0}
-.puces{display:flex;flex-wrap:wrap;gap:8px}
-.puce{font:inherit;font-size:14px;border:1px solid #D9C8DE;background:var(--carte);color:var(--encre);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:42px;max-width:100%;text-align:left}
-.puce:hover{border-color:var(--violet)}
-.puce:active{transform:scale(.97)}
-.puce[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:#fff}
-.puce:focus-visible,.bouton:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,details.prec>summary:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-label.note{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--titre);margin-top:10px}
-input[type=text],input[type=number],input[type=date],textarea,select{font:inherit;font-size:16px;color:var(--encre);background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:10px 12px;width:100%;min-width:0}
-textarea{min-height:76px;resize:vertical}
-.facultatif{color:var(--doux);font-weight:400}
-.enfant{background:var(--violet-clair);border-radius:12px;padding:4px 12px 12px;margin-top:10px}
-.enfant .num{font-size:13px;font-weight:600;color:var(--violet-fonce);margin:8px 0 0}
-.ajout{margin-top:14px}
-details.prec{margin-top:16px;border-top:2px solid var(--filet);padding-top:12px}
-details.prec>summary{cursor:pointer;font-size:14px;color:var(--violet-fonce);font-weight:600;border-radius:8px;padding:6px 0;min-height:36px}
-.carte{background:var(--carte);border:1px solid var(--filet);border-radius:18px;padding:20px 16px}
-.recap{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--creme);border:1px solid var(--filet);border-radius:12px;padding:14px;font-size:14px;max-height:55vh;overflow:auto}
-nav.pied{position:fixed;left:0;right:0;bottom:0;background:var(--carte);border-top:1px solid var(--filet);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
-nav.pied .dedans{max-width:640px;margin:0 auto;display:flex;gap:10px;align-items:center}
-.total{font-size:13px;color:var(--doux);white-space:nowrap;font-variant-numeric:tabular-nums}
-.bouton{font:inherit;font-weight:600;font-size:16px;border-radius:999px;padding:12px 18px;cursor:pointer;border:1px solid var(--violet);min-height:48px}
-.bouton:active{transform:scale(.98)}
-.bouton.plein{background:var(--violet);color:#fff;flex:1}
-.bouton.plein:hover{background:var(--violet-fonce)}
-.bouton.vide{background:var(--carte);color:var(--violet-fonce);border-color:#D9C8DE}
-.bouton.vide:hover{border-color:var(--violet)}
-.bouton[disabled]{opacity:.6;cursor:wait}
-.petit{font-size:13px;color:var(--doux);margin:8px 0 0}
-.enregistre{font-size:12px;color:var(--ok);min-height:18px;margin:0}
-.piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-@media (prefers-reduced-motion:reduce){.barre i,summary .fleche{transition:none}.puce:active,.bouton:active{transform:none}}
+h1{font-weight:700;color:var(--violet-fonce);line-height:1.2;margin:0 0 8px;font-size:26px;text-wrap:balance}
+.aide{color:var(--doux);font-size:15px;margin:0 0 24px}
+.choix{display:flex;flex-direction:column;gap:14px}
+.choix a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:76px;padding:18px 20px;border-radius:18px;background:var(--violet);color:#fff;text-decoration:none;font-weight:700;font-size:19px;line-height:1.25;box-shadow:0 6px 18px rgba(90,33,102,.18)}
+.choix a span{min-width:0}
+.choix a::after{content:"";flex:none;width:11px;height:11px;border-right:3px solid #fff;border-top:3px solid #fff;transform:rotate(45deg)}
+.choix a:hover{background:var(--violet-fonce)}
+.choix a:active{transform:scale(.98)}
+.choix a:focus-visible{outline:3px solid var(--violet-fonce);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.choix a:active{transform:none}}
 </style>
 </head>
 <body>
-<div class="cadre">
+<main class="cadre">
   <p class="marque">Au Cocon Du Bonheur</p>
-  <h1>Validation, 04/11</h1>
-  <p class="aide">Tout est facultatif : envoie même si des questions restent vides.</p>
-  <div class="barre" aria-hidden="true"><i id="barre"></i></div>
-
-  <form id="f" novalidate>
-    <div class="piege" aria-hidden="true"><label>Ne pas remplir <input type="text" name="_gotcha" id="gotcha" tabindex="-1" autocomplete="off"></label></div>
-    <div id="parties"></div>
-    <section class="carte" id="vueRecap" hidden>
-      <h2 tabindex="-1" id="titreRecap">Récapitulatif</h2>
-      <p class="aide">Voici ce qui partira. Touche « Modifier » pour corriger.</p>
-      <div class="recap" id="recap" tabindex="0"></div>
-      <p class="petit" id="envoiEtat" role="status"></p>
-    </section>
-    <section class="carte" id="vueFin" hidden>
-      <h2 tabindex="-1" id="titreFin">C’est envoyé</h2>
-      <p class="aide">Les réponses sont parties sur Formspree. Elles restent aussi sur ce téléphone.</p>
-      <button type="button" class="bouton vide" id="rouvrir">Modifier les réponses</button>
-    </section>
-  </form>
-  <p class="enregistre" id="enregistre" role="status"></p>
-</div>
-
-<nav class="pied" id="pied">
-  <div class="dedans" id="piedForm">
-    <span class="total" id="total"></span>
-    <button type="button" class="bouton plein" id="voir">Voir le récapitulatif</button>
-  </div>
-  <div class="dedans" id="piedRecap" hidden>
-    <button type="button" class="bouton vide" id="modifier">Modifier</button>
-    <button type="button" class="bouton plein" id="envoyer">Envoyer</button>
-  </div>
-</nav>
-
-<script>
-(function(){
-  const CLE='aucocon-validation-0411';
-  const ENVOI='https://formspree.io/f/xrennzzp';
-  const TEST=new URLSearchParams(location.search).has('test');
-  const SUJET=(TEST?'TEST – ':'')+'Au Cocon – validation 04/11';
-
-  /* Une question : id, q (texte repris dans la réponse), o (choix), multi (plusieurs choix), n (notes : si = choix qui l'ouvrent, vide = toujours ; t = text, number, date, long).
-     Genres à part : titre (sous-titre), perso (personne du personnel + ses enfants), ajout (bouton « + Autre personne »). */
-  const ON=['Oui','Non'];
-  const F=n=>n.toLocaleString('fr-FR').replace(/\s/g,' ')+' F';
-  const CLASSES=['Poussinière','TPS','PS','MS','GS','CI','CP','CE1','CE2','CM1','CM2'];
-  const PERSONNEL=['Aïssata S.','Khady','Waldé W.','Awa Kassary B.','Maïmouna S.','Ramatoulaye B.','Ndèye Coura D.','Mame B.','Hélène Isabelle B.','Khardiata N.','Fatou S.','Aminata G.','Anna T.','« T. » (seul sur la feuille)','M. D. (directeur des études)','Mme S. (intervenante)','La directrice'];
-  const CAR_NOV=['Mathys J. (PS)','Mouhamed Askia T. (MS)','Astou G. (CE1)','Ndeye Penda T. (CE1)','Serigne Saliou G. (CE1)','Ndeye Ngone D. (CI)','Mouhamed Rassoul D. (MS)','Sophia O. (CI)','Cherif Maleyni B. (CI)'];
-  const PROBABLES=[
-    ['car','Seydina Mouhammad T.','Seydina Mouhamed T. (TPS)'],
-    ['car','Adja Binetou D.','Adja Binetou Naby D. (GS)'],
-    ['car','David Samb S.','David Samba S. (MS)'],
-    ['car','Yaya Omar B.','Yahya Omar B. (CM1)'],
-    ['car','Maymouna C.','Maïmouna Diarra C. (GS)'],
-    ['car','Ibrahima D.','Ibrahim D. (GS)'],
-    ['études CI','Adama Moundor N.','Adama Moundor N. (CI), nom écrit autrement'],
-    ['études CM2','Pendant S.','Penda S. (CM2)'],
-    ['études CM2','Mouhamadou Mahdiyou G.','Mouhamadou Mahdihou G. (CM2)']
-  ];
-  const ECHANTILLON=[
-    ['PS','Abdou D.',85500,30000],['GS','Sassoum Zahra D.',85500,30000],['CI','Fatimata Zahra T.',74000,25000],['CP','Yaye Fatou D.',74000,25000],
-    ['CE1','Cheikh Ahmed Tidjane G.',74000,25000],['CE2','Mame Diarra S.',62000,25000],['CM1','Adjaratou Paya D.',74000,25000],['CM2','Daouda Yague G.',62000,25000]
-  ];
-  const INSC_PAYEE=['Aïcha G.','Aïssatou N.','Ramatoulaye N.','Mouhamadou Mansour D.'];
-
-  let etat={r:{},n:{},ouvert:[0],vue:'form',envoye:false,autres:0};
-  try{const s=localStorage.getItem(CLE);if(s)etat=Object.assign(etat,JSON.parse(s));}catch(e){}
-
-  const PARTIES=[
-    {t:'Règles de l’école',aide:'Avec la directrice.',qs:[
-      {id:'a-insc',q:'Une inscription non payée passe en retard après le 5 du mois, comme les mensualités :',o:ON,n:{si:['Non'],lib:'À partir de quand (date ou jour du mois)'}},
-      {id:'a-juin',q:'Juin divisé en 5 parts ajoutées de janvier à mai, collation de juin comprise :',o:ON},
-      {id:'a-prix-car',q:'Transport : la fiche dit '+F(20000)+' (Ouakam) / '+F(25000)+' (hors Ouakam), mais les parents paient surtout '+F(15000)+'. Le vrai prix :',o:[F(15000)+' pour tous',F(20000)+' ou '+F(25000)+' selon la zone','Ça dépend de l’élève','Autre'],n:{si:['Autre'],t:'number',lib:'Montant (en F)'}},
-      {id:'a-ibrahima',q:'Ibrahima D. paie '+F(10000)+' de car :',o:['Demi-trajet','Réduction','Erreur','Ne sait pas']},
-      {id:'a-feuille-car',q:'Feuille du car d’octobre : elle écrit '+F(317000)+' encaissés, les lignes font '+F(327000)+' ; reste après dépenses : '+F(47500)+' écrit, '+F(67500)+' calculé. Le bon chiffre :',o:['Celui de la feuille','Celui des lignes','À revérifier avec Aminata']},
-      {id:'a-presence',q:'Présence du personnel notée par personne, comme la feuille papier, retard après 8 h 15 :',o:ON,n:{si:['Non'],lib:'Autre heure'}},
-      {id:'a-mathys',q:'Mathys J. : il reste '+F(8000)+' sur le transport d’octobre. On les réclame :',o:['Oui','Non','Déjà réglé']},
-      {id:'a-visite-note',q:'Visites de classe : la note écrite par la direction après sa visite (ex. « revoir le tableau de lecture ») :',o:['Visible par l’enseignant','Privée à la direction']},
-      {id:'a-visite-planning',q:'Visites de classe : qui saisit le planning :',o:['Directrice et directeur des études','Aussi la secrétaire']}
-    ]},
-    {t:'Enfants du personnel et réductions',aide:'Certains élèves ont un parent qui travaille à l’école et ont une réduction.',qs:()=>[
-      {id:'b-reduc',q:'Les enfants du personnel ont une réduction :',o:['Oui','Non','Ça dépend de la personne']},
-      {id:'b-quoi',q:'Sur quoi (plusieurs choix possibles) :',multi:true,o:['Inscription','Mensualités','Juillet','Collation','Tenue ou blouse','Transport','Études','Tout']},
-      {id:'b-combien',q:'Combien :',o:['25 %','50 %','100 % (gratuit)','Montant fixe par mois','Autre'],n:[{si:['Montant fixe par mois'],t:'number',lib:'Montant par mois (en F)'},{si:['Autre'],lib:'Combien'}]},
-      {id:'b-meme',q:'La même réduction pour tout le personnel (si non : précise par enfant juste en dessous) :',o:ON},
-      {titre:'Qui a un enfant à l’école ? (feuille de présence du 03/11)'},
-      ...PERSONNEL.map((x,i)=>({id:'b-p'+i,perso:x,q:x+' : a un enfant à l’école ?',o:['Non','Oui']})),
-      ...Array.from({length:etat.autres},(_,k)=>({id:'b-autre'+k,perso:'',q:'Autre personne : a un enfant à l’école ?',o:['Non','Oui']})),
-      {ajout:true},
-      {id:'b-depuis',q:'Ces réductions existent depuis :',o:['Rentrée 2026-2027','Avant','Ne sait pas']},
-      {id:'b-corriger',q:'Les mois déjà payés plein tarif cette année :',o:['On les corrige (avoir sur les prochains mois)','On laisse','Ne sait pas']}
-    ]},
-    {t:'Personnel',qs:[
-      {id:'c-dir-etudes',q:'M. D. (directeur des études) signe la feuille de présence :',o:ON},
-      {id:'c-intervenante',q:'Mme S. (intervenante) signe la feuille de présence :',o:ON},
-      {id:'c-t-seul',q:'« T. » seul sur la feuille, c’est :',o:['La directrice','Une autre personne'],n:{si:['Une autre personne'],lib:'Nom et fonction'}},
-      {id:'c-ndeye',q:'Ndèye Coura D. : son nom s’écrit avec :',o:['« tt » (Dia-tta)','« ll » (Dia-lla)']}
-    ]},
-    {t:'Inscriptions et élèves',aide:'Avec Anna.',qs:[
-      ...INSC_PAYEE.map((x,i)=>({id:'d-insc'+i,q:x+' : inscription payée :',o:['Oui','Non','En partie'],n:{si:['Oui','En partie'],t:'number',lib:'Montant payé (en F)'}})),
-      {id:'d-bamba',q:'Cheikh Ahmadou Bamba M. : les '+F(25000)+' qui restent, c’est :',o:['L’inscription','Tenue + assurance + collation ('+F(24000)+')','Autre'],n:{si:['Autre'],lib:'Quoi'}},
-      {id:'d-aminata-s',q:'Aminata Rassoul S. (PS) : montant payé pour l’inscription (on ne connaît que juillet, '+F(30000)+') :',o:[],n:{si:[],t:'number',lib:'Montant (en F)'}},
-      {id:'d-aminata-w',q:'Aminata Rassoul W. : sa classe :',o:['PS','MS']},
-      {id:'d-loucia',q:'Loucia : c’est bien « Loucia B. » dans l’appli :',o:ON},
-      {id:'d-garderie',q:'Garderie : le carnet note '+F(30000)+' (TPS) / '+F(40000)+' (Poussinière) à l’inscription. La blouse et le 1er mois sont payés à part :',o:['Oui','Non','Inclus']}
-    ]},
-    {t:'Car et études',qs:[
-      {titre:'Payés en octobre, pas en novembre : prend le car en novembre ?'},
-      ...CAR_NOV.map((x,i)=>({id:'e-nov'+i,q:x+' :',o:['Oui','Non','Arrêté']})),
-      {titre:'Même élève ? (feuille d’Aminata → appli)'},
-      ...PROBABLES.map(([f,a,b],i)=>({id:'e-prob'+i,q:'Feuille '+f+' « '+a+' » → appli « '+b+' » :',o:['Même élève','Pas le même','Ne sait pas']})),
-      {titre:'Dépenses du car d’octobre sans date'},
-      {id:'e-dep1',q:'Nettoyage du car, '+F(3000)+' :',o:[],n:{si:[],t:'date',lib:'Date'}},
-      {id:'e-dep2',q:'Achat de gasoil, '+F(50000)+' :',o:[],n:{si:[],t:'date',lib:'Date'}}
-    ]},
-    {t:'Vérification par échantillon',aide:'1 élève tiré au sort par classe. Ce que l’appli croit payé d’après l’import ; octobre et novembre se lisent dans l’appli.',qs:[
-      ...ECHANTILLON.map(([c,x,i,j])=>({id:'f-'+c,q:x+' ('+c+') : inscription '+F(i)+', juillet '+F(j)+' payés :',o:['Juste','Faux'],n:{si:['Faux'],lib:'Précision'}})),
-      {titre:'Élèves partis'},
-      {id:'f-parti1',q:'Moustapha S. (CE1), parti le 23/10 :',o:['Bien parti','Pas parti']},
-      {id:'f-parti2',q:'Cheikh Ahmadou Bamba D. (CI), parti le 23/10 :',o:['Bien parti','Pas parti']},
-      {id:'f-parti3',q:'Un 3e élève parti :',o:['Bien parti','Pas parti'],n:{si:[],lib:'Nom de l’élève'}}
-    ]},
-    {t:'À rapporter',qs:[
-      {id:'g-registre',q:'Photo du registre avec les numéros des parents :',o:['Rapporté','Pas encore']},
-      {id:'g-presence',q:'Feuilles de présence du personnel depuis le 08/10 :',o:['Rapporté','Pas encore']},
-      {id:'g-appel',q:'Cahier d’appel des élèves :',o:['Rapporté','Pas encore']}
-    ]}
-  ];
-
-  const $=id=>document.getElementById(id);
-  let t;
-  function sauver(){try{localStorage.setItem(CLE,JSON.stringify(etat));$('enregistre').textContent='Brouillon enregistré sur ce téléphone';}catch(e){}clearTimeout(t);t=setTimeout(()=>{$('enregistre').textContent='';},1500);}
-  function el(tag,attrs,txt){const e=document.createElement(tag);if(attrs)for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;return e;}
-
-  const qsDe=p=>typeof p.qs==='function'?p.qs():p.qs;
-  const vraies=p=>qsDe(p).filter(q=>q.id);
-  const notes=q=>!q.n?[]:Array.isArray(q.n)?q.n:[q.n];
-  const choisi=(q,o)=>q.multi?(etat.r[q.id]||[]).includes(o):etat.r[q.id]===o;
-  const noteVue=(q,n)=>n.si.length===0||n.si.some(o=>choisi(q,o));
-  const repondu=q=>q.perso===''?!!(etat.n[q.id+'-nom']||'').trim()||!!etat.r[q.id]:q.o.length?(q.multi?(etat.r[q.id]||[]).length>0:!!etat.r[q.id]):!!(etat.n[q.id]||'').trim();
-  function compte(p){const v=vraies(p);return [v.filter(repondu).length,v.length];}
-  function majCompteurs(){
-    let a=0,b=0;
-    PARTIES.forEach((p,i)=>{const [x,y]=compte(p);a+=x;b+=y;const c=$('compte'+i);c.textContent=x+' / '+y+' répondu';c.classList.toggle('plein',x===y);});
-    $('total').textContent=a+' / '+b;$('barre').style.width=(a/b*100)+'%';
-  }
-
-  function champ(cle,lib,type){
-    const id='n-'+cle,l=el('label',{class:'note',for:id});
-    const s=el('span',null,lib);s.append(el('span',{class:'facultatif'},' (facultatif)'));l.append(s);
-    let i;
-    if(type==='long')i=el('textarea',{id:id});
-    else if(type==='classe'){i=el('select',{id:id});i.append(el('option',{value:''},'Choisir'));CLASSES.forEach(c=>i.append(el('option',{value:c},c)));}
-    else i=el('input',{id:id,type:type||'text'});
-    if(type==='number'){i.inputMode='numeric';i.min='0';i.step='500';}
-    i.value=etat.n[cle]||'';
-    i.addEventListener(type==='classe'?'change':'input',()=>{etat.n[cle]=i.value;sauver();majCompteurs();});
-    l.append(i);return l;
-  }
-  function champsNote(q,box){
-    box.innerHTML='';
-    notes(q).forEach((n,k)=>{if(noteVue(q,n))box.append(champ(q.id+(k?'-'+k:''),n.lib,n.t));});
-    if(q.perso!==undefined&&etat.r[q.id]==='Oui')enfants(q,box);
-  }
-  function enfants(q,box){
-    const nb=+etat.r[q.id+'-nb']||0,lid='l-'+q.id+'-nb';
-    const d=el('div',{class:'q'});d.style.borderTop='0';
-    d.append(el('p',{class:'lib',id:lid},'Combien d’enfants à l’école :'));
-    const z=el('div',{class:'puces',role:'group','aria-labelledby':lid});
-    ['1','2','3'].forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':String(etat.r[q.id+'-nb']===o)},o);
-      b.addEventListener('click',()=>{etat.r[q.id+'-nb']=etat.r[q.id+'-nb']===o?'':o;champsNote(q,box);sauver();});z.append(b);});
-    d.append(z);box.append(d);
-    for(let k=1;k<=nb;k++){
-      const e=el('div',{class:'enfant'});e.append(el('p',{class:'num'},'Enfant '+k));
-      const c=q.id+'-e'+k;
-      e.append(champ(c+'-nom','Nom de l’enfant'),champ(c+'-classe','Classe','classe'),champ(c+'-reduc','Réduction différente pour cet enfant'));
-      box.append(e);
-    }
-  }
-  function question(q,refaire){
-    if(q.titre)return el('p',{class:'sous'},q.titre);
-    if(q.ajout){const b=el('button',{type:'button',class:'bouton vide ajout'},'+ Autre personne');
-      b.addEventListener('click',()=>{etat.autres++;sauver();refaire(etat.autres-1);});return b;}
-    const d=el('div',{class:'q'}),lid='l-'+q.id;
-    if(q.perso==='')d.append(champ(q.id+'-nom','Nom de la personne'));
-    d.append(el('p',{class:'lib',id:lid},q.q));
-    const box=el('div');
-    if(q.o.length){
-      const z=el('div',{class:'puces',role:'group','aria-labelledby':lid});
-      q.o.forEach(o=>{const b=el('button',{type:'button',class:'puce','aria-pressed':String(choisi(q,o))},o);
-        b.addEventListener('click',()=>{
-          if(q.multi){const a=etat.r[q.id]||[];etat.r[q.id]=a.includes(o)?a.filter(x=>x!==o):a.concat(o);}
-          else etat.r[q.id]=etat.r[q.id]===o?'':o;
-          z.querySelectorAll('.puce').forEach(x=>x.setAttribute('aria-pressed',String(choisi(q,x.textContent))));
-          champsNote(q,box);sauver();majCompteurs();});
-        z.append(b);});
-      d.append(z);
-    }
-    champsNote(q,box);d.append(box);return d;
-  }
-  function remplir(c,p,i){
-    c.innerHTML='';if(p.aide)c.append(el('p',{class:'aide'},p.aide));
-    const refaire=k=>{remplir(c,p,i);majCompteurs();const n=$('n-b-autre'+k+'-nom');if(n)n.focus();};
-    qsDe(p).forEach(q=>c.append(question(q,refaire)));
-    const pr=el('details',{class:'prec'});if((etat.n['prec-'+i]||'').trim())pr.open=true;
-    pr.append(el('summary',null,'Précision'),champ('prec-'+i,'Précision sur cette partie','long'));c.append(pr);
-  }
-  function construire(){
-    const w=$('parties');
-    PARTIES.forEach((p,i)=>{
-      const det=el('details',{class:'partie'});if(etat.ouvert.includes(i))det.open=true;
-      const s=el('summary');s.append(el('span',{class:'titre'},String.fromCharCode(65+i)+'. '+p.t),el('span',{class:'compte',id:'compte'+i}),el('span',{class:'fleche','aria-hidden':'true'}));
-      det.append(s);const c=el('div',{class:'corps'});remplir(c,p,i);det.append(c);
-      det.addEventListener('toggle',()=>{etat.ouvert=etat.ouvert.filter(x=>x!==i);if(det.open)etat.ouvert.push(i);sauver();});
-      w.append(det);
-    });
-    majCompteurs();
-  }
-
-  function dateFr(v){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||'');return m?m[3]+'/'+m[2]+'/'+m[1]:v;}
-  function valeur(n,v){v=(v||'').trim();if(!v)return '';if(n.t==='date')return dateFr(v);if(n.lib.includes('(en F)'))return v+' F';return v;}
-  function texte(){
-    let a=0,b=0;PARTIES.forEach(p=>{const [x,y]=compte(p);a+=x;b+=y;});
-    const L=['AU COCON : VALIDATION DU 04/11',a+' / '+b+' questions répondues',''];
-    PARTIES.forEach((p,i)=>{
-      L.push(String.fromCharCode(65+i)+'. '+p.t.toUpperCase());
-      qsDe(p).forEach(q=>{
-        if(q.titre){L.push('['+q.titre+']');return;}
-        if(q.ajout)return;
-        const ext=notes(q).map((n,k)=>noteVue(q,n)?[n.lib.replace(' (en F)',''),valeur(n,etat.n[q.id+(k?'-'+k:'')])]:null).filter(x=>x&&x[1]).map(x=>' ; '+x[0]+' : '+x[1]).join('');
-        let lib=q.q;
-        if(q.perso===''){const nom=(etat.n[q.id+'-nom']||'').trim();if(!nom&&!etat.r[q.id])return;lib=(nom||'Autre personne (sans nom)')+' : a un enfant à l’école ?';}
-        if(q.o.length){
-          const r=q.multi?((etat.r[q.id]||[]).join(', ')||'(pas répondu)'):(etat.r[q.id]||'(pas répondu)');
-          L.push('- '+lib+' '+r+ext);
-        }else L.push('- '+lib+' '+(ext?ext.slice(3).replace(/^[^:]+: /,''):'(rien)'));
-        if(q.perso!==undefined&&etat.r[q.id]==='Oui'){
-          const nb=+etat.r[q.id+'-nb']||0;if(!nb)L.push('    nombre d’enfants : (pas répondu)');
-          for(let k=1;k<=nb;k++){const c=q.id+'-e'+k,g=s=>(etat.n[c+s]||'').trim();
-            L.push('    enfant '+k+' : '+(g('-nom')||'(nom ?)')+', '+(g('-classe')||'(classe ?)')+(g('-reduc')?', réduction : '+g('-reduc'):''));}
-        }
-      });
-      const pr=(etat.n['prec-'+i]||'').trim();if(pr)L.push('- Précision : '+pr);
-      L.push('');
-    });
-    return L.join('\n').trim();
-  }
-
-  function vue(v){
-    etat.vue=v;sauver();
-    $('parties').hidden=v!=='form';$('vueRecap').hidden=v!=='recap';$('vueFin').hidden=v!=='fin';
-    $('pied').hidden=v==='fin';$('piedForm').hidden=v!=='form';$('piedRecap').hidden=v!=='recap';
-    if(v==='recap'){$('recap').textContent=texte();$('envoiEtat').textContent='';}
-    window.scrollTo({top:0});
-    const h=v==='recap'?$('titreRecap'):v==='fin'?$('titreFin'):null;if(h)h.focus({preventScroll:true});
-  }
-  async function envoyer(){
-    const b=$('envoyer');b.disabled=true;$('envoiEtat').textContent='Envoi en cours…';
-    try{
-      const r=await fetch(ENVOI,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},
-        body:JSON.stringify({_subject:SUJET,_gotcha:$('gotcha').value,reponses:texte()})});
-      const j=await r.json().catch(()=>({}));
-      if(!r.ok||j.ok!==true)throw new Error(r.status);
-      etat.envoye=true;vue('fin');
-    }catch(e){$('envoiEtat').textContent='L’envoi n’a pas marché (réseau ?). Les réponses restent sur ce téléphone : réessaie un peu plus tard.';}
-    b.disabled=false;
-  }
-  $('voir').addEventListener('click',()=>vue('recap'));
-  $('modifier').addEventListener('click',()=>vue('form'));
-  $('rouvrir').addEventListener('click',()=>vue('form'));
-  $('envoyer').addEventListener('click',envoyer);
-  $('f').addEventListener('submit',e=>e.preventDefault());
-  construire();
-  vue(etat.vue==='recap'||etat.vue==='fin'?etat.vue:'form');
-})();
-</script>
+  <h1>Quelques questions</h1>
+  <p class="aide">Environ 5 minutes. Choisissez votre page.</p>
+  <nav class="choix" aria-label="Choisir sa page">
+    <a href="directrice.html"><span>Je suis la directrice</span></a>
+    <a href="secretaire.html"><span>Je suis la secrétaire</span></a>
+  </nav>
+</main>
 </body>
 </html>
